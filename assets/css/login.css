@@ -1,0 +1,25 @@
+.card-section.login-box {
+    width: 655px;
+    height: 450px;
+}
+.form-section.login-box {
+    margin-left: 375px;
+}
+.form-group.login-form label {
+    width: 100%;
+}
+.form-group.login-form {
+    margin-bottom: 30px;
+}
+.form-flex-wrapper {
+    justify-content: center;
+}
+.forget-password {
+    text-align: center;
+    color: #655DBB;
+    font-size: 16px;
+    font-weight: 500;
+}
+.card-section.login-box.signup {
+    height: max-content;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEBSITE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,300&display=swap"
+        rel="stylesheet">
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/css/air-datepicker.css">
+        <link rel="stylesheet" href="/assets/css/common.css">
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="/assets/css/login.css">
+</head>
+
+<body>
+    <!-- Header Section start here -->
+    <section>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <ul class="navbar-nav mr-auto">
+                    <a class="navbar-brand" href="#">Doctor/Name</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dsp-none" href="#">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login.html">Login</a>
+                    </li>
+                </ul>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> <i class="fas fa-user mx-1"></i> Profile
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+    <!-- Header Section end here -->
+    <!-- Form Section start here -->
+    <section class="form-section login-box">
+        <div class="container">
+            <div class="card-section login-box">
+                <h2 class="heading-title">Login Form</h2>
+                <form>
+                    <div class="form-group login-form">
+                        <label for="inputDoctorName">
+                            <span class="input-field_label">Username/Email<span class="input-field_required"
+                                    aria-hidden="true"> *</span></span>
+                            <input id="inputDoctorName" maxlength="40" type="text" autocomplete="given-name"
+                                name="fullName" aria-label="First Name First name is required."
+                                aria-required="true" value="" placeholder="" class="input-field">
+                        </label>
+                    </div>
+                    <div class="form-group login-form">
+                        <label for="inputEmail" class="email-label">
+                            <span class="input-field_label">Password<span class="input-field_required"
+                                    aria-hidden="true"> *</span></span>
+                            <input id="inputEmail" maxlength="40" type="text" autocomplete="given-name"
+                                name="email" aria-label="First Name First name is required."
+                                aria-required="true" value="" placeholder="" class="input-field">
+                        </label>
+                    </div>
+                    <a href="#" class="forget-password">Forget Password?</a>
+                    <div class="d-flex form-flex-wrapper btn-div">
+                        <button type="button" class="btn btn-primary btn-lg btn-color">Login</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-color">Cancel</button>
+                    </div>
+                    <p class="text-center">Don't have an account? <a href="/signup.html" class="forget-password">Sign Up</a></p>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Form Section end here -->
+
+</body>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script src="/assets/js/air-datepicker.js"></script>
+<script src="/assets/js/base64.js"></script>
+<script src="/assets/js/setImage.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/login.js"></script>
+
+</html>
