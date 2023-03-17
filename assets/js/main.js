@@ -10,7 +10,7 @@ $(document).ready(function () {
             monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             today: 'Today',
             clear: 'Clear',
-            dateFormat: 'MM/dd/yyyy',
+            dateFormat: 'dd/MM/yyyy',
             timeFormat: 'hh:mm aa',
             firstDay: 0
         },
@@ -35,12 +35,12 @@ $(document).ready(function () {
         }
     })
 
-    $('#inputFile').on('input', function(e) {
+    $('#inputFile').on('input', function (e) {
         console.log(this.value);
         var file = this.files;
         console.log(file);
         convertToBase64(file, true).then(function (data) {
-            localStorage.setItem("profileImage",data)
+            localStorage.setItem("profileImage", data)
             console.log(data);
             profileBase64 = data;
             setImage(profileBase64);
@@ -58,9 +58,33 @@ $(document).ready(function () {
     // dataTable
 
     // modal close
-    $('.btn-close, .close-btn').on('click', function() {
+    $('.btn-close, .close-btn').on('click', function () {
         location.reload();
     })
     // modal close
 
+    $('.cancel-btn').on('click', function (e) {
+        $('input').val('');
+    })
+
+
+    let btnIncreament = 18;
+    let addIncreament = $('.add-btn-div').position().top + 20;
+    $('.card-section').css('transform','translateY(0px)')
+    $('.add-btn-div').on('click', function (e) {
+        $('.card-section').addClass('cloned');
+        let cloneEle;
+        if ($('.card-section').length == 1) {
+            cloneEle = $('.card-section').clone();
+        } else {
+            cloneEle = $('.card-section').eq(0).clone();
+        }
+        $('.form-section .container').append(cloneEle.clone(true));
+        $('.card-section:first-child').removeClass('cloned');
+        let iValue = $('.card-section').length;
+        $('.card-section:nth-child('+iValue+')').css('transform','translateY('+btnIncreament+'px)');
+        $('.add-btn-div').css('top',addIncreament+'px');
+        btnIncreament+=18;
+        addIncreament+=18;
+    })
 })

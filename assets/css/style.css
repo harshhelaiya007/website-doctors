@@ -35,6 +35,15 @@ body {
     padding-left: 55px;
     padding-top: 50px;
     margin-left: 85px;
+    position: relative;
+}
+
+.add-btn-div {
+    position: absolute;
+    top: 70px;
+    left: 100px;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .card-section {
@@ -44,6 +53,7 @@ body {
     box-shadow: 0px 49px 32px -19px rgba(56, 56, 150, 0.15);
     border-radius: 32px;
     padding: 35px;
+    transform-origin: center top;
 }
 
 .heading-title {
@@ -61,6 +71,25 @@ body {
 .form-group label {
     max-width: 100%;
     width: 250px;
+}
+
+.form-group .error-msg {
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.form-group .error-msg p {
+    font-size: 12px;
+    font-weight: 500;
+    color: red;
+}
+
+.form-group.error-show input {
+    border: 1px solid red;
+}
+
+.form-group.success input {
+    border: 1px solid green;
 }
 
 .form-group .input-field_label {
@@ -182,6 +211,7 @@ textarea:focus {
     outline-color: #BFACE2;
     background-color: #BFACE2;
     border: 1px solid #BFACE2;
+    cursor: pointer;
 }
 
 .btn.btn-color:active {
@@ -210,6 +240,11 @@ textarea:focus {
 
 .card-section-img.inputFileUpload {
     min-height: 370px;
+    padding: 16px;
+}
+
+.inputFileUpload .form-group {
+    display: none !important;
 }
 
 .input-file-type.input-field {
@@ -249,6 +284,16 @@ label.file-label {
     border-radius: 5px;
 }
 
+.nav-item.dropdown {
+    color: black;
+    background-color: unset;
+    border-radius: 0;
+}
+
+.dropdown-toggle::after {
+    display: none ;
+}
+
 .nav-link,
 .navbar-brand {
     color: white;
@@ -260,4 +305,15 @@ label.file-label {
     transform: scale(1.1);
 }
 
+.container {
+    position: relative;
+}
+
 /* form section css end here */
+
+.card-section.cloned {
+    position: absolute;
+    top: 0;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    /* box-shadow: none; */
+}

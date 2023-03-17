@@ -1,55 +1,89 @@
 .d-flex {
-    display: flex;
+  display: flex;
 }
+
 .all-center {
-    align-items: center;
+  align-items: center;
 }
+
 .dsp-none {
-    display: none;
+  display: none;
 }
+
 .i-dsp-none {
-    display: none !important;
+  display: none !important;
 }
+
 /* hide in desktop */
 .desktop-dsp-none {
-    display: none;
+  display: none;
 }
+
 /* hide in mobile */
 @media screen and (max-width:767px) {
-    .mobile-dsp-none {
-        display: none;
-    }
+  .mobile-dsp-none {
+    display: none;
+  }
 }
+
 .text-center {
-    text-align: center;
+  text-align: center;
 }
+
 /* loader */
 .lds-dual-ring.active {
-    display: inline-block;
+  display: inline-block;
 }
+
 .lds-dual-ring {
-    display: none;
-    width: 80px;
-    height: 80px;
+  display: none;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #655DBB;
+  border-color: #655DBB transparent #655DBB transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
   }
-  .lds-dual-ring:after {
-    content: " ";
-    display: block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border-radius: 50%;
-    border: 6px solid #fff;
-    border-color: #fff transparent #fff transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
+
+  100% {
+    transform: rotate(360deg);
   }
-  @keyframes lds-dual-ring {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
+}
+
 /* loader */
+
+/* animation css */
+.card-section.cloned {
+  /* animation: card-animation 1.2s linear infinite forwards;
+  transition: transform 150ms, opacity 200ms;
+  transform-origin: top left; */
+}
+/* @keyframes card-animation {
+  0% {
+    position: absolute;
+    top: 0;
+    transform: rotate(-90deg);
+  }
+
+  25% {
+    transform: rotate(-40deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+} */
+/* animation css */
