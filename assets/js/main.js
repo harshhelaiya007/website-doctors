@@ -58,7 +58,7 @@ $(document).ready(function () {
     // dataTable
 
     // modal close
-    $('.btn-close, .close-btn').on('click', function () {
+    $('.modal-close-btn').on('click', function () {
         location.reload();
     })
     // modal close
@@ -87,4 +87,5 @@ $(document).ready(function () {
         btnIncreament+=18;
         addIncreament+=18;
     })
+
 })

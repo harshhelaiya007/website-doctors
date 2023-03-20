@@ -317,3 +317,57 @@ label.file-label {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     /* box-shadow: none; */
 }
+
+.card-section-img .form-group .error-msg {
+    position: absolute;
+    top: 100%;
+}
+
+.mobile-wrapper-nav-icon {
+    display: flex;
+    align-items: center;
+}
+
+/* responsive design */
+@media screen and (max-width:767px) {
+    .hide-in-mobile {
+        display: none;
+    }
+    .mobile-d-flex {
+        display: flex;
+        flex-direction: column;
+    }
+    .btn-close.btn-close-white {
+        display: block;
+    }
+    .nav-mobile {
+        justify-content: space-between;
+    }
+    .offcanvas.offcanvas-end {
+        padding: 10px;
+    }
+    .navbar-nav.mr-auto {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .mobile-wrapper-nav-icon {
+        display: flex;
+        justify-content: space-between;    
+    }
+    .nav-item.dropdown {
+        width: 100%;
+        padding: 5px 15px 5px 5px;
+        text-align: right;
+    }
+    .text-bg-dark {
+        background-color: #655DBB !important;
+    }
+    .desktop-dsp-none {
+        display: block;
+    }
+    .mobile-d-flex .nav-item,
+    .mobile-d-flex .nav-link {
+        padding: 10px;
+    }
+}
+/* responsive design */
