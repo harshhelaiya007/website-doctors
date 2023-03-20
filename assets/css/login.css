@@ -2,24 +2,52 @@
     width: 655px;
     height: 450px;
 }
+
 .form-section.login-box {
     margin-left: 375px;
 }
+
 .form-group.login-form label {
     width: 100%;
 }
+
 .form-group.login-form {
     margin-bottom: 30px;
 }
+
 .form-flex-wrapper {
     justify-content: center;
 }
+
 .forget-password {
     text-align: center;
     color: #655DBB;
     font-size: 16px;
     font-weight: 500;
 }
+
 .card-section.login-box.signup {
     height: max-content;
 }
+
+/* responsive design */
+@media screen and (max-width:767px) {
+    .form-section.login-box {
+        margin: 5px;
+        width: 100px;
+        min-height: 550px;
+        padding-left: 0;
+        padding-bottom: 50px;
+    }
+    .card-section.login-box {
+        width: 350px;
+    }
+    .forget-btn-div.form-flex-wrapper {
+        flex-direction: column;
+    }
+    .form-flex-wrapper.forget-btn-div .btn.forget-btn.btn-color {
+        width: 100%;
+    }
+}
+
+/* responsive design */
