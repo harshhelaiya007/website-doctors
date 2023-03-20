@@ -36,6 +36,7 @@
 }
 
 .lds-dual-ring {
+  margin: 0 auto;
   display: none;
   width: 80px;
   height: 80px;
@@ -64,26 +65,14 @@
 }
 
 /* loader */
-
-/* animation css */
-.card-section.cloned {
-  /* animation: card-animation 1.2s linear infinite forwards;
-  transition: transform 150ms, opacity 200ms;
-  transform-origin: top left; */
+/* air date picker css */
+.air-datepicker-body--day-name {
+  color: black;
 }
-/* @keyframes card-animation {
-  0% {
-    position: absolute;
-    top: 0;
-    transform: rotate(-90deg);
-  }
-
-  25% {
-    transform: rotate(-40deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-} */
-/* animation css */
+.air-datepicker-cell.-selected-, .air-datepicker-cell.-selected-.-current- {
+  background-color: #3E54AC;
+}
+.air-datepicker-cell.-selected-:hover, .air-datepicker-cell.-selected-.-current-:hover {
+  background-color: #3E54AC;
+}
+/* air date picker css */
