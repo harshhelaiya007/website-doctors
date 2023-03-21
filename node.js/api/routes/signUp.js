@@ -4,8 +4,17 @@ const Signup = require('../model/signUpModel');
 const mongoose = require('mongoose');
 
 router.get('/',(req,res,next)=>{
-    res.status(200).json({
-        msg:'signUp working get'
+    Signup.find()
+    .then(result=>{
+        res.status(200).json({
+            Signup:result
+        })
+    })
+    .catch(error=>{
+        console.log(error)
+        res.status(500).json({
+            error:error
+        })
     })
 })
 
