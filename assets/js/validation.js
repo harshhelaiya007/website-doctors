@@ -2,7 +2,10 @@ console.log('validation js');
 
 // show success
 function showSuccess(inputEle) {
+    $(inputEle).parents('form').addClass('valid');
+    $(inputEle).parents('form').removeClass('error');
     $(inputEle).addClass('valid');
+    $(inputEle).removeClass('error');
     $(inputEle).parent().siblings().removeClass('show');
     $(inputEle).parent().siblings().find('p').text('');
     $(inputEle).parents('.form-group').removeClass('error-show');
@@ -11,7 +14,10 @@ function showSuccess(inputEle) {
 
 // show error
 function showError(inputEle, msg) {
+    $(inputEle).parents('form').addClass('error');
+    $(inputEle).parents('form').removeClass('valid');
     $(inputEle).addClass('error');
+    $(inputEle).removeClass('valid');
     $(inputEle).parent().siblings().addClass('show');
     $(inputEle).parent().siblings().find('p').text(msg);
     $(inputEle).parents('.form-group').addClass('error-show');
@@ -28,9 +34,16 @@ function showRequired(inputEle, requiredMsg, validationMsg) {
 
 function buttonDisable(inputEle) {
     if (inputEle.hasClass('error') || inputEle.val() == '') {
-        $('.btn.btn-color').prop('disabled', true);
+        $('.btn.btn-color.submit-btn').prop('disabled', true);
     } else {
-        $('.btn.btn-color').prop('disabled', false);
+        Array.from($('input.input-field')).forEach(function (ele) {
+            if ($(ele).hasClass('valid')) {
+                $('.btn.btn-color.submit-btn').prop('disabled', false);
+            } else {
+                $('.btn.btn-color.submit-btn').prop('disabled', true);
+            }
+        })
+        // $('.btn.btn-color').prop('disabled', false);
     }
 }
 
@@ -42,6 +55,7 @@ function buttonDisable(inputEle) {
 $('#inputDoctorName').on('input blur', function (e) {
     let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
+    buttonDisable($(this));
     if (!inputValue == '' && docRegx.test(inputValue)) {
         showSuccess($(this));
     } else {
@@ -53,6 +67,7 @@ $('#inputDoctorName').on('input blur', function (e) {
 $('#inputEmail').on('input blur', function (e) {
     let emailRegx = /\S+@\S+\.\S+/;
     let inputValue = e.target.value;
+    buttonDisable($(this));
     if (!inputValue == '' && emailRegx.test(inputValue)) {
         showSuccess($(this));
     } else {
@@ -64,6 +79,7 @@ $('#inputEmail').on('input blur', function (e) {
 $('#inputDob').on('input blur', function (e) {
     let dobRegx = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
     let inputValue = e.target.value;
+    buttonDisable($(this));
     if (!inputValue == '' && dobRegx.test(inputValue)) {
         showSuccess($(this));
     } else {
@@ -76,6 +92,7 @@ $('#inputRegion').on('input blur keyup', function (e) {
     $(this).val($(this).val().replace(/[^a-z\s]/ig, ''));
     let regionRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
+    buttonDisable($(this));
     if (!inputValue == '' && regionRegx.test(inputValue)) {
         showSuccess($(this));
     } else {
@@ -86,6 +103,7 @@ $('#inputRegion').on('input blur keyup', function (e) {
 // HQ
 $('#inputHQ').on('input blur', function (e) {
     let inputValue = e.target.value;
+    buttonDisable($(this));
     if (!inputValue == '') {
         showSuccess($(this));
     } else {
@@ -96,6 +114,7 @@ $('#inputHQ').on('input blur', function (e) {
 // FSO Name
 $('#inputFSOName').on('input blur', function (e) {
     let inputValue = e.target.value;
+    buttonDisable($(this));
     if (!inputValue == '') {
         showSuccess($(this));
     } else {
@@ -108,9 +127,29 @@ $('#inputDoctorNumber').on('input blur', function (e) {
     $(this).val($(this).val().replace((/[^0-9]/g), ''));
     let docNumberRegx = /^[0-9]*$/;
     let inputValue = e.target.value;
+    buttonDisable($(this));
     if (!inputValue == '' && docNumberRegx.test(inputValue)) {
         showSuccess($(this));
     } else {
         showError($(this), 'Docots Number is Required', 'Please Enter Valid Docots Number.');
     }
+})
+
+// img
+// $('#inputFile').on('click', function (e) {
+//     let inputValue = e.target.value;
+//     buttonDisable($(this));
+//     if (!$('#change-img').attr('src') == '') {
+//         showSuccess($(this))
+//     } else {
+//         showError($(this), 'Doctors Photo is Required', 'Please Select Doctors Photo.');
+//     }
+// })
+
+$(document).on("click", ":submit", function (e) {
+    
+        if ($('form').hasClass('error')) {
+            e.preventDefault();
+        }
+
 })

@@ -10,30 +10,61 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,300&display=swap"
         rel="stylesheet">
-        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/assets/css/air-datepicker.css">
-        <link rel="stylesheet" href="/assets/css/common.css">
-        <link rel="stylesheet" href="/assets/css/style.css">
-        <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/air-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/common.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/login.css">
 </head>
 
 <body>
+    <!-- loader -->
+    <div class="lds-dual-ring"></div>
+    <!-- loader -->
     <!-- Header Section start here -->
     <section>
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <ul class="navbar-nav mr-auto">
-                    <a class="navbar-brand" href="#">Doctor/Name</a>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dsp-none" href="#">Admin</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login.html">Login</a>
-                    </li>
+                    <div class="mobile-wrapper-nav-icon">
+                        <a class="navbar-brand" href="#">Doctor/Name</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                        aria-labelledby="offcanvasDarkNavbarLabel">
+                        <div class="d-flex nav-mobile">
+                            <h5 class="offcanvas-title desktop-dsp-none" id="offcanvasDarkNavbarLabel">Dark offcanvas
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white desktop-dsp-none"
+                                data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="d-flex mobile-d-flex">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/index.html">Home</a>
+                            </li>
+                            <li class="nav-item dsp-none">
+                                <a class="nav-link" href="#">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login.html">Login</a>
+                            </li>
+                        </div>
+                    </div>
                 </ul>
+                <div class="nav-item dropdown dsp-none">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> <i class="fas fa-user mx-1"></i> Profile
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">Log out</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </section>
@@ -48,9 +79,9 @@
                         <label for="inputUserName">
                             <span class="input-field_label">Username<span class="input-field_required"
                                     aria-hidden="true"> *</span></span>
-                            <input id="inputUserName" maxlength="40" type="text" 
-                                name="fullName" aria-label="First Name First name is required."
-                                aria-required="true" value="" placeholder="" class="input-field">
+                            <input id="inputUserName" maxlength="40" type="text" name="fullName"
+                                aria-label="First Name First name is required." aria-required="true" value=""
+                                placeholder="" class="input-field">
                         </label>
                         <div class="error-msg">
                             <p></p>
@@ -58,11 +89,11 @@
                     </div>
                     <div class="form-group login-form">
                         <label for="inputEmail">
-                            <span class="input-field_label">Email<span class="input-field_required"
-                                    aria-hidden="true"> *</span></span>
-                            <input id="inputEmail" maxlength="40" type="text" 
-                                name="fullName" aria-label="First Name First name is required."
-                                aria-required="true" value="" placeholder="" class="input-field">
+                            <span class="input-field_label">Email<span class="input-field_required" aria-hidden="true">
+                                    *</span></span>
+                            <input id="inputEmail" maxlength="40" type="text" name="fullName"
+                                aria-label="First Name First name is required." aria-required="true" value=""
+                                placeholder="" class="input-field">
                         </label>
                         <div class="error-msg">
                             <p></p>
@@ -72,23 +103,23 @@
                         <label for="inputPassword" class="email-label">
                             <span class="input-field_label">Password<span class="input-field_required"
                                     aria-hidden="true"> *</span></span>
-                            <input id="inputPassword" maxlength="40" type="text" 
-                                name="email" aria-label="First Name First name is required."
-                                aria-required="true" value="" placeholder="" class="input-field">
+                            <input id="inputPassword" maxlength="40" type="text" name="email"
+                                aria-label="First Name First name is required." aria-required="true" value=""
+                                placeholder="" class="input-field">
                         </label>
                     </div>
                     <div class="form-group login-form">
                         <label for="inputConfirmPassword" class="email-label">
                             <span class="input-field_label">Confirm Password<span class="input-field_required"
                                     aria-hidden="true"> *</span></span>
-                            <input id="inputConfirmPassword" maxlength="40" type="text" 
-                                name="email" aria-label="First Name First name is required."
-                                aria-required="true" value="" placeholder="" class="input-field">
+                            <input id="inputConfirmPassword" maxlength="40" type="text" name="email"
+                                aria-label="First Name First name is required." aria-required="true" value=""
+                                placeholder="" class="input-field">
                         </label>
                     </div>
                     <div class="d-flex form-flex-wrapper btn-div">
                         <button type="button" class="btn btn-primary btn-lg btn-color signUp-btn">Sign Up</button>
-                        <button type="button" class="btn btn-secondary btn-lg btn-color">Cancel</button>
+                        <button type="button" class="btn btn-secondary btn-lg btn-color cancel-btn">Cancel</button>
                     </div>
                 </form>
             </div>

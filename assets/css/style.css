@@ -43,7 +43,7 @@ body {
     top: 70px;
     left: 100px;
     cursor: pointer;
-    z-index: 1;
+    z-index: 999;
 }
 
 .card-section {
@@ -317,3 +317,158 @@ label.file-label {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     /* box-shadow: none; */
 }
+
+.card-section-img .form-group .error-msg {
+    position: absolute;
+    top: 100%;
+}
+
+.mobile-wrapper-nav-icon {
+    display: flex;
+    align-items: center;
+}
+
+.sideBar-cardClone {
+    width: 1319.5px;
+    height: 90px;
+    background-color: #655DBB;
+    position: absolute;
+    border-radius: 20px;
+    padding: 1px;
+    left: 66.8px;
+    top: 8px;
+    padding-left: 44px;
+    display: flex;
+    gap: 5px;
+}
+
+.sideBar-cardClone .select-item {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    color: white;
+}
+
+.sideBar-cardClone .select-item a {
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+}
+
+.select-item.active {
+    background-color: #ECF2FF;
+    border-radius: 50%;
+    color: black;
+}
+
+.comesForward {
+    position: relative;
+    z-index: 1;
+}
+
+.comesForward.cloned {
+    z-index: 1;
+}
+
+/* responsive design */
+@media screen and (max-width:767px) {
+    .hide-in-mobile {
+        display: none;
+    }
+    .mobile-d-flex {
+        display: flex;
+        flex-direction: column;
+    }
+    .btn-close.btn-close-white {
+        display: block;
+    }
+    .nav-mobile {
+        justify-content: space-between;
+    }
+    .offcanvas.offcanvas-end {
+        padding: 10px;
+    }
+    .navbar-nav.mr-auto {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .mobile-wrapper-nav-icon {
+        display: flex;
+        justify-content: space-between;    
+    }
+    .nav-item.dropdown {
+        width: 100%;
+        padding: 5px 15px 5px 5px;
+        text-align: right;
+    }
+    .text-bg-dark {
+        background-color: #655DBB !important;
+    }
+    .desktop-dsp-none {
+        display: block;
+    }
+    .mobile-d-flex .nav-item,
+    .mobile-d-flex .nav-link {
+        padding: 10px;
+    }
+    .form-section.main {
+        margin: 5px;
+        width: 100px;
+        min-height: 550px;
+        padding-bottom: 40px;
+        padding-top: 40px;
+        padding-left: 0;
+    }
+    .form-section.main .card-section {
+        width: 350px;
+        height: max-content;
+    }
+    .add-btn-div {
+        left: 25px;
+    }
+    .main-wrapper {
+        flex-direction: column;
+        gap: 0;
+    }
+    .left-side-wrapper,
+    .left-side-wrapper {
+        width: 100%;
+    }
+    .form-section.main .form-flex-wrapper {
+        flex-direction: column;
+    }
+    .form-section.main .form-group label {
+        width: 100%;
+    }
+    .modal-content,
+    .modal-body {
+        width: 100%;
+    }
+    .cropper-container {
+        max-width: 100%;
+    }
+    .right-side-wrapper {
+        display: flex;
+        order: -1;
+        margin-bottom: 20px;
+    }
+    .sideBar-cardClone {
+        padding-left: 15px;
+        width: 350px;
+        left: 12px;
+        top: 5px;
+        height: 75px;
+    }
+    .sideBar-cardClone .select-item {
+        padding: 5px;
+        width: 35px;
+        height: 35px;
+    }
+    .sideBar-cardClone .select-item a {
+        font-size: 14px;
+    }
+}
+/* responsive design */
