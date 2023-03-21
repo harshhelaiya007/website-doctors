@@ -1,0 +1,11 @@
+{
+  "name": "node-mongodb-connection",
+  "version": "1.0.0",
+  "description": "connection of mongodb",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harsh Helaiya",
+  "license": "MIT"
+}
