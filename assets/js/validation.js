@@ -35,12 +35,15 @@ function showRequired(inputEle, requiredMsg, validationMsg) {
 function buttonDisable(inputEle) {
     if (inputEle.hasClass('error') || inputEle.val() == '') {
         $('.btn.btn-color.submit-btn').prop('disabled', true);
+        $('.btn.btn-color.signUp-btn').prop('disabled', true);
     } else {
         Array.from($('input.input-field')).forEach(function (ele) {
             if ($(ele).hasClass('valid')) {
                 $('.btn.btn-color.submit-btn').prop('disabled', false);
+                $('.btn.btn-color.signUp-btn').prop('disabled', false);
             } else {
                 $('.btn.btn-color.submit-btn').prop('disabled', true);
+                $('.btn.btn-color.signUp-btn').prop('disabled', true);
             }
         })
         // $('.btn.btn-color').prop('disabled', false);
@@ -52,7 +55,7 @@ function buttonDisable(inputEle) {
 // })
 
 // doctors name
-$('#inputDoctorName').on('input blur', function (e) {
+$('#inputDoctorName, #inputUserName').on('input blur', function (e) {
     let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
     buttonDisable($(this));
@@ -146,10 +149,21 @@ $('#inputDoctorNumber').on('input blur', function (e) {
 //     }
 // })
 
+// password
+$('#inputPassword, #inputConfirmPassword').on('input blur', function (e) {
+    let inputValue = e.target.value;
+    buttonDisable($(this));
+    if (!inputValue == '') {
+        showSuccess($(this));
+    } else {
+        showError($(this), 'FSO Name is Required', 'Please Enter Valid FSO Name.');
+    }
+})
+
 $(document).on("click", ":submit", function (e) {
-    
-        if ($('form').hasClass('error')) {
-            e.preventDefault();
-        }
+
+    if ($('form').hasClass('error')) {
+        e.preventDefault();
+    }
 
 })
