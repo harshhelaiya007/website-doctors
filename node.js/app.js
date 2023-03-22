@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const signUpRoute = require('./api/routes/signUp');
 const loginRoute = require('./api/routes/login');
-const doctorForms = require('./api/model/formModel');
+const formsRoute = require('./api/routes/form');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -20,21 +20,6 @@ mongoose.connection.on('connected', connected => {
 app.use(bodyParser.urlencoded({ extends: false }));
 app.use(bodyParser.json())
 
-// sign up
-app.use('/signUp', signUpRoute);
-
-// login
-app.use('/login', loginRoute);
-
-// forms
-app.use('/forms',doctorForms);
-
-app.use((req, res, next) => {
-    res.status(404).json({
-        error: 'Bad Request'
-    })
-})
-
 app.use((req, res, next) => {
     //allow access to current url. work for https as well
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -43,6 +28,21 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', req.method);
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
+})
+
+// sign up
+app.use('/signUp', signUpRoute);
+
+// login
+app.use('/login', loginRoute);
+
+// forms
+app.use('/forms', formsRoute);
+
+app.use((req, res, next) => {
+    res.status(404).json({
+        error: 'Bad Request'
+    })
 })
 
 

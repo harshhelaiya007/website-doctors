@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const doctorForms = require('../model/doctorForms');
+const doctorFormsModel = require('../model/formModel');
 const mongoose = require('mongoose');
 
 router.get('/', (req, res, next) => {
@@ -19,8 +19,8 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    // console.log(req.body);
-    const doctorForms = new doctorForms({
+    console.log(req.body);
+    const doctorForms = new doctorFormsModel({
         _id: new mongoose.Types.ObjectId,
         doctorName: req.body.name,
         email: req.body.email,
