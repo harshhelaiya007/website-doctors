@@ -71,6 +71,7 @@ $(document).ready(function () {
     let btnIncreament = 18;
     let addIncreament = $('.add-btn-div').position().top + 20;
     $('.card-section').css('transform', 'translateY(0px)')
+    // add btn click
     $('.add-btn-div').on('click', function (e) {
 
         $('.card-section').addClass('cloned');
@@ -89,8 +90,10 @@ $(document).ready(function () {
         const mediaQuery = window.matchMedia('(max-width: 768px)');
         if (mediaQuery.matches) {
             $('.add-btn-div').css('top', addIncreament - 10 + 'px');
+            $('.minus-btn-div').css('top', addIncreament - 10 + 'px');
         } else {
             $('.add-btn-div').css('top', addIncreament + 'px');
+            $('.minus-btn-div').css('top', addIncreament + 'px');
         }
         btnIncreament += 18;
         addIncreament += 18;
@@ -148,6 +151,11 @@ $(document).ready(function () {
         $('.sideBar-cardClone .select-item').removeClass('active');
         $('.sideBar-cardClone .select-item:last-child').addClass('active');
 
+    })
+
+    // minus btn click
+    $('.minus-btn-div').on('click', function(e) {
+        
     })
 
     // form submit data into database

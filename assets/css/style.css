@@ -46,6 +46,14 @@ body {
     z-index: 999;
 }
 
+.minus-btn-div {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    cursor: pointer;
+    z-index: 999;
+}
+
 .card-section {
     width: 1319px;
     height: 550px;
