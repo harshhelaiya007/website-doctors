@@ -150,4 +150,27 @@ $(document).ready(function () {
 
     })
 
+    // form submit data into database
+    $('.btn.submit-btn').on('click', function(e) {
+
+    fetch('http://localhost:3000/forms', {
+        method: "POST",
+        body: JSON.stringify({
+            'doctorName': $('#inputDoctorName').val(),
+            'email': $('#inputEmail').val(),
+            'dob': $('#inputDob').val(),
+            'region': $('#inputRegion').val(),
+            'hq': $('#inputHQ').val(),
+            'fsoName': $('#inputFSOName').val(),
+            'doctorNumber': $('#inputDoctorNumber').val(),
+            'doctorImage': $('#change-img').attr('src'),
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+    .then(response => response.json())
+    .then(json => console.log(json));
+    })
+
 })

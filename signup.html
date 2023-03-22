@@ -33,7 +33,7 @@
                             <span class="navbar-toggler-icon"></span>
                         </button>
                     </div>
-                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                    <div class="offcanvas offcanvas-end password-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
                         aria-labelledby="offcanvasDarkNavbarLabel">
                         <div class="d-flex nav-mobile">
                             <h5 class="offcanvas-title desktop-dsp-none" id="offcanvasDarkNavbarLabel">Dark offcanvas
@@ -91,7 +91,7 @@
                         <label for="inputEmail">
                             <span class="input-field_label">Email<span class="input-field_required" aria-hidden="true">
                                     *</span></span>
-                            <input id="inputEmail" maxlength="40" type="text" name="fullName"
+                            <input id="inputEmail" type="text" name="email"
                                 aria-label="First Name First name is required." aria-required="true" value=""
                                 placeholder="" class="input-field">
                         </label>
@@ -103,7 +103,7 @@
                         <label for="inputPassword" class="email-label">
                             <span class="input-field_label">Password<span class="input-field_required"
                                     aria-hidden="true"> *</span></span>
-                            <input id="inputPassword" maxlength="40" type="text" name="email"
+                            <input id="inputPassword" type="password" name="password"
                                 aria-label="First Name First name is required." aria-required="true" value=""
                                 placeholder="" class="input-field">
                         </label>
@@ -112,13 +112,13 @@
                         <label for="inputConfirmPassword" class="email-label">
                             <span class="input-field_label">Confirm Password<span class="input-field_required"
                                     aria-hidden="true"> *</span></span>
-                            <input id="inputConfirmPassword" maxlength="40" type="text" name="email"
+                            <input id="inputConfirmPassword" type="password" name="confirmPassword"
                                 aria-label="First Name First name is required." aria-required="true" value=""
                                 placeholder="" class="input-field">
                         </label>
                     </div>
                     <div class="d-flex form-flex-wrapper btn-div">
-                        <button type="button" class="btn btn-primary btn-lg btn-color signUp-btn">Sign Up</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-color signUp-btn" disabled>Sign Up</button>
                         <button type="button" class="btn btn-secondary btn-lg btn-color cancel-btn">Cancel</button>
                     </div>
                 </form>
