@@ -68,14 +68,15 @@ $(document).ready(function () {
         $('input').val('');
     })
 
-
-    let btnIncreament = 18;
-    let addIncreament = $('.add-btn-div').position().top + 20;
+    var btnIncreament = 18;
+    var addIncreament = $('.add-btn-div').position().top + 20;
     $('.card-section').css('transform', 'translateY(0px)')
     // add btn click
+
     $('.add-btn-div').on('click', function (e) {
 
         $('.card-section').addClass('cloned');
+        $('.minus-btn-div').removeClass('dsp-none');
         let cloneEle;
         if ($('.card-section').length == 1) {
             cloneEle = $('.card-section').clone();
@@ -140,8 +141,10 @@ $(document).ready(function () {
 
                 if (!$(this).is(':last-child')) {
                     $('.add-btn-div').addClass('dsp-none');
+                    $('.minus-btn-div').addClass('dsp-none');
                 } else {
                     $('.add-btn-div').removeClass('dsp-none');
+                    $('.minus-btn-div').removeClass('dsp-none');
                 }
             })
         })
@@ -156,7 +159,38 @@ $(document).ready(function () {
 
     // minus btn click
     $('.minus-btn-div').on('click', function(e) {
+
+        addIncreament = $('.add-btn-div').position().top - 20;
+
+        $('.card-section:last-child').remove();
+        let dataIdVar = parseInt($('.card-section:last-child').attr('data-id').split('-')[1]) + 2 
         
+        Array.from($('.sideBar-cardClone .select-item')).forEach(function(selectItemEle) {
+            if (dataIdVar - 1 == 1) {
+                $('.sideBar-cardClone .select-item:first-child').removeClass('active');
+                $('.add-btn-div').css('top','70px');
+                $('.minus-btn-div').addClass('dsp-none');
+                $('.sideBar-cardClone').addClass('i-dsp-none');
+            }
+            if ($(selectItemEle).find('a').text() == dataIdVar) {
+                $(selectItemEle).remove();
+            }
+        })
+        $('.sideBar-cardClone .select-item:last-child').addClass('active');
+
+        let paddingBottomEle = parseInt($('.form-section.main').css('padding-bottom').replace('px', '')) - 10;
+        $('.form-section.main').css('padding-bottom', paddingBottomEle);
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+        if (mediaQuery.matches) {
+            $('.add-btn-div').css('top', addIncreament - 10 + 'px');
+            $('.minus-btn-div').css('top', addIncreament - 10 + 'px');
+        } else {
+            $('.add-btn-div').css('top', addIncreament + 'px');
+            $('.minus-btn-div').css('top', addIncreament + 'px');
+        }
+
+        addIncreament += 18;
+        btnIncreament-=18;
     })
 
     // form submit data into database

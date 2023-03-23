@@ -45,7 +45,6 @@ function setImage(val) {
             });
         }
         // cropper js
-        debugger
         $('.modal-btn-click').click();
     }
 }
