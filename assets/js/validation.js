@@ -150,13 +150,17 @@ $('#inputDoctorNumber').on('input blur', function (e) {
 // })
 
 // password
-$('#inputPassword, #inputConfirmPassword').on('input blur', function (e) {
-    let inputValue = e.target.value;
-    buttonDisable($(this));
-    if (!inputValue == '') {
-        showSuccess($(this));
-    } else {
-        showError($(this), 'FSO Name is Required', 'Please Enter Valid FSO Name.');
+$('#inputPassword, #inputConfirmPassword').on('input blur keyup', function (e) {
+    buttonDisable($('#inputConfirmPassword'))
+    buttonDisable($('#inputPassword'))
+    if (!$('#inputConfirmPassword').val() == '') {
+        if ($('#inputPassword').val() == $('#inputConfirmPassword').val()) {
+            showSuccess($('#inputPassword'));
+            showSuccess($('#inputConfirmPassword'));
+        } else {
+            showError($('#inputPassword'), 'Password Mismatch', 'Password Mismatch')
+            showError($('#inputConfirmPassword'), 'Password Mismatch', 'Password Mismatch');
+        }   
     }
 })
 

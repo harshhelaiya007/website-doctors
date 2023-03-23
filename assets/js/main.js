@@ -59,7 +59,8 @@ $(document).ready(function () {
 
     // modal close
     $('.modal-close-btn').on('click', function () {
-        location.reload();
+        // location.reload();
+        // $('.modal-btn-click').off('click');
     })
     // modal close
 

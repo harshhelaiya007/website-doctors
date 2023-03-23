@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
     fetch('http://localhost:3000/login')
         .then(response => response.json())
         .then(json => {
@@ -27,8 +26,9 @@ $(document).ready(function () {
             .then(response => response.json())
             .then(json => {
                 let responseData = json;
-                if (responseData.message) {
+                if (responseData.message == true) {
                     loaderShow(false);
+                    location.href = '/login.html';
                 } else {
                     console.log('Please Fill All Details Again');
                 }
