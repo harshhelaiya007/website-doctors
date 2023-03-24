@@ -24,10 +24,10 @@ router.post('/', (req, res, next) => {
     // console.log(req.body);
     const signUp = new Signup({
         _id: new mongoose.Types.ObjectId,
-        username: encrypt(req.body.username),
-        email: encrypt(req.body.email),
-        password: encrypt(req.body.password),
-        confirmPassword: encrypt(req.body.confirmPassword)
+        username: (req.body.username),
+        email: (req.body.email),
+        password: (req.body.password),
+        confirmPassword: (req.body.confirmPassword)
     })
 
     signUp.save()
