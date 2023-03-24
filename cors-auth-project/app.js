@@ -10,8 +10,32 @@ const cors = require("cors") //Newly added
 const app = express();
 app.use(cors()) // Newly added
 
-
 app.use(express.json({ limit: "50mb" }));
+
+app.use((req, res, next) => {
+    //allow access to current url. work for https as well
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.removeHeader('x-powered-by');
+    //allow access to current method
+    res.setHeader('Access-Control-Allow-Methods', req.method);
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
+
+const bodyparser = require("body-parser");
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
+
+const corsOptions = {
+    origin: 'http://example.com',
+    optionsSuccessStatus: 200 // for some legacy browsers
+}
+
+app.get('/welcome', cors(corsOptions), auth, (req, res) => {
+    res.status(200).send({
+        Message: 'LoginedIn',
+    });
+});
 
 // Logic goes here
 
@@ -23,12 +47,12 @@ app.post("/register", async (req, res) => {
     // Our register logic starts here
     try {
         // Get user input
-        const { userName, email, password,confirmPassword } = req.body;
+        const { username, email, region, hq, fsoname, password, confirmPassword } = req.body;
 
         // Validate user input
-        if (!(email && password && userName && confirmPassword)) {
-            res.status(400).send("All input is required");
-        }
+        // if (!(username && email && password && confirmPassword)) {
+        //     return res.status(400).send("All input is required");
+        // }
 
         // check if user already exist
         // Validate if user exist in our database
@@ -39,13 +63,22 @@ app.post("/register", async (req, res) => {
         }
 
         //Encrypt user password
-        encryptedUserPassword = await bcrypt.hash(password, 10);
+        var encryptedUserPassword;
+        await bcrypt.genSalt(10, function (err, salt) {
+            bcrypt.hash(password, salt, function (err, hash) {
+                // Store hash in your password DB.
+                encryptedUserPassword = hash;
+            });
+        });
 
         // Create user in our database
         const user = await User.create({
-            userName: userName,
-            email: email.toLowerCase(), // sanitize
-            password: encryptedUserPassword,
+            username: username,
+            email: email,
+            region: region,
+            hq: hq,
+            fsoname: fsoname,
+            password: encryptedUserPassword, // sanitize
             confirmPassword: encryptedUserPassword,
         });
 
@@ -54,71 +87,21 @@ app.post("/register", async (req, res) => {
             { user_id: user._id, email },
             process.env.TOKEN_KEY,
             {
-                expiresIn: "5h",
+                expiresIn: "1h",
             }
         );
         // save user token
         user.token = token;
 
         // return new user
-        res.status(201).json(user);
+        res.status(201).json({
+            user,
+            register: true
+        });
     } catch (err) {
         console.log(err);
     }
     // Our register logic ends here
-});
-
-app.post("/login", async (req, res) => {
-
-    // Our login logic starts here
-    try {
-        // Get user input
-        const { email, password } = req.body;
-
-        // Validate user input
-        if (!(email && password)) {
-            res.status(400).send("All input is required");
-        }
-        // Validate if user exist in our database
-        const user = await User.findOne({ email });
-
-        if (user && (await bcrypt.compare(password, user.password))) {
-            // Create token
-            const token = jwt.sign(
-                { user_id: user._id, email },
-                process.env.TOKEN_KEY,
-                {
-                    expiresIn: "1h",
-                }
-            );
-
-            // save user token
-            user.token = token;
-
-            // user
-            return res.status(200).json(user);
-        }
-        return res.status(400).send("Invalid Credentials");
-
-        // Our login logic ends here
-    }
-    catch (err) {
-        console.log(err);
-    }
-
-    // Our login logic ends here
-});
-
-
-const corsOptions = {
-    origin: 'http://example.com',
-    optionsSuccessStatus: 200 // for some legacy browsers
-}
-
-app.get('/welcome', cors(corsOptions), auth, (req, res) => {
-    res.status(200).send({
-        Message: 'LoginedIn',
-    });
 });
 
 
