@@ -1,41 +1,20 @@
 $(document).ready(function () {
 
-    fetch('http://localhost:3000/login')
-        .then(response => response.json())
-        .then(json => {
-            $('.login-btn').on('click', function (e) {
-                // login data
-                loaderShow(true);
-                let getLoginDataVar = json.Signup;
-                getLoginDataVar.forEach(function (loginEleData) {
-                    if ($('#inputEmail').val() == loginEleData.email && $('#inputPassword').val() == loginEleData.password) {
-                        if (json.message) {
-                            localStorage.setItem('profileLogin',true);
-                            console.log('working');
-                            loaderShow(false);
-                            location.href = '/index.html';
-                        } else {
-                            console.log('Please Fill All Details Again');   
-                        }
-                    }
-                })
-            })
-        });
-
     $('.signUp-btn').on('click', function (e) {
         loaderShow(true);
+        console.log($('#inputUserName').val());
 
         fetch('http://localhost:4001/register', {
             method: "POST",
             body: JSON.stringify({
                 'userName': $('#inputUserName').val(),
                 'email': $('#inputEmail').val(),
+                'region': $('#inputRegion').val(),
+                'hq': $('#inputHQ').val(),
+                'fsoname': $('#inputFSOName').val(),
                 'password': $('#inputPassword').val(),
                 'confirmPassword': $('#inputConfirmPassword').val(),
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
+            })
         })
             .then(response => response.json())
             .then(json => {
