@@ -2,19 +2,28 @@ $(document).ready(function () {
 
     $('.signUp-btn').on('click', function (e) {
         loaderShow(true);
-        console.log($('#inputUserName').val());
+        let userName = $('#inputUserName').val();
+        let userEmail = $('#inputEmail').val();
+        let userRegion = $('#inputRegion').val();
+        let userHQ = $('#inputHQ').val();
+        let userFsoname = $('#inputFSOName').val();
+        let userPassword = $('#inputPassword').val();
+
+        requestObj = {
+            "username": userName,
+            "email": userEmail,
+            "region": userRegion,
+            "hq": userHQ,
+            "fsoname": userFsoname,
+            "password": userPassword,
+            "confirmPassword": userPassword
+        }
+
+        console.log(requestObj);
 
         fetch('http://localhost:4001/register', {
             method: "POST",
-            body: JSON.stringify({
-                'userName': $('#inputUserName').val(),
-                'email': $('#inputEmail').val(),
-                'region': $('#inputRegion').val(),
-                'hq': $('#inputHQ').val(),
-                'fsoname': $('#inputFSOName').val(),
-                'password': $('#inputPassword').val(),
-                'confirmPassword': $('#inputConfirmPassword').val(),
-            })
+            body: JSON.stringify(requestObj)
         })
             .then(response => response.json())
             .then(json => {

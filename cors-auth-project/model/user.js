@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   confirmPassword: { type: String },
   token: { type: String },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    index: { expires: 300 },
+    // after 5 mins it get's deleted
+  }
 });
 
 module.exports = mongoose.model("user", userSchema);
