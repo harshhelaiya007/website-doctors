@@ -8,30 +8,20 @@ const cors = require("cors") //Newly added
 
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.use(cors()) // Newly added
-
-app.use(express.json({ limit: "50mb" }));
-
-app.use((req, res, next) => {
-    //allow access to current url. work for https as well
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.removeHeader('x-powered-by');
-    //allow access to current method
-    res.setHeader('Access-Control-Allow-Methods', req.method);
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-})
 
 const bodyparser = require("body-parser");
 app.use(bodyparser.urlencoded({ extended: false }));
-app.use(bodyparser.json());
+// app.use(bodyparser.json());
+app.use(express.json())
 
 const corsOptions = {
     origin: 'http://example.com',
     optionsSuccessStatus: 200 // for some legacy browsers
 }
 
-app.get('/welcome', cors(corsOptions), auth, (req, res) => {
+app.get('/welcome', cors(corsOptions), auth, async(req, res) => {
     res.status(200).send({
         user: req.body,
         Message: 'LoginedIn',
@@ -48,14 +38,14 @@ app.post("/register", async (req, res) => {
     // Our register logic starts here
     try {
         // Get user input
-        const { username, email, region, hq, fsoname, password } = req.body;
+        const { userName, email, hq, fsoName, region, password } = req.body;
 
-        const user = await User({
-            username: username,
+        const user = await User.create({
+            userName: userName,
             email: email,
-            region: region,
+            region: region, 
             hq: hq,
-            fsoname: fsoname,
+            fsoName: fsoName,
             password: password,
           });
 
@@ -69,6 +59,8 @@ app.post("/register", async (req, res) => {
         );
         // save user token
         user.token = token;
+
+        console.log(user);
 
         // return new user
         res.status(201).json({

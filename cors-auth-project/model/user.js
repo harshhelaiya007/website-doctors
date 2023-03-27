@@ -1,20 +1,13 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  username: { type: String },
-  email: { type: String },
-  region: { type: String },
-  hq: { type: String },
-  fsoname: { type: String },
+  userName: { type: String, default: null },
+  email: { type: String, unique: false },
+  region: { type: String, default: null },
+  hq: { type: String, default: null },
+  fsoName: { type: String, default: null },
   password: { type: String },
-  confirmPassword: { type: String },
   token: { type: String },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    index: { expires: 300 },
-    // after 5 mins it get's deleted
-  }
 });
 
 module.exports = mongoose.model("user", userSchema);
