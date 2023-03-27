@@ -21,7 +21,7 @@ $(document).ready(function () {
 
         console.log(requestObj);
 
-        fetch('http://localhost:4001/register', {
+        fetch('http://localhost:8000/signUp', {
             method: "POST",
             body: JSON.stringify(requestObj)
         })
