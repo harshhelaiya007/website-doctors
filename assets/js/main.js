@@ -40,8 +40,6 @@ $(document).ready(function () {
         var file = this.files;
         console.log(file);
         convertToBase64(file, true).then(function (data) {
-            localStorage.setItem("profileImage", data)
-            console.log(data);
             profileBase64 = data;
             setImage(profileBase64);
         }).catch(function (er) {
@@ -116,6 +114,9 @@ $(document).ready(function () {
             var newID = 'card-' + cardInc;
             $(this).attr('data-id', newID);
             $(this).find('.heading-title>.form-number').text(cardInc + 1)
+            $('[data-id=' + newID + '] #change-img').addClass('dsp-none')
+            $('[data-id=' + newID + '] .card-section-img').removeClass('inputFileUpload')
+            $('[data-id=' + newID + '] #change-img').attr('src', '');
             cardInc++;
         })
 
@@ -158,17 +159,17 @@ $(document).ready(function () {
     })
 
     // minus btn click
-    $('.minus-btn-div').on('click', function(e) {
+    $('.minus-btn-div').on('click', function (e) {
 
         addIncreament = $('.add-btn-div').position().top - 20;
 
         $('.card-section:last-child').remove();
-        let dataIdVar = parseInt($('.card-section:last-child').attr('data-id').split('-')[1]) + 2 
-        
-        Array.from($('.sideBar-cardClone .select-item')).forEach(function(selectItemEle) {
+        let dataIdVar = parseInt($('.card-section:last-child').attr('data-id').split('-')[1]) + 2
+
+        Array.from($('.sideBar-cardClone .select-item')).forEach(function (selectItemEle) {
             if (dataIdVar - 1 == 1) {
                 $('.sideBar-cardClone .select-item:first-child').removeClass('active');
-                $('.add-btn-div').css('top','70px');
+                $('.add-btn-div').css('top', '70px');
                 $('.minus-btn-div').addClass('dsp-none');
                 $('.sideBar-cardClone').addClass('i-dsp-none');
             }
@@ -190,30 +191,56 @@ $(document).ready(function () {
         }
 
         addIncreament += 18;
-        btnIncreament-=18;
+        btnIncreament -= 18;
     })
 
     // form submit data into database
-    $('.btn.submit-btn').on('click', function(e) {
+    $('.btn.submit-btn').on('click', function (e) {
 
-    fetch('http://localhost:3000/forms', {
-        method: "POST",
-        body: JSON.stringify({
-            'doctorName': $('#inputDoctorName').val(),
-            'email': $('#inputEmail').val(),
-            'dob': $('#inputDob').val(),
-            'region': $('#inputRegion').val(),
-            'hq': $('#inputHQ').val(),
-            'fsoName': $('#inputFSOName').val(),
-            'doctorNumber': $('#inputDoctorNumber').val(),
-            'doctorImage': $('#change-img').attr('src'),
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    })
-    .then(response => response.json())
-    .then(json => console.log(json));
+        let doctorName = $('#inputDoctorName').val();
+        let userEmail = $('#inputEmail').val();
+        let userRegion = $('#inputRegion').val();
+        let userHQ = $('#inputHQ').val();
+        let userFsoName = $('#inputFSOName').val();
+        let userMobileNumber = $('#inputDoctorNumber').val();
+        let userImage = $('#change-img').attr('src');
+
+        const image = URL.createObjectURL(new Blob([userImage], { type: 'text/plain' }));
+
+        axios.post('http://localhost:4001/forms', {
+            name: doctorName,
+            email: userEmail,
+            region: userRegion,
+            hq: userHQ,
+            fsoname: userFsoName,
+            doctorNumber: userMobileNumber,
+            image: image,
+        })
+            .then(function (response) {
+                let data = response.data;
+                if (data.data == 'successfully data saved') {
+                    loaderShow(false);
+                    alert(data.data);
+                } else {
+                    alert(error);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     })
 
 })
+
+
+function loaderShow(bool) {
+    if (bool) {
+        $('.navbar.navbar-expand-lg').addClass('dsp-none');
+        $('.form-section').addClass('dsp-none');
+        $('.lds-dual-ring').addClass('active');
+    } else {
+        $('.navbar.navbar-expand-lg').removeClass('dsp-none');
+        $('.form-section').removeClass('dsp-none');
+        $('.lds-dual-ring').removeClass('active');
+    }
+}

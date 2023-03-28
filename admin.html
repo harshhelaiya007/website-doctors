@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/assets/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/air-datepicker.css">
+    <link rel="stylesheet" href="/assets/css/datatables.min.css">
     <link rel="stylesheet" href="/assets/css/common.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
@@ -36,7 +37,8 @@
                     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
                         aria-labelledby="offcanvasDarkNavbarLabel">
                         <div class="d-flex nav-mobile">
-                            <h5 class="offcanvas-title desktop-dsp-none" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5>
+                            <h5 class="offcanvas-title desktop-dsp-none" id="offcanvasDarkNavbarLabel">Dark offcanvas
+                            </h5>
                             <button type="button" class="btn-close btn-close-white desktop-dsp-none"
                                 data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
@@ -69,10 +71,25 @@
     </section>
     <!-- Header Section end here -->
     <!-- Form Section start here -->
-    <section class="form-section dsp-none">
+    <section class="form-section">
         <div class="container">
             <div class="card-section">
                 <h2 class="heading-title">Admin Panel</h2>
+                <table id="data-table" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Region</th>
+                            <th>HQ</th>
+                            <th>FSOName</th>
+                            <th>Doctor Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </section>
@@ -84,8 +101,12 @@
 <script src="/assets/js/popper.min.js"></script>
 <script src="/assets/js/bootstrap.js"></script>
 <script src="/assets/js/air-datepicker.js"></script>
+<script src="/assets/js/datatables.min.js"></script>
 <script src="/assets/js/header.js"></script>
 <script src="/assets/js/base64.js"></script>
 <script src="/assets/js/setImage.js"></script>
+<script src="/assets/js/axios.js"></script>
+<script src="/assets/js/admin.js"></script>
 <script src="/assets/js/main.js"></script>
+
 </html>

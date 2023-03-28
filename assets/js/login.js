@@ -55,7 +55,7 @@ $(document).ready(function () {
 
 
     // password click signup
-    $('.signup.login-box .password-icon-div').on('click', function (e) {
+    $('.signup.login-box .password-icon-div.signup').on('click', function (e) {
         if ($(this).parent().find('input').attr('type') && $(this).parents('.form-group').prev().find('input').attr('type') == 'password') {
             $(this).parent().find('input').attr('type', 'text');
             $(this).parents('.form-group').prev().find('input').attr('type', 'text');
@@ -66,7 +66,7 @@ $(document).ready(function () {
     })
 
     // password check for login
-    $('.login-box .password-icon-div').on('click', function (e) {
+    $('.login-box .password-icon-div.login').on('click', function (e) {
         if ($(this).parent().find('input').attr('type') == 'password') {
             $(this).parent().find('input').attr('type', 'text');
         } else {
