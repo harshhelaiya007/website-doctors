@@ -1,5 +1,11 @@
 $(document).ready(function () {
 
+    var profileLogin = JSON.parse(localStorage.getItem('profileLogin'));
+
+    if (profileLogin) {
+        var profileUserEmail = profileLogin.user.user.email
+    }
+
     // air datepicker
     new AirDatepicker('#inputDob', {
         locale: {
@@ -35,16 +41,33 @@ $(document).ready(function () {
         }
     })
 
+    function validateImageSize(file) {
+        const fileSize = file[0].size / 1024; // convert to KB
+        const maxSize = 100; // 100 KB
+
+        if (fileSize > maxSize) {
+            return false; // file size is greater than 100KB
+        }
+
+        return true; // file size is less than or equal to 100KB
+    }
+
     $('#inputFile').on('input', function (e) {
         console.log(this.value);
         var file = this.files;
-        console.log(file);
-        convertToBase64(file, true).then(function (data) {
-            profileBase64 = data;
-            setImage(profileBase64);
-        }).catch(function (er) {
-            console.error(er);
-        })
+        const bool = validateImageSize(file);
+        if (bool) {
+            console.log(file);
+            convertToBase64(file, true).then(function (data) {
+                profileBase64 = data;
+                console.log(profileBase64)
+                setImage(profileBase64);
+            }).catch(function (er) {
+                console.error(er);
+            })
+        } else {
+            alert('Please Enter Image 100kb');
+        }
         // if (!e.target.value == '') {
         //     $(this).parents('.card-section-img').addClass('inputFileUpload')
         //     $(this).parent().addClass('dsp-none');
@@ -197,6 +220,7 @@ $(document).ready(function () {
     // form submit data into database
     $('.btn.submit-btn').on('click', function (e) {
 
+        let cardId = $(this).parents('.card-section').attr('data-id');
         let doctorName = $('#inputDoctorName').val();
         let userEmail = $('#inputEmail').val();
         let userRegion = $('#inputRegion').val();
@@ -205,16 +229,18 @@ $(document).ready(function () {
         let userMobileNumber = $('#inputDoctorNumber').val();
         let userImage = $('#change-img').attr('src');
 
-        const image = URL.createObjectURL(new Blob([userImage], { type: 'text/plain' }));
+        // const image = URL.createObjectURL(new Blob([userImage], { type: 'text/plain' }));
 
         axios.post('http://localhost:4001/forms', {
+            refe: profileUserEmail,
+            cardId: cardId,
             name: doctorName,
             email: userEmail,
             region: userRegion,
             hq: userHQ,
             fsoname: userFsoName,
             doctorNumber: userMobileNumber,
-            image: image,
+            image: userImage,
         })
             .then(function (response) {
                 let data = response.data;

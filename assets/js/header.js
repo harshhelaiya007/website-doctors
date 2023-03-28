@@ -1,14 +1,19 @@
 $(document).ready(function() {
 
     var profileLogin = localStorage.getItem('profileLogin');
-    if (profileLogin) {
-        profileLogin = JSON.parse(localStorage.getItem('profileLogin'));
+    profileLogin = JSON.parse(localStorage.getItem('profileLogin'));
+    if (!profileLogin == "") {
 
-        var authToken = profileLogin.token;
-        var userDetails = profileLogin.user.user;
-        var userRegion = userDetails.region;
-        var userHQ = userDetails.hq;
-        var userFsoName = userDetails.fsoname;
+        if (profileLogin.admin) {
+            $('.mobile-d-flex .nav-item').eq(1).removeClass('dsp-none');
+            $('.mobile-d-flex .nav-item').eq(2).addClass('dsp-none');
+        } else {
+            var authToken = profileLogin.token;
+            var userDetails = profileLogin.user.user;
+            var userRegion = userDetails.region;
+            var userHQ = userDetails.hq;
+            var userFsoName = userDetails.fsoname;
+        }
 
         $('.nav-item.dropdown').removeClass('dsp-none');
         $('.mobile-d-flex .nav-item:last-child').addClass('dsp-none');
