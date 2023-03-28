@@ -28,6 +28,10 @@ const doctorSchema = new Schema({
     required: true,
     unique: true
   },
+  image: {
+    data: Buffer,
+    contentType: String
+  },
   date: {
     type: Date,
     default: Date.now
