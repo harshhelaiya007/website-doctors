@@ -38,11 +38,11 @@ app.use(cors({
 // })
 
 // Routes
-const registerRoute = require('./api/register');
-const loginRoute = require('./api/login');
-const logoutRoute = require('./api/logout');
-const formRoute = require('./api/form');
-const doctorsDetails = require('./api/doctos');
+const registerRoute = require('./src/api/register');
+const loginRoute = require('./src/api/login');
+const logoutRoute = require('./src/api/logout');
+const formRoute = require('./src/api/form');
+const doctorsDetails = require('./src/api/doctos');
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
