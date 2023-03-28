@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // Make Axios GET call
-    axios.get('http://localhost:4001/doctorGet')
+    axios.get('/doctorGet')
         .then(response => {
             const data = response.data;
 

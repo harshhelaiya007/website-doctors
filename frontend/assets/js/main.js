@@ -207,7 +207,7 @@ $(document).ready(function () {
 
         const image = URL.createObjectURL(new Blob([userImage], { type: 'text/plain' }));
 
-        axios.post('http://localhost:4001/forms', {
+        axios.post('/forms', {
             name: doctorName,
             email: userEmail,
             region: userRegion,

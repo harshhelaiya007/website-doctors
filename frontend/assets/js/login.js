@@ -10,7 +10,7 @@ $(document).ready(function () {
         let userFsoname = $('#inputFSOName').val();
         let userPassword = $('#inputPassword').val();
 
-        axios.post('http://localhost:4001/register', {
+        axios.post('/register', {
             username: userName,
             email: userEmail,
             region: userRegion,
@@ -38,7 +38,7 @@ $(document).ready(function () {
         let userEmail = $('#inputEmail').val();
         let userPassword = $('#inputPassword').val();
 
-        axios.post('http://localhost:4001/login', {
+        axios.post('/login', {
             email: userEmail,
             password: userPassword
         })

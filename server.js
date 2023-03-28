@@ -32,9 +32,10 @@ app.use(cors({
 }));
 
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-})
+
+// app.get('/assets/*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'frontend','assets' ))
+// })
 
 // Routes
 const registerRoute = require('./api/register');
@@ -48,3 +49,11 @@ app.use('/logout', logoutRoute);
 app.use('/forms', formRoute);
 app.use('/doctorGet', doctorsDetails);
 app.listen(4001, () => console.log('Server running on port 3000'));
+
+
+
+app.use(express.static('frontend/'))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'index.html'))
+})

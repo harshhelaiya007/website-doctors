@@ -34,7 +34,7 @@ $(document).ready(function() {
 
     $(".dropdown-menu .dropdown-item").on('click', function(e) {
         loaderShow(true);
-        axios.post('http://localhost:4001/logout', {
+        axios.post('/logout', {
             email: userEmail,
             token: authToken
         })
