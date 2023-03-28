@@ -19,8 +19,8 @@ mongoose.connection.on('connected', connected => {
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ type: 'application/*+json' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ type: 'application/*+json', limit: '50mb' }));
 app.use(cors()); // Add CORS middleware
 
 app.use(cors({
@@ -30,6 +30,13 @@ app.use(cors({
 // Routes
 const registerRoute = require('./api/register');
 const loginRoute = require('./api/login');
+const logoutRoute = require('./api/logout');
+const formRoute = require('./api/form');
+const doctorsDetails = require('./api/doctos');
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
+app.use('/logout', logoutRoute);
+app.use('/forms', formRoute);
+app.use('/doctorGet', doctorsDetails);
+app.use('/upload', image);
 app.listen(4001, () => console.log('Server running on port 3000'));
