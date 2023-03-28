@@ -5,6 +5,7 @@
 
 .form-section.login-box {
     margin-left: 375px;
+    padding-bottom: 55px;
 }
 
 .form-group.login-form label {
@@ -29,6 +30,18 @@
 .card-section.login-box.signup {
     height: max-content;
 }
+.password-icon-div {
+    position: absolute;
+    right: 1%;
+    top: 30%;
+    z-index: 999;
+}
+
+.password-icon-eye {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
 
 /* responsive design */
 @media screen and (max-width:767px) {
@@ -47,6 +60,9 @@
     }
     .form-flex-wrapper.forget-btn-div .btn.forget-btn.btn-color {
         width: 100%;
+    }
+    .password-icon-div {
+        right: 3%;
     }
 }
 

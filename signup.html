@@ -74,7 +74,7 @@
         <div class="container">
             <div class="card-section login-box signup">
                 <h2 class="heading-title">Sign Up Form</h2>
-                <form>
+                <form method="POST" action="/api/user/register">
                     <div class="form-group login-form">
                         <label for="inputUserName">
                             <span class="input-field_label">Username<span class="input-field_required"
@@ -100,6 +100,42 @@
                         </div>
                     </div>
                     <div class="form-group login-form">
+                        <label for="inputRegion">
+                            <span class="input-field_label">Region<span class="input-field_required"
+                                    aria-hidden="true"> *</span></span>
+                            <input id="inputRegion" maxlength="40" type="text" name="fullName"
+                                aria-label="First Name First name is required." aria-required="true"
+                                value="" placeholder="" class="input-field">
+                        </label>
+                        <div class="error-msg">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="form-group login-form">
+                        <label for="inputHQ" class="email-label">
+                            <span class="input-field_label">HQ<span class="input-field_required"
+                                    aria-hidden="true"> *</span></span>
+                            <input id="inputHQ" maxlength="40" type="text" name="email"
+                                aria-label="First Name First name is required." aria-required="true"
+                                value="" placeholder="" class="input-field">
+                        </label>
+                        <div class="error-msg">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="form-group login-form">
+                        <label for="inputFSOName">
+                            <span class="input-field_label">FSO Name<span class="input-field_required"
+                                    aria-hidden="true"> *</span></span>
+                            <input id="inputFSOName" maxlength="40" type="text" name="fullName"
+                                aria-label="First Name First name is required." aria-required="true"
+                                value="" placeholder="" class="input-field">
+                        </label>
+                        <div class="error-msg">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="form-group login-form">
                         <label for="inputPassword" class="email-label">
                             <span class="input-field_label">Password<span class="input-field_required"
                                     aria-hidden="true"> *</span></span>
@@ -115,10 +151,18 @@
                             <input id="inputConfirmPassword" type="password" name="confirmPassword"
                                 aria-label="First Name First name is required." aria-required="true" value=""
                                 placeholder="" class="input-field">
+                            <div class="password-icon-div signup">
+                                <img src="/assets/image/password-icon.png" alt="password-eye-icon"
+                                    class="password-    eye">
+                            </div>
                         </label>
+                        <div class="error-msg">
+                            <p></p>
+                        </div>
                     </div>
                     <div class="d-flex form-flex-wrapper btn-div">
-                        <button type="button" class="btn btn-primary btn-lg btn-color signUp-btn" disabled>Sign Up</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-color signUp-btn" disabled>Sign
+                            Up</button>
                         <button type="button" class="btn btn-secondary btn-lg btn-color cancel-btn">Cancel</button>
                     </div>
                 </form>
@@ -134,7 +178,9 @@
 <script src="/assets/js/air-datepicker.js"></script>
 <script src="/assets/js/base64.js"></script>
 <script src="/assets/js/setImage.js"></script>
+<script src="/assets/js/header.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/axios.js"></script>
 <script src="/assets/js/login.js"></script>
 <script src="/assets/js/validation.js"></script>
 

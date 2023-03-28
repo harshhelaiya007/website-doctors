@@ -6,7 +6,8 @@ router.get('/',(req,res,next)=>{
     Signup.find()
     .then(result=>{
         res.status(200).json({
-            Signup:result
+            Signup:result,
+            message:true
         })
     })
     .catch(error=>{

@@ -231,7 +231,8 @@ textarea:focus {
 
 .main-wrapper {
     align-items: center;
-    gap: 40px;
+    /* gap: 40px; */
+    justify-content: space-between;
 }
 
 .card-section-img {

@@ -40,8 +40,6 @@ $(document).ready(function () {
         var file = this.files;
         console.log(file);
         convertToBase64(file, true).then(function (data) {
-            localStorage.setItem("profileImage", data)
-            console.log(data);
             profileBase64 = data;
             setImage(profileBase64);
         }).catch(function (er) {
@@ -59,7 +57,8 @@ $(document).ready(function () {
 
     // modal close
     $('.modal-close-btn').on('click', function () {
-        location.reload();
+        // location.reload();
+        // $('.modal-btn-click').off('click');
     })
     // modal close
 
@@ -67,14 +66,15 @@ $(document).ready(function () {
         $('input').val('');
     })
 
-
-    let btnIncreament = 18;
-    let addIncreament = $('.add-btn-div').position().top + 20;
+    var btnIncreament = 18;
+    var addIncreament = $('.add-btn-div').position().top + 20;
     $('.card-section').css('transform', 'translateY(0px)')
     // add btn click
+
     $('.add-btn-div').on('click', function (e) {
 
         $('.card-section').addClass('cloned');
+        $('.minus-btn-div').removeClass('dsp-none');
         let cloneEle;
         if ($('.card-section').length == 1) {
             cloneEle = $('.card-section').clone();
@@ -114,6 +114,9 @@ $(document).ready(function () {
             var newID = 'card-' + cardInc;
             $(this).attr('data-id', newID);
             $(this).find('.heading-title>.form-number').text(cardInc + 1)
+            $('[data-id=' + newID + '] #change-img').addClass('dsp-none')
+            $('[data-id=' + newID + '] .card-section-img').removeClass('inputFileUpload')
+            $('[data-id=' + newID + '] #change-img').attr('src', '');
             cardInc++;
         })
 
@@ -139,8 +142,10 @@ $(document).ready(function () {
 
                 if (!$(this).is(':last-child')) {
                     $('.add-btn-div').addClass('dsp-none');
+                    $('.minus-btn-div').addClass('dsp-none');
                 } else {
                     $('.add-btn-div').removeClass('dsp-none');
+                    $('.minus-btn-div').removeClass('dsp-none');
                 }
             })
         })
@@ -154,31 +159,88 @@ $(document).ready(function () {
     })
 
     // minus btn click
-    $('.minus-btn-div').on('click', function(e) {
-        
+    $('.minus-btn-div').on('click', function (e) {
+
+        addIncreament = $('.add-btn-div').position().top - 20;
+
+        $('.card-section:last-child').remove();
+        let dataIdVar = parseInt($('.card-section:last-child').attr('data-id').split('-')[1]) + 2
+
+        Array.from($('.sideBar-cardClone .select-item')).forEach(function (selectItemEle) {
+            if (dataIdVar - 1 == 1) {
+                $('.sideBar-cardClone .select-item:first-child').removeClass('active');
+                $('.add-btn-div').css('top', '70px');
+                $('.minus-btn-div').addClass('dsp-none');
+                $('.sideBar-cardClone').addClass('i-dsp-none');
+            }
+            if ($(selectItemEle).find('a').text() == dataIdVar) {
+                $(selectItemEle).remove();
+            }
+        })
+        $('.sideBar-cardClone .select-item:last-child').addClass('active');
+
+        let paddingBottomEle = parseInt($('.form-section.main').css('padding-bottom').replace('px', '')) - 10;
+        $('.form-section.main').css('padding-bottom', paddingBottomEle);
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+        if (mediaQuery.matches) {
+            $('.add-btn-div').css('top', addIncreament - 10 + 'px');
+            $('.minus-btn-div').css('top', addIncreament - 10 + 'px');
+        } else {
+            $('.add-btn-div').css('top', addIncreament + 'px');
+            $('.minus-btn-div').css('top', addIncreament + 'px');
+        }
+
+        addIncreament += 18;
+        btnIncreament -= 18;
     })
 
     // form submit data into database
-    $('.btn.submit-btn').on('click', function(e) {
+    $('.btn.submit-btn').on('click', function (e) {
 
-    fetch('http://localhost:3000/forms', {
-        method: "POST",
-        body: JSON.stringify({
-            'doctorName': $('#inputDoctorName').val(),
-            'email': $('#inputEmail').val(),
-            'dob': $('#inputDob').val(),
-            'region': $('#inputRegion').val(),
-            'hq': $('#inputHQ').val(),
-            'fsoName': $('#inputFSOName').val(),
-            'doctorNumber': $('#inputDoctorNumber').val(),
-            'doctorImage': $('#change-img').attr('src'),
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    })
-    .then(response => response.json())
-    .then(json => console.log(json));
+        let doctorName = $('#inputDoctorName').val();
+        let userEmail = $('#inputEmail').val();
+        let userRegion = $('#inputRegion').val();
+        let userHQ = $('#inputHQ').val();
+        let userFsoName = $('#inputFSOName').val();
+        let userMobileNumber = $('#inputDoctorNumber').val();
+        let userImage = $('#change-img').attr('src');
+
+        const image = URL.createObjectURL(new Blob([userImage], { type: 'text/plain' }));
+
+        axios.post('http://localhost:4001/forms', {
+            name: doctorName,
+            email: userEmail,
+            region: userRegion,
+            hq: userHQ,
+            fsoname: userFsoName,
+            doctorNumber: userMobileNumber,
+            image: image,
+        })
+            .then(function (response) {
+                let data = response.data;
+                if (data.data == 'successfully data saved') {
+                    loaderShow(false);
+                    alert(data.data);
+                } else {
+                    alert(error);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     })
 
 })
+
+
+function loaderShow(bool) {
+    if (bool) {
+        $('.navbar.navbar-expand-lg').addClass('dsp-none');
+        $('.form-section').addClass('dsp-none');
+        $('.lds-dual-ring').addClass('active');
+    } else {
+        $('.navbar.navbar-expand-lg').removeClass('dsp-none');
+        $('.form-section').removeClass('dsp-none');
+        $('.lds-dual-ring').removeClass('active');
+    }
+}
