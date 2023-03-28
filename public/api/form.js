@@ -20,22 +20,7 @@ router.post('/', [
     }
 
     // Extract doctor input from request body
-    const { name, email, region, hq, fsoname, doctorNumber } = req.body;
-
-    function blobToBuffer(blob) {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.onload = (event) => {
-                const arrayBuffer = event.target.result;
-                const buffer = Buffer.from(arrayBuffer);
-                resolve(buffer);
-            };
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-            fileReader.readAsArrayBuffer(blob);
-        });
-    }
+    const { name, email, region, hq, fsoname, doctorNumber, image } = req.body;
 
     try {
         // Check if doctor with given email exists
@@ -52,6 +37,7 @@ router.post('/', [
             hq,
             fsoname,
             doctorNumber,
+            image
         });
         console.log(doctor)
         // Save new doctor to database

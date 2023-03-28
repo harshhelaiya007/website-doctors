@@ -29,8 +29,7 @@ const doctorSchema = new Schema({
     unique: true
   },
   image: {
-    data: Buffer,
-    contentType: String
+    type: String
   },
   date: {
     type: Date,
