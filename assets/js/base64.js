@@ -7,13 +7,13 @@ function convertToBase64(files, skipMetadata) {
     return Promise.reject("Invalid file array");
   }
 
-  function truncateMetadata(base64String) {
-    if (skipMetadata === true) {
-      var base64StrArr = base64String.split("base64,");
-      return base64StrArr.length > 1 ? base64StrArr[1] : "";
-    }
-    return base64String;
-  }
+  // function truncateMetadata(base64String) {
+  //   if (skipMetadata === true) {
+  //     var base64StrArr = base64String.split("base64,");
+  //     return base64StrArr.length > 1 ? base64StrArr[1] : "";
+  //   }
+  //   return base64String;
+  // }
 
   return Promise.all(
     files.map(async (file) => {
@@ -24,7 +24,7 @@ function convertToBase64(files, skipMetadata) {
           resolve(reader.result);
         };
       });
-      return truncateMetadata(dataUrl);
+      return (dataUrl);
     })
   );
 }

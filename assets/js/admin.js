@@ -3,7 +3,6 @@ $(document).ready(function () {
     axios.get('http://localhost:4001/doctorGet')
         .then(response => {
             const data = response.data;
-
             console.log(data);
 
             // Initialize DataTable

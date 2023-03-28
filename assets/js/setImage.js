@@ -2,8 +2,7 @@ console.log('setImage.js');
 
 function setImage(val) {
     if (val && val != "undefined") {
-        var img = 'data:image/jpeg;base64,' + val + '';
-        $('.modal-body .photo-upload-img').attr('src', img).removeClass('dsp-none');
+        $('.modal-body .photo-upload-img').attr('src', val).removeClass('dsp-none');
         // cropper js
         let doctorImage = $('#cropperjs')[0];
         cropper = new Cropper(doctorImage, {
