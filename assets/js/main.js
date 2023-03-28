@@ -41,6 +41,7 @@ $(document).ready(function () {
         console.log(file);
         convertToBase64(file, true).then(function (data) {
             profileBase64 = data;
+            console.log(profileBase64)
             setImage(profileBase64);
         }).catch(function (er) {
             console.error(er);

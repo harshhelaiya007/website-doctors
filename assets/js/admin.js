@@ -5,6 +5,7 @@ $(document).ready(function () {
             const data = response.data;
 
             console.log(data);
+
             // Initialize DataTable
             const dataTable = $('#data-table').DataTable({
                 data: data,
