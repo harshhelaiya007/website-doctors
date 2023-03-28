@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const path = require('path');
-const fs = require("fs");
 const multer = require("multer");
 const Doctor = require('../model/forms');
 
@@ -10,17 +8,17 @@ const Doctor = require('../model/forms');
 // SET STORAGE
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads')
+        cb(null, 'uploads')
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
+        cb(null, file.fieldname + '-' + Date.now())
     }
-  })
- 
+})
+
 var upload = multer({ storage: storage })
 
 // Define doctor creation endpoint
-router.post('/', upload.single('myImage'),[
+router.post('/', upload.single('myImage'), [
     // Validate user input
     check('name', 'Please enter the doctor name').notEmpty(),
     check('email', 'Please enter a valid email').isEmail(),
@@ -56,7 +54,6 @@ router.post('/', upload.single('myImage'),[
             doctorNumber,
             image
         });
-        console.log(doctor)
         // Save new doctor to database
         await doctor.save();
 
