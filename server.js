@@ -6,6 +6,10 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 dotenv.config();
 
+const path = require('path');
+
+
+
 // Connect to database
 mongoose.connect('mongodb+srv://harshhelaiya5:Justin%40007@cluster0.eyqbbzz.mongodb.net/?retryWrites=true&w=majority');
 
@@ -26,6 +30,11 @@ app.use(cors()); // Add CORS middleware
 app.use(cors({
     origin: '*'
 }));
+
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+})
 
 // Routes
 const registerRoute = require('./api/register');
