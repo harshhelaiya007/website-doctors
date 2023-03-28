@@ -48,7 +48,7 @@ app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
 app.use('/forms', formRoute);
 app.use('/doctorGet', doctorsDetails);
-app.listen(4001, () => console.log('Server running on port 3000'));
+app.listen(80, () => console.log('Server running on port 80'));
 
 
 
