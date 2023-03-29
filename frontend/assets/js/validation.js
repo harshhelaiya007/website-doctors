@@ -141,11 +141,15 @@ $('#inputDoctorNumber').on('input blur', function (e) {
 // img
 // $('#inputFile').on('click', function (e) {
 //     let inputValue = e.target.value;
+//     const fileSize = inputValue.size / 1024; // convert to KB
+//     const maxSize = 100; // 100 KB
 //     buttonDisable($(this));
-//     if (!$('#change-img').attr('src') == '') {
-//         showSuccess($(this))
-//     } else {
+//     if (fileSize > maxSize) {
 //         showError($(this), 'Doctors Photo is Required', 'Please Select Doctors Photo.');
+//         return false; // file size is greater than 100KB
+//     } else {
+//         showSuccess($(this))
+
 //     }
 // })
 
@@ -160,7 +164,7 @@ $('#inputPassword, #inputConfirmPassword').on('input blur keyup', function (e) {
         } else {
             showError($('#inputPassword'), 'Password Mismatch', 'Password Mismatch')
             showError($('#inputConfirmPassword'), 'Password Mismatch', 'Password Mismatch');
-        }   
+        }
     }
 })
 

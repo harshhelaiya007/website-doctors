@@ -438,6 +438,9 @@ label.file-label {
     .add-btn-div {
         left: 25px;
     }
+    .minus-btn-div {
+        right: -240px;
+    }
     .main-wrapper {
         flex-direction: column;
         gap: 0;

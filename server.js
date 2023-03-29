@@ -23,8 +23,8 @@ mongoose.connection.on('connected', connected => {
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
-app.use(bodyParser.json({ type: 'application/*+json', limit: '50mb' }));
+app.use(bodyParser.json({ type: 'application/*+json', limit: '150mb' }));
+app.use(bodyParser.urlencoded({limit: '150mb',extended: true}));
 app.use(cors()); // Add CORS middleware
 
 app.use(cors({
