@@ -24,7 +24,7 @@ mongoose.connection.on('connected', connected => {
 // Middleware
 app.use(express.json());
 app.use(bodyParser.json({ type: 'application/*+json', limit: '150mb' }));
-app.use(bodyParser.urlencoded({limit: '150mb',extended: true}));
+app.use(bodyParser.urlencoded({ limit: '150mb', extended: true }));
 app.use(cors()); // Add CORS middleware
 
 app.use(cors({
@@ -36,6 +36,17 @@ app.use(cors({
 // app.get('/assets/*', (req, res) => {
 //     res.sendFile(path.resolve(__dirname, 'frontend','assets' ))
 // })
+
+// Serve the login page as the default route
+app.use(express.static('frontend/'))
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'login.html'));
+});
+
+// Handle requests that don't match any route
+app.use((req, res, next) => {
+    res.status(404).send('404 - Page not found');
+});
 
 // Routes
 const registerRoute = require('./src/api/register');
@@ -52,8 +63,8 @@ app.listen(80, () => console.log('Server running on port 80'));
 
 
 
-app.use(express.static('frontend/'))
+// app.use(express.static('frontend/'))
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'login.html'))
-})
+// app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(__dirname, 'frontend', 'login.html'))
+// })
