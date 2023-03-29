@@ -21,7 +21,7 @@ $(document).ready(function () {
         $('.mobile-d-flex .nav-item').eq(0).removeClass('dsp-none');
     } else {
         window.location.href.split('/').forEach(function(ele) {
-            if (ele == 'index.html' || ele == 'admin.html' || ele == "") {
+            if (ele == 'index.html' || ele == 'admin.html') {
                 window.open('./login.html','_self')
             }
             else {
