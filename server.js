@@ -55,5 +55,5 @@ app.listen(80, () => console.log('Server running on port 80'));
 app.use(express.static('frontend/'))
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'index.html'))
+    res.sendFile(path.resolve(__dirname, 'frontend', 'login.html'))
 })
