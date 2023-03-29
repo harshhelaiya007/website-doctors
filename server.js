@@ -43,11 +43,6 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'login.html'));
 });
 
-// Handle requests that don't match any route
-app.use((req, res, next) => {
-    res.status(404).send('404 - Page not found');
-});
-
 // Routes
 const registerRoute = require('./src/api/register');
 const loginRoute = require('./src/api/login');
