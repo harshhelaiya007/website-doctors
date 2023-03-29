@@ -9,6 +9,7 @@ $(document).ready(function () {
             const dataTable = $('#data-table').DataTable({
                 data: data,
                 columns: [
+                    { data: 'refe' },
                     { data: 'name' },
                     { data: 'email' },
                     { data: 'region' },
