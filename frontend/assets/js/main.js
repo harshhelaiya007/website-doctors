@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-    var profileLogin = JSON.parse(localStorage.getItem('profileLogin'));
-
+    
     if (profileLogin) {
+        var profileLogin = JSON.parse(localStorage.getItem('profileLogin'));
         var profileUserEmail = profileLogin.user.user.email
     }
 

@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
     var profileLogin = localStorage.getItem('profileLogin');
-    profileLogin = JSON.parse(localStorage.getItem('profileLogin'));
-
+    
     if (!profileLogin == "") {
-
+        profileLogin = JSON.parse(localStorage.getItem('profileLogin'));
+        
         if (profileLogin.admin) {
             $('.mobile-d-flex .nav-item').eq(1).removeClass('dsp-none');
             $('.mobile-d-flex .nav-item').eq(2).addClass('dsp-none');
@@ -20,11 +20,14 @@ $(document).ready(function () {
         $('.mobile-d-flex .nav-item:last-child').addClass('dsp-none');
         $('.mobile-d-flex .nav-item').eq(0).removeClass('dsp-none');
     } else {
-        if (window. location. href.split('/')[3] == 'index.html') {
-            window.open('/login.html','_self')
-        } else {
-            window.open('','_self');
-        }
+        window.location.href.split('/').forEach(function(ele) {
+            if (ele == 'index.html' || ele == 'admin.html') {
+                window.open('./login.html','_self')
+            }
+            else {
+                window.open('','_self');
+            }
+        })
         console.log('Not Login Try Again');
         $('.nav-item.dropdown').addClass('dsp-none');
         $('.mobile-d-flex .nav-item').eq(0).addClass('dsp-none');
