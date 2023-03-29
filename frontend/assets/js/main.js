@@ -232,6 +232,8 @@ $(document).ready(function () {
         // const image = URL.createObjectURL(new Blob([userImage], { type: 'text/plain' }));
 
         axios.post('/forms', {
+            cardId: cardId,
+            refe: profileUserEmail,
             name: doctorName,
             email: userEmail,
             region: userRegion,
