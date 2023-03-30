@@ -24,7 +24,7 @@ function Input({ inputId, labelClassName, labelText, changeEvent, parentWrapperC
     }
 
     return (
-        <div className={`form-group ${parentWrapperClass}`}>
+        <div className={`form-group ${parentWrapperClass ? parentWrapperClass : ''}`}>
             <label htmlFor={inputId} className={labelClassName}>
                 <span className={`input-field_label ${isInputActive ? 'input-focus input-active' : ''}`}>{labelText}<span className="input-field_required"
                     aria-hidden="true"> *</span></span>

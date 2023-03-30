@@ -1,4 +1,4 @@
-import { React, ReactDOM } from "react";
+import { React } from "react";
 import { Link } from "react-router-dom";
 import 'jquery'
 import 'bootstrap';
@@ -15,7 +15,7 @@ function Header() {
             <div className="container">
                 <ul className="navbar-nav mr-auto">
                     <div className="mobile-wrapper-nav-icon">
-                        <Link to='/' className="navbar-brand">Doctor/Name</Link>
+                        <Link to='/Home' className="navbar-brand">Doctor/Name</Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
                             <span className="navbar-toggler-icon"></span>

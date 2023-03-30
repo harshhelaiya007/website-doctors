@@ -19,7 +19,7 @@ function Signup() {
                             <Input inputId={'inputPassword'} type="password" name="password" labelClassName={''} labelText={'Password'} parentWrapperClass={'login-form'} />
                             <Input inputId={'inputConfirmPassword'} type="password" name="confirmPassword" labelClassName={''} labelText={'Confirm Password'} parentWrapperClass={'login-form'} />
                             <div className="d-flex form-flex-wrapper btn-div jus-center">
-                                <Button className="btn btn-primary btn-lg btn-color signUp-btn" type="button" btnText={'Sign Up'} />
+                                <Button className="btn btn-primary btn-lg btn-color signUp-btn" type="button" btnText={'Sign Up'} disabled/>
                                 <Button className="btn btn-secondary btn-lg btn-color cancel-btn" type="button" btnText={'Cancel'} />
                             </div>
                         </form>

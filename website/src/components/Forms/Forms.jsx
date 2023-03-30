@@ -1,58 +1,70 @@
 import { React, useState } from 'react'
 import './Forms.css'
-import Input from '../Input/Input'
 import { Link } from 'react-router-dom'
-import Button from '../Button/Button'
+import Card from '../Card/Card'
 
 function Forms() {
+
+    const [cardSections, setCardSections] = useState([{ id: 0 }]);
+    const [activeSection, setActiveSection] = useState(cardSections[0]);
+    let [cardTranslate, setcardTranslate] = useState(0);
+
+    const handleAddSection = () => {
+        const newSection = { id: cardSections.length };
+        setCardSections([...cardSections, newSection]);
+        setActiveSection(newSection);
+        setcardTranslate(cardTranslate += 18);
+    };
+
+    const handleSelectSection = (section) => {
+        setActiveSection(section);
+    };
+
+    const handleRemoveSection = (sectionId) => {
+        const updatedSections = cardSections.filter((section) => section.id !== sectionId);
+        setCardSections(updatedSections);
+        if (activeSection.id === sectionId) {
+            setActiveSection(updatedSections[0]);
+        }
+    };
 
     return (
         <div>
             {/* <!-- Form Section start here --> */}
             <section className="form-section main">
                 <div className="form-section-inner">
-                    <div className="add-btn-div">
+                    <div className="add-btn-div" onClick={handleAddSection}>
                         <img src="./assets/image/add-btn.png" alt="Add Button" className="add-btn" />
                     </div>
-                    <div className="minus-btn-div dsp-none">
+                    <div className={`minus-btn-div ${cardSections.length > 1 ? '' : 'dsp-none'}`} onClick={handleRemoveSection}>
                         <img src="./assets/image/minus-btn.png" alt="Minus Button" className="minus-btn" />
                     </div>
-                    <div className="sideBar-cardClone i-dsp-none">
-                        <div className="select-item">
-                            <Link to={''}>1</Link>
-                        </div>
+                    <div className="sideBar-cardClone">
+                        {cardSections.map((section) => (
+                            <div key={section.id} className="select-item" onClick={() => handleSelectSection(section)}>
+                                <Link to=''>{section.id + 1}</Link>
+                            </div>
+                        ))}
                     </div>
                     <div className="container card-section-wrapper">
-                        <div className="card-section" data-id="card-0">
-                            <h2 className="heading-title">Doctors Details Form <span className="form-number"></span></h2>
-                            <form>
-                                <div className="d-flex main-wrapper">
-                                    <div className="left-side-wrapper">
-                                        <div className="d-flex form-flex-wrapper">
-                                            <Input inputId={'inputDoctorName'} type="text" name="fullName" labelText={'Doctor Name'} />
-                                            <Input inputId={'inputEmail'} type="text" name="email" labelClassName={'email-label'} labelText={'Email'} />
-                                        </div>
-                                        <div className="d-flex form-flex-wrapper">
-                                            <Input inputId={'inputRegion'} type="text" name="region" labelText={'Region'} />
-                                            <Input inputId={'inputHQ'} type="text" name="hq" labelClassName={'email-label'} labelText={'HQ'} />
-                                        </div>
-                                        <div className="d-flex form-flex-wrapper">
-                                            <Input inputId={'inputFSOName'} type="text" name="fsoName" labelText={'FSO Name'} />
-                                            <Input inputId={'inputDoctorNumber'} type="text" name="doctorNumber" labelClassName={'email-label'} labelText={'Doctors Number'} />
-                                        </div>
-                                        <div className="d-flex form-flex-wrapper btn-div">
-                                            <Button className="btn btn-primary btn-lg btn-color submit-btn" type="button" btnText={'Submit'} />
-                                            <Button className="btn btn-secondary btn-lg btn-color cancel-btn" type="button" btnText={'Cancel'} />
-                                        </div>
-                                    </div>
-                                    <div className="right-side-wrapper">
-                                        <div className="card-section-img">
-                                            <Input inputId={'inputFile'} type="file" accept="image/png, image/jpg, image/jpeg" name="inputImage" labelClassName={'file-label'} labelText={'Upload Doctor Photo'} hidden />
-                                        </div>
-                                    </div>
+                        {cardSections.map((section) => (
+                            <div
+                                style={{ transform: `translateY(${0}px)` }}
+                                key={section.id}
+                                className={`card-section ${section.id > 0 ? 'cloned' : ''}`}
+                                data-id={`card-${section.id}`}
+                            >
+                                <div className="heading-title">
+                                    <h2>
+                                        Doctors Details Form <span className="form-number">{section.id + 1}</span>
+                                    </h2>
                                 </div>
-                            </form>
-                        </div>
+                                <div className="card-section-body">
+                                    {/* Render input fields here */}
+                                    <Card />
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
