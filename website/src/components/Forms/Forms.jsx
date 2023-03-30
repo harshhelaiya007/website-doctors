@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import "./Forms.css";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
@@ -30,69 +30,75 @@ function Forms() {
   };
 
   return (
-    <div className="form-section main">
-      <div className="form-section-inner">
-        <div className={`sideBar-cardClone ${activeCard > 0 ? '' : 'dsp-none'}`}>
-          {cardPositions.map((position, index) => (
-            <div
-              key={index}
-              className={`select-item ${index === activeCard ? "active" : ""}`}
-              onClick={() => handleSidebarClick(index)}
-            >
-              <Link to="#">{index + 1}</Link>
-            </div>
-          ))}
-        </div>
-        <div className="container card-section-wrapper">
-          {cardPositions.map((position, index) => (
-            <div
-              key={`card-${position}`}
-              className={`card-section ${index > 0 ? "cloned" : ""} ${
-                index === 0 ? "first-ele" : ""
-              } ${activeCard == index ? "comesForward" : ""}`}
-              style={{ transform: `translateY(${position}px)` }}
-              id={index}
-            >
-              <div className="btn-wrapper">
-                <div
-                  className="add-btn-div"
-                  key={`add-${index}`}
-                  onClick={addCard}
-                >
-                  <img
-                    src="./assets/image/add-btn.png"
-                    alt="Add Button"
-                    className="add-btn"
-                  />
+    <>
+      <div className="form-section main">
+        <div className="form-section-inner">
+          <div className="sideBar-cardClone">
+            {cardPositions.map((position, index) => (
+              <div
+                key={index}
+                className={`select-item ${
+                  index === activeCard ? "active" : ""
+                }`}
+                onClick={() => handleSidebarClick(index)}
+              >
+                <Link to="#">{index + 1}</Link>
+              </div>
+            ))}
+          </div>
+          <div className="container card-section-wrapper">
+            {cardPositions.map((position, index) => (
+              <div
+                key={`card-${position}`}
+                className={`card-section ${index > 0 ? "cloned" : ""} ${
+                  index === 0 ? "first-ele" : ""
+                } ${activeCard == index ? "comesForward" : ""}`}
+                style={{ transform: `translateY(${position}px)` }}
+                id={index}
+              >
+                <div className="btn-wrapper">
+                  <div
+                    className="add-btn-div"
+                    key={`add-${index}`}
+                    onClick={addCard}
+                  >
+                    <img
+                      src="./assets/image/add-btn.png"
+                      alt="Add Button"
+                      className="add-btn"
+                    />
+                  </div>
+                  <div
+                    className={`minus-btn-div${
+                      cardCount > 1 ? "" : " dsp-none"
+                    }`}
+                    key={`minus-${index}`}
+                    onClick={removeCard}
+                  >
+                    <img
+                      src="./assets/image/minus-btn.png"
+                      alt="Minus Button"
+                      className="minus-btn"
+                    />
+                  </div>
                 </div>
-                <div
-                  className={`minus-btn-div${cardCount > 1 ? "" : " dsp-none"}`}
-                  key={`minus-${index}`}
-                  onClick={removeCard}
-                >
-                  <img
-                    src="./assets/image/minus-btn.png"
-                    alt="Minus Button"
-                    className="minus-btn"
-                  />
+                {/* Card content goes here */}
+                <div className="heading-title">
+                  <h2>
+                    Doctors Details Form{" "}
+                    <span className="form-number">{index + 1}</span>
+                  </h2>
+                </div>
+                <div className="card-section-body">
+                  {/* Render input fields here */}
+                  <Card />
                 </div>
               </div>
-              {/* Card content goes here */}
-              <div className="heading-title">
-                <h2>
-                  Doctors Details Form{" "}
-                  <span className="form-number">{index + 1}</span>
-                </h2>
-              </div>
-              <div className="card-section-body">
-                {/* Render input fields here */}
-                <Card />
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

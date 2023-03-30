@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from '../Button/Button'
+import Button from '../Button/Button';
 
 function Model() {
     return (
-        <div>
+        <div className='model-wrapper'>
             <Button type="button" className="btn btn-primary modal-btn-click" data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop" hidden />
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1"
