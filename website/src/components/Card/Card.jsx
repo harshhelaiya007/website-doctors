@@ -9,7 +9,6 @@ function Card() {
     const [number, setNumber] = useState('');
     const [region, setRegion] = useState('');
     const [hq, setHq] = useState('');
-    const [cardInc, setcardInc] = useState(0);
 
     const showSuccess = (inputEle) => {
         inputEle.parentNode.parentNode.classList.add('valid');
@@ -140,7 +139,7 @@ function Card() {
                     </div>
                     <div className="d-flex form-flex-wrapper btn-div">
                         <Button className="btn btn-primary btn-lg btn-color submit-btn" type="button" btnText={'Submit'} disabled />
-                        <Button className="btn btn-secondary btn-lg btn-color cancel-btn" type="button" btnText={'Cancel'} />
+                        <Button className="btn btn-secondary btn-lg btn-color cancel-btn" type="reset" btnText={'Cancel'} />
                     </div>
                 </div>
                 <div className="right-side-wrapper">

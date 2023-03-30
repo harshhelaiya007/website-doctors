@@ -6,6 +6,7 @@
 
 .card-section-wrapper {
     width: 1319px;
+    border-radius: 32px;
 }
 
 .form-section .form-section-inner {
@@ -23,16 +24,16 @@
 
 .add-btn-div {
     position: absolute;
-    top: 70px;
-    left: 100px;
+    top: 20px;
+    left: 40px;
     cursor: pointer;
     z-index: 999;
 }
 
 .minus-btn-div {
     position: absolute;
-    top: 70px;
-    right: 0;
+    top: 20px;
+    right: 40px;
     cursor: pointer;
     z-index: 999;
 }
@@ -45,6 +46,9 @@
     border-radius: 32px;
     padding: 35px;
     transform-origin: center top;
+}
+.card-section.first-ele {
+    position: absolute;
 }
 
 .heading-title {
