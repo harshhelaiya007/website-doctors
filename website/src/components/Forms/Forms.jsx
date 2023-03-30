@@ -52,7 +52,7 @@ function Forms() {
                 key={`card-${position}`}
                 className={`card-section ${index > 0 ? "cloned" : ""} ${
                   index === 0 ? "first-ele" : ""
-                } ${activeCard == index ? "comesForward" : ""}`}
+                }`}
                 style={{ transform: `translateY(${position}px)` }}
                 id={index}
               >
