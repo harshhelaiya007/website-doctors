@@ -32,7 +32,7 @@ function Forms() {
   return (
     <div className="form-section main">
       <div className="form-section-inner">
-        <div className="sideBar-cardClone">
+        <div className={`sideBar-cardClone ${activeCard > 0 ? '' : 'dsp-none'}`}>
           {cardPositions.map((position, index) => (
             <div
               key={index}
