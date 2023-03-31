@@ -1,12 +1,12 @@
 import React from "react";
 import "./Photo.css";
 
-function Photo({ UploadImage, uploadClick }) {
+function Photo({ UploadImage }) {
   return (
     <div className="image-section">
       <img
-        src=''
-        className={`${!UploadImage ? "dsp-none" : ""}`}
+        src={`${UploadImage ? UploadImage : ""}`}
+        className={`photo-upload-img ${!UploadImage ? "dsp-none" : ""}`}
         alt="doctor-profile"
       />
     </div>

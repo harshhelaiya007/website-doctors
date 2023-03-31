@@ -1,16 +1,17 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useRef } from "react";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Photo from "../Photo/Photo";
 import ModelImageContext from "../Context/ModelImageContext";
 
 function Card({ keyId }) {
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
-  const { setImage } = useContext(ModelImageContext);
+  const { setImage, croppedImage } = useContext(ModelImageContext);
 
   const showSuccess = (inputEle) => {
     inputEle.parentNode.parentNode.classList.add("valid");
@@ -138,7 +139,7 @@ function Card({ keyId }) {
       convertToBase64(file, true)
         .then((data) => {
           setImage(data);
-          document.getElementById("clickMe").click();
+          openModelImage();
         })
         .catch((error) => {
           console.error(error);
@@ -146,6 +147,10 @@ function Card({ keyId }) {
     } else {
       alert("Please upload an image of size less than or equal to 100KB");
     }
+  };
+
+  const openModelImage = () => {
+    document.getElementById("clickMe").click();
   };
 
   const validateImageSize = (files) => {
@@ -158,7 +163,9 @@ function Card({ keyId }) {
       const file = files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
+      reader.onload = () => {
+        resolve(reader.result);
+      };
       reader.onerror = (error) => reject(error);
     });
   };
@@ -235,7 +242,11 @@ function Card({ keyId }) {
             </div>
           </div>
           <div className="right-side-wrapper">
-            <div className="card-section-img">
+            <div
+              className={`card-section-img ${
+                croppedImage ? "inputFileUpload" : ""
+              }`}
+            >
               <Input
                 inputId={`inputFile-${keyId}`}
                 type="file"
@@ -246,7 +257,7 @@ function Card({ keyId }) {
                 changeEvent={handleInputChange}
                 hidden
               />
-              <Photo UploadImage={""} />
+              <Photo UploadImage={croppedImage} key={keyId}/>
             </div>
           </div>
         </div>

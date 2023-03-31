@@ -1,8 +1,13 @@
-import React from "react";
+import { React, useState, useRef } from "react";
 import Button from "../Button/Button";
 
-function Model({ uploadImageData }) {
-  console.log(uploadImageData);
+function Model({ uploadImageData, onImageLoadCropper, imageRef }) {
+  const saveBtnHandleClick = () => {
+    document.getElementById("staticBackdrop").style.display = "none";
+    document.querySelector("body").classList.remove("modal-open");
+    document.querySelector(".modal-backdrop.fade.show").remove();
+    document.querySelector("body").removeAttribute("style");
+  };
 
   return (
     <div className="model-wrapper">
@@ -42,6 +47,8 @@ function Model({ uploadImageData }) {
                 alt="doctors photos upload"
                 className="photo-upload-img dsp-none"
                 id="cropperjs"
+                ref={imageRef}
+                onLoad={onImageLoadCropper}
               />
             </div>
             <div className="modal-footer">
@@ -55,6 +62,7 @@ function Model({ uploadImageData }) {
                 type="button"
                 className="btn btn-primary btn-color save-btn"
                 btnText={"Save"}
+                onClick={saveBtnHandleClick}
               />
             </div>
           </div>

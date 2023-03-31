@@ -1,9 +1,11 @@
-import { React, useState } from "react";
+import { React, useState, useRef } from "react";
 import "./Forms.css";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import ModelImageContext from "../Context/ModelImageContext";
 import Model from "../Model/Model";
+import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.css";
 
 function Forms() {
   const [cardPositions, setCardPositions] = useState([0]);
@@ -11,6 +13,9 @@ function Forms() {
   const [activeCard, setActiveCard] = useState(0);
 
   const [image, setImage] = useState(null);
+
+  const [croppedImage, setCroppedImage] = useState(null);
+  const imageRef = useRef(null);
 
   const addCard = () => {
     const newPosition = cardPositions[cardPositions.length - 1] + 18;
@@ -31,6 +36,33 @@ function Forms() {
 
   const handleSidebarClick = (index) => {
     setActiveCard(index);
+  };
+
+  const cropperOptions = {
+    aspectRatio: 16 / 9,
+    width: 328,
+    height: 399,
+    viewMode: 0,
+    minContainerWidth: 618,
+    minContainerHeight: 458,
+    minCanvasWidth: 618,
+    minCanvasHeight: 458,
+    minCropBoxWidth: 100,
+    minCropBoxHeight: 100,
+    background: true,
+    movable: true,
+    zoomable: false,
+    cropBoxResizable: true,
+    crop: () => {
+      const canvas = cropper.getCroppedCanvas();
+      setCroppedImage(canvas.toDataURL());
+    },
+  };
+
+  let cropper;
+
+  const onImageLoaded = (event) => {
+    cropper = new Cropper(event.target, cropperOptions);
   };
 
   return (
@@ -97,7 +129,9 @@ function Forms() {
                 </div>
                 <div className="card-section-body">
                   {/* Render input fields here */}
-                  <ModelImageContext.Provider value={{ image, setImage }}>
+                  <ModelImageContext.Provider
+                    value={{ image, setImage, croppedImage }}
+                  >
                     <Card keyId={index + 1} key={index} />
                   </ModelImageContext.Provider>
                 </div>
@@ -106,7 +140,11 @@ function Forms() {
           </div>
         </div>
       </div>
-      <Model uploadImageData={image}/>
+      <Model
+        uploadImageData={image}
+        modelRef={imageRef}
+        onImageLoadCropper={onImageLoaded}
+      />
     </>
   );
 }
