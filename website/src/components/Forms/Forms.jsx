@@ -1,12 +1,16 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import "./Forms.css";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
+import ModelImageContext from "../Context/ModelImageContext";
+import Model from "../Model/Model";
 
 function Forms() {
   const [cardPositions, setCardPositions] = useState([0]);
   const [cardCount, setCardCount] = useState(1);
   const [activeCard, setActiveCard] = useState(0);
+
+  const [image, setImage] = useState(null);
 
   const addCard = () => {
     const newPosition = cardPositions[cardPositions.length - 1] + 18;
@@ -93,13 +97,16 @@ function Forms() {
                 </div>
                 <div className="card-section-body">
                   {/* Render input fields here */}
-                  <Card keyId={index + 1} key={index} />
+                  <ModelImageContext.Provider value={{ image, setImage }}>
+                    <Card keyId={index + 1} key={index} />
+                  </ModelImageContext.Provider>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+      <Model uploadImageData={image}/>
     </>
   );
 }

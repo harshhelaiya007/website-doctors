@@ -1,6 +1,8 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useContext } from "react";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
+import Photo from "../Photo/Photo";
+import ModelImageContext from "../Context/ModelImageContext";
 
 function Card({ keyId }) {
   const [name, setName] = useState("");
@@ -8,7 +10,7 @@ function Card({ keyId }) {
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
-  const [image, setImage] = useState(null);
+  const { setImage } = useContext(ModelImageContext);
 
   const showSuccess = (inputEle) => {
     inputEle.parentNode.parentNode.classList.add("valid");
@@ -136,6 +138,7 @@ function Card({ keyId }) {
       convertToBase64(file, true)
         .then((data) => {
           setImage(data);
+          document.getElementById("clickMe").click();
         })
         .catch((error) => {
           console.error(error);
@@ -161,91 +164,94 @@ function Card({ keyId }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="d-flex main-wrapper">
-        <div className="left-side-wrapper">
-          <div className="d-flex form-flex-wrapper">
-            <Input
-              inputId={`inputDoctorName-${keyId}`}
-              type="text"
-              name={`fullName-${keyId}`}
-              labelText={"Doctor Name"}
-              changeEvent={handleName}
-            />
-            <Input
-              inputId={`inputEmail-${keyId}`}
-              type="text"
-              name={`email${keyId}`}
-              labelClassName={"email-label"}
-              labelText={"Email"}
-              changeEvent={handleEmail}
-            />
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className="d-flex main-wrapper">
+          <div className="left-side-wrapper">
+            <div className="d-flex form-flex-wrapper">
+              <Input
+                inputId={`inputDoctorName-${keyId}`}
+                type="text"
+                name={`fullName-${keyId}`}
+                labelText={"Doctor Name"}
+                changeEvent={handleName}
+              />
+              <Input
+                inputId={`inputEmail-${keyId}`}
+                type="text"
+                name={`email${keyId}`}
+                labelClassName={"email-label"}
+                labelText={"Email"}
+                changeEvent={handleEmail}
+              />
+            </div>
+            <div className="d-flex form-flex-wrapper">
+              <Input
+                inputId={`inputRegion-${keyId}`}
+                type="text"
+                name={`region-${keyId}`}
+                labelText={"Region"}
+                changeEvent={handleRegion}
+              />
+              <Input
+                inputId={`inputHQ-${keyId}`}
+                type="text"
+                name={`hq-${keyId}`}
+                labelClassName={"email-label"}
+                labelText={"HQ"}
+                changeEvent={handleHq}
+              />
+            </div>
+            <div className="d-flex form-flex-wrapper">
+              <Input
+                inputId={`inputFSOName-${keyId}`}
+                type="text"
+                name={`fsoName-${keyId}`}
+                labelText={"FSO Name"}
+                changeEvent={handleName}
+              />
+              <Input
+                inputId={`inputDoctorNumber-${keyId}`}
+                type="text"
+                name={`doctorNumber-${keyId}`}
+                labelClassName={"email-label"}
+                labelText={"Doctors Number"}
+                changeEvent={handleNumber}
+                maxLength="10"
+              />
+            </div>
+            <div className="d-flex form-flex-wrapper btn-div">
+              <Button
+                className="btn btn-primary btn-lg btn-color submit-btn"
+                type="button"
+                btnText={"Submit"}
+                disabled
+              />
+              <Button
+                className="btn btn-secondary btn-lg btn-color cancel-btn"
+                type="reset"
+                btnText={"Cancel"}
+              />
+            </div>
           </div>
-          <div className="d-flex form-flex-wrapper">
-            <Input
-              inputId={`inputRegion-${keyId}`}
-              type="text"
-              name={`region-${keyId}`}
-              labelText={"Region"}
-              changeEvent={handleRegion}
-            />
-            <Input
-              inputId={`inputHQ-${keyId}`}
-              type="text"
-              name={`hq-${keyId}`}
-              labelClassName={"email-label"}
-              labelText={"HQ"}
-              changeEvent={handleHq}
-            />
-          </div>
-          <div className="d-flex form-flex-wrapper">
-            <Input
-              inputId={`inputFSOName-${keyId}`}
-              type="text"
-              name={`fsoName-${keyId}`}
-              labelText={"FSO Name"}
-              changeEvent={handleName}
-            />
-            <Input
-              inputId={`inputDoctorNumber-${keyId}`}
-              type="text"
-              name={`doctorNumber-${keyId}`}
-              labelClassName={"email-label"}
-              labelText={"Doctors Number"}
-              changeEvent={handleNumber}
-              maxLength="10"
-            />
-          </div>
-          <div className="d-flex form-flex-wrapper btn-div">
-            <Button
-              className="btn btn-primary btn-lg btn-color submit-btn"
-              type="button"
-              btnText={"Submit"}
-              disabled
-            />
-            <Button
-              className="btn btn-secondary btn-lg btn-color cancel-btn"
-              type="reset"
-              btnText={"Cancel"}
-            />
+          <div className="right-side-wrapper">
+            <div className="card-section-img">
+              <Input
+                inputId={`inputFile-${keyId}`}
+                type="file"
+                accept="image/png, image/jpg, image/jpeg"
+                name={`inputImage-${keyId}`}
+                labelClassName={"file-label"}
+                labelText={"Upload Doctor Photo"}
+                changeEvent={handleInputChange}
+                hidden
+              />
+              <Photo UploadImage={""} />
+            </div>
           </div>
         </div>
-        <div className="right-side-wrapper">
-          <div className="card-section-img">
-            <Input
-              inputId={`inputFile-${keyId}`}
-              type="file"
-              accept="image/png, image/jpg, image/jpeg"
-              name={`inputImage-${keyId}`}
-              labelClassName={"file-label"}
-              labelText={"Upload Doctor Photo"}
-              changeEvent={handleInputChange}
-              hidden
-            />
-          </div>
-        </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 

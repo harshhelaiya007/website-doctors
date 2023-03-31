@@ -10,6 +10,9 @@ function Input({
 }) {
   const [isInputActive, setIsInputActive] = useState(false);
   const handleInputChange = (event) => {
+    if (event.target.type === "file") {
+      return;
+    }
     if (event.target.value === "") {
       setIsInputActive(false);
     } else {
@@ -17,7 +20,10 @@ function Input({
     }
   };
 
-  const handleInputClick = () => {
+  const handleInputClick = (event) => {
+    if (event.target.type === "file") {
+      return;
+    }
     setIsInputActive(true);
   };
 
