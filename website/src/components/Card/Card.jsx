@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 
-function Card() {
+function Card({ keyId }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
@@ -146,11 +146,11 @@ function Card() {
   };
 
   const validateImageSize = (files) => {
-    const fileSize = files[0].size / 1024; // in KB
-    return fileSize <= 100;
+    const fileSize = files[0].size / 1024 / 1024; // in MB
+    return fileSize <= 1;
   };
 
-  const convertToBase64 = (files, bool) => {
+  const convertToBase64 = (files) => {
     return new Promise((resolve, reject) => {
       const file = files[0];
       const reader = new FileReader();
@@ -166,16 +166,16 @@ function Card() {
         <div className="left-side-wrapper">
           <div className="d-flex form-flex-wrapper">
             <Input
-              inputId={"inputDoctorName"}
+              inputId={`inputDoctorName-${keyId}`}
               type="text"
-              name="fullName"
+              name={`fullName-${keyId}`}
               labelText={"Doctor Name"}
               changeEvent={handleName}
             />
             <Input
-              inputId={"inputEmail"}
+              inputId={`inputEmail-${keyId}`}
               type="text"
-              name="email"
+              name={`email${keyId}`}
               labelClassName={"email-label"}
               labelText={"Email"}
               changeEvent={handleEmail}
@@ -183,16 +183,16 @@ function Card() {
           </div>
           <div className="d-flex form-flex-wrapper">
             <Input
-              inputId={"inputRegion"}
+              inputId={`inputRegion-${keyId}`}
               type="text"
-              name="region"
+              name={`region-${keyId}`}
               labelText={"Region"}
               changeEvent={handleRegion}
             />
             <Input
-              inputId={"inputHQ"}
+              inputId={`inputHQ-${keyId}`}
               type="text"
-              name="hq"
+              name={`hq-${keyId}`}
               labelClassName={"email-label"}
               labelText={"HQ"}
               changeEvent={handleHq}
@@ -200,19 +200,20 @@ function Card() {
           </div>
           <div className="d-flex form-flex-wrapper">
             <Input
-              inputId={"inputFSOName"}
+              inputId={`inputFSOName-${keyId}`}
               type="text"
-              name="fsoName"
+              name={`fsoName-${keyId}`}
               labelText={"FSO Name"}
               changeEvent={handleName}
             />
             <Input
-              inputId={"inputDoctorNumber"}
+              inputId={`inputDoctorNumber-${keyId}`}
               type="text"
-              name="doctorNumber"
+              name={`doctorNumber-${keyId}`}
               labelClassName={"email-label"}
               labelText={"Doctors Number"}
               changeEvent={handleNumber}
+              maxLength="10"
             />
           </div>
           <div className="d-flex form-flex-wrapper btn-div">
@@ -232,10 +233,10 @@ function Card() {
         <div className="right-side-wrapper">
           <div className="card-section-img">
             <Input
-              inputId={"inputFile"}
+              inputId={`inputFile-${keyId}`}
               type="file"
               accept="image/png, image/jpg, image/jpeg"
-              name="inputImage"
+              name={`inputImage-${keyId}`}
               labelClassName={"file-label"}
               labelText={"Upload Doctor Photo"}
               changeEvent={handleInputChange}

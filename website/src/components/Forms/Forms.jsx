@@ -33,7 +33,9 @@ function Forms() {
     <>
       <div className="form-section main">
         <div className="form-section-inner">
-          <div className="sideBar-cardClone">
+          <div
+            className={`sideBar-cardClone ${cardCount <= 1 ? "dsp-none" : ""}`}
+          >
             {cardPositions.map((position, index) => (
               <div
                 key={index}
@@ -49,10 +51,10 @@ function Forms() {
           <div className="container card-section-wrapper">
             {cardPositions.map((position, index) => (
               <div
-                key={`card-${position}`}
+                key={index}
                 className={`card-section ${index > 0 ? "cloned" : ""} ${
                   index === 0 ? "first-ele" : ""
-                }`}
+                } ${index === activeCard ? "comesForward" : ""}`}
                 style={{ transform: `translateY(${position}px)` }}
                 id={index}
               >
@@ -91,7 +93,7 @@ function Forms() {
                 </div>
                 <div className="card-section-body">
                   {/* Render input fields here */}
-                  <Card />
+                  <Card keyId={index + 1} key={index} />
                 </div>
               </div>
             ))}
