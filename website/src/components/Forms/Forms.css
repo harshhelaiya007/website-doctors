@@ -30,6 +30,10 @@
     z-index: 999;
 }
 
+.disable-btns {
+    opacity: 0.5;
+}
+
 .minus-btn-div {
     position: absolute;
     top: 20px;

@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React } from "react";
 import Button from "../Button/Button";
 
 function Model({ uploadImageData, onImageLoadCropper, imageRef }) {
@@ -7,6 +7,7 @@ function Model({ uploadImageData, onImageLoadCropper, imageRef }) {
     document.querySelector("body").classList.remove("modal-open");
     document.querySelector(".modal-backdrop.fade.show").remove();
     document.querySelector("body").removeAttribute("style");
+    localStorage.setItem('formImage',JSON.stringify(uploadImageData));
   };
 
   return (

@@ -14,7 +14,7 @@ function Forms() {
 
   const [image, setImage] = useState(null);
 
-  const [croppedImage, setCroppedImage] = useState(null);
+  let [croppedImage, setCroppedImage] = useState(null);
   const imageRef = useRef(null);
 
   const addCard = () => {
@@ -22,6 +22,7 @@ function Forms() {
     setCardPositions([...cardPositions, newPosition]);
     setCardCount(cardCount + 1);
     setActiveCard(cardCount);
+    setCroppedImage(null);
   };
 
   const removeCard = () => {
