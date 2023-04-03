@@ -1,14 +1,15 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
+import axios from 'axios';
 import Forms from "../Forms/Forms";
 import Loader from "../Loader/Loader";
-import Model from "../Model/Model";
 
 function Home() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <>
       <Loader />
       <Forms />
-      <Model />
     </>
   );
 }

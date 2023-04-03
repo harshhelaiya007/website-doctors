@@ -1,14 +1,23 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useContext, useRef, useEffect } from "react";
+import axios from "axios";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
+import Photo from "../Photo/Photo";
+import ModelImageContext from "../Context/ModelImageContext";
 
-function Card() {
+function Card({ keyId }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
-  const [image, setImage] = useState(null);
+  const [file, setFile] = useState([]);
+  const { setImage, croppedImage } = useContext(ModelImageContext);
+  var userInfo = localStorage.getItem("userData");
+
+  if (userInfo && !userInfo == "") {
+    userInfo = JSON.parse(localStorage.getItem("userData"));
+  }
 
   const showSuccess = (inputEle) => {
     inputEle.parentNode.parentNode.classList.add("valid");
@@ -131,11 +140,13 @@ function Card() {
 
   const handleInputChange = (event) => {
     const file = event.target.files;
+    setFile(file[0]);
     const bool = validateImageSize(file);
     if (bool) {
       convertToBase64(file, true)
         .then((data) => {
           setImage(data);
+          openModelImage();
         })
         .catch((error) => {
           console.error(error);
@@ -145,106 +156,169 @@ function Card() {
     }
   };
 
-  const validateImageSize = (files) => {
-    const fileSize = files[0].size / 1024; // in KB
-    return fileSize <= 100;
+  const openModelImage = () => {
+    document.getElementById("clickMe").click();
   };
 
-  const convertToBase64 = (files, bool) => {
+  const validateImageSize = (files) => {
+    const fileSize = files[0].size / 1024 / 1024; // in MB
+    return fileSize <= 1;
+  };
+
+  const convertToBase64 = (files) => {
     return new Promise((resolve, reject) => {
       const file = files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
+      reader.onload = () => {
+        resolve(reader.result);
+      };
       reader.onerror = (error) => reject(error);
     });
   };
 
+  const handleSubmitClick = () => {
+    const formData = new FormData();
+    formData.append("image", file);
+    console.log(formData);
+    axios
+      .post("http://localhost:3000/forms", {
+        cardId: "1",
+        reference: "user",
+        name: "name",
+        email: "email1@gmail.com",
+        region: "regon",
+        hq: "d",
+        fsoname: "dd",
+        doctorNumber: "567898765467",
+      })
+      .then((response) => {
+        console.log(response.data);
+        // do something with the response data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
+    let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
+    let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
+    if (!inputFieldDRegion == "") {
+      if (userInfo && !userInfo == "") {
+        inputFieldDRegion.value = userInfo.user.user.region;
+        inputFieldDHQ.value = userInfo.user.user.hq;
+        inputFieldFsoName.value = userInfo.user.user.fsoname;
+        inputFieldDRegion.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        inputFieldDHQ.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        inputFieldFsoName.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+      }
+    }
+  }, []);
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="d-flex main-wrapper">
-        <div className="left-side-wrapper">
-          <div className="d-flex form-flex-wrapper">
-            <Input
-              inputId={"inputDoctorName"}
-              type="text"
-              name="fullName"
-              labelText={"Doctor Name"}
-              changeEvent={handleName}
-            />
-            <Input
-              inputId={"inputEmail"}
-              type="text"
-              name="email"
-              labelClassName={"email-label"}
-              labelText={"Email"}
-              changeEvent={handleEmail}
-            />
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className="d-flex main-wrapper">
+          <div className="left-side-wrapper">
+            <div className="d-flex form-flex-wrapper">
+              <Input
+                inputId={`inputDoctorName-${keyId}`}
+                type="text"
+                name={`fullName-${keyId}`}
+                labelText={"Doctor Name"}
+                changeEvent={handleName}
+              />
+              <Input
+                inputId={`inputEmail-${keyId}`}
+                type="text"
+                name={`email${keyId}`}
+                labelClassName={"email-label"}
+                labelText={"Email"}
+                changeEvent={handleEmail}
+              />
+            </div>
+            <div className="d-flex form-flex-wrapper">
+              <Input
+                inputId={`inputRegion-${keyId}`}
+                type="text"
+                name={`region-${keyId}`}
+                labelText={"Region"}
+                changeEvent={handleRegion}
+              />
+              <Input
+                inputId={`inputHQ-${keyId}`}
+                type="text"
+                name={`hq-${keyId}`}
+                labelClassName={"email-label"}
+                labelText={"HQ"}
+                changeEvent={handleHq}
+              />
+            </div>
+            <div className="d-flex form-flex-wrapper">
+              <Input
+                inputId={`inputFSOName-${keyId}`}
+                type="text"
+                name={`fsoName-${keyId}`}
+                labelText={"FSO Name"}
+                changeEvent={handleName}
+              />
+              <Input
+                inputId={`inputDoctorNumber-${keyId}`}
+                type="text"
+                name={`doctorNumber-${keyId}`}
+                labelClassName={"email-label"}
+                labelText={"Doctors Number"}
+                changeEvent={handleNumber}
+                maxLength="10"
+              />
+            </div>
+            <div className="d-flex form-flex-wrapper btn-div">
+              <Button
+                className="btn btn-primary btn-lg btn-color submit-btn"
+                type="button"
+                btnText={"Submit"}
+                onClick={handleSubmitClick}
+              />
+              <Button
+                className="btn btn-secondary btn-lg btn-color cancel-btn"
+                type="reset"
+                btnText={"Cancel"}
+              />
+            </div>
           </div>
-          <div className="d-flex form-flex-wrapper">
-            <Input
-              inputId={"inputRegion"}
-              type="text"
-              name="region"
-              labelText={"Region"}
-              changeEvent={handleRegion}
-            />
-            <Input
-              inputId={"inputHQ"}
-              type="text"
-              name="hq"
-              labelClassName={"email-label"}
-              labelText={"HQ"}
-              changeEvent={handleHq}
-            />
-          </div>
-          <div className="d-flex form-flex-wrapper">
-            <Input
-              inputId={"inputFSOName"}
-              type="text"
-              name="fsoName"
-              labelText={"FSO Name"}
-              changeEvent={handleName}
-            />
-            <Input
-              inputId={"inputDoctorNumber"}
-              type="text"
-              name="doctorNumber"
-              labelClassName={"email-label"}
-              labelText={"Doctors Number"}
-              changeEvent={handleNumber}
-            />
-          </div>
-          <div className="d-flex form-flex-wrapper btn-div">
-            <Button
-              className="btn btn-primary btn-lg btn-color submit-btn"
-              type="button"
-              btnText={"Submit"}
-              disabled
-            />
-            <Button
-              className="btn btn-secondary btn-lg btn-color cancel-btn"
-              type="reset"
-              btnText={"Cancel"}
-            />
+          <div className="right-side-wrapper">
+            <div
+              className={`card-section-img ${
+                croppedImage ? "inputFileUpload" : ""
+              }`}
+            >
+              <Input
+                inputId={`inputFile-${keyId}`}
+                type="file"
+                accept="image/png, image/jpg, image/jpeg"
+                name={`inputImage-${keyId}`}
+                labelClassName={"file-label"}
+                labelText={"Upload Doctor Photo"}
+                changeEvent={handleInputChange}
+                hidden
+              />
+              <Photo UploadImage={croppedImage} key={keyId} />
+            </div>
           </div>
         </div>
-        <div className="right-side-wrapper">
-          <div className="card-section-img">
-            <Input
-              inputId={"inputFile"}
-              type="file"
-              accept="image/png, image/jpg, image/jpeg"
-              name="inputImage"
-              labelClassName={"file-label"}
-              labelText={"Upload Doctor Photo"}
-              changeEvent={handleInputChange}
-              hidden
-            />
-          </div>
-        </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
 
