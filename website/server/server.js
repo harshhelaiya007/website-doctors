@@ -32,17 +32,6 @@ app.use(cors({
 }));
 
 
-
-// app.get('/assets/*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'frontend','assets' ))
-// })
-
-// Serve the login page as the default route
-app.use(express.static('frontend/'))
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'login.html'));
-});
-
 // Routes
 const registerRoute = require('./src/api/register');
 const loginRoute = require('./src/api/login');
@@ -53,13 +42,5 @@ app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
 app.use('/forms', formRoute);
-app.use('/doctorGet', doctorsDetails);
+app.use('/doctors', doctorsDetails);
 app.listen(3000, () => console.log('Server running on port 3000'));
-
-
-
-// app.use(express.static('frontend/'))
-
-// app.get('*', (req, res) => {
-//     res.sendFile(path.resolve(__dirname, 'frontend', 'login.html'))
-// })
