@@ -1,0 +1,14 @@
+version: '2.0'
+
+services:
+  landing_page:
+    container_name: landing_page
+    image:  website-landing:0.0.1
+    volumes:
+      - ./app:/app
+    ports:
+      - 80:80
+
+networks:
+  defaults:
+    driver: bridge

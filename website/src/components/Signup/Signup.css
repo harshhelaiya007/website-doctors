@@ -1,0 +1,11 @@
+.card-section.login-box.signup {
+    height: max-content;
+}
+
+.form-section.login-box.signup {
+    margin-left: 345px;
+    padding-bottom: 0;
+}
+.form-section .form-section-inner.signup {
+    height: 927px;
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEBSITE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/air-datepicker.css">
+    <link rel="stylesheet" href="./assets/css/datatables.min.css">
+    <link rel="stylesheet" href="./assets/css/common.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <!-- loader -->
+    <div class="lds-dual-ring"></div>
+    <!-- loader -->
+    <!-- Header Section start here -->
+    <section>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <ul class="navbar-nav mr-auto">
+                    <div class="mobile-wrapper-nav-icon">
+                        <a class="navbar-brand" href="#">Doctor/Name</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                        aria-labelledby="offcanvasDarkNavbarLabel">
+                        <div class="d-flex nav-mobile">
+                            <h5 class="offcanvas-title desktop-dsp-none" id="offcanvasDarkNavbarLabel">Dark offcanvas
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white desktop-dsp-none"
+                                data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="d-flex mobile-d-flex">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./index.html">Home</a>
+                            </li>
+                            <li class="nav-item dsp-none">
+                                <a class="nav-link" href="./admin.html">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./login.html">Login</a>
+                            </li>
+                        </div>
+                    </div>
+                </ul>
+                <div class="nav-item dropdown dsp-none">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> <i class="fas fa-user mx-1"></i> Profile
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">Log out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+    <!-- Header Section end here -->
+    <!-- Form Section start here -->
+    <section class="form-section">
+        <div class="container">
+            <div class="card-section">
+                <h2 class="heading-title">Admin Panel</h2>
+                <table id="data-table" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Region</th>
+                            <th>HQ</th>
+                            <th>FSOName</th>
+                            <th>Doctor Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </section>
+    <!-- Form Section end here -->
+
+</body>
+<script src="./assets/js/jquery.min.js"></script>
+<script src="./assets/js/jquery.dataTables.min.js"></script>
+<script src="./assets/js/popper.min.js"></script>
+<script src="./assets/js/bootstrap.js"></script>
+<script src="./assets/js/air-datepicker.js"></script>
+<script src="./assets/js/datatables.min.js"></script>
+<script src="./assets/js/header.js"></script>
+<script src="./assets/js/base64.js"></script>
+<script src="./assets/js/setImage.js"></script>
+<script src="./assets/js/axios.js"></script>
+<script src="./assets/js/admin.js"></script>
+<script src="./assets/js/main.js"></script>
+
+</html>
