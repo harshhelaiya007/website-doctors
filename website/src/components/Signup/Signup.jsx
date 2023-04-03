@@ -153,7 +153,7 @@ function Signup() {
       .then((response) => {
         // do something with the response data
         let registerUserData = response.data;
-        localStorage.setItem("userData", registerUserData);
+        localStorage.setItem("userData", JSON.stringify(registerUserData));
         console.log(registerUserData);
       })
       .catch((error) => {
@@ -166,9 +166,10 @@ function Signup() {
       ".card-section.login-box.signup"
     );
     if (window.matchMedia("(max-width: 767px)").matches) {
-        cardLoginSignup.setAttribute('style',`width:${window.innerWidth - 50}px`);
-    } else {
-        console.log('card size is in window');
+      cardLoginSignup.setAttribute(
+        "style",
+        `width:${window.innerWidth - 50}px`
+      );
     }
   }, []);
 

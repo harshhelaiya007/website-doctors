@@ -1,17 +1,22 @@
-import { React, useState, useContext, useRef } from "react";
+import { React, useState, useContext, useRef, useEffect } from "react";
+import axios from 'axios';
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Photo from "../Photo/Photo";
 import ModelImageContext from "../Context/ModelImageContext";
 
 function Card({ keyId }) {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
   const { setImage, croppedImage } = useContext(ModelImageContext);
+  var userInfo = localStorage.getItem('userData');
+
+  if (userInfo && !userInfo == '') {
+    userInfo = JSON.parse(localStorage.getItem('userData'));
+  }
 
   const showSuccess = (inputEle) => {
     inputEle.parentNode.parentNode.classList.add("valid");
@@ -113,6 +118,20 @@ function Card({ keyId }) {
   const handleSubmit = (e) => {
     if (document.querySelector("form").classList.contains("error")) {
       e.preventDefault();
+      // axios
+      //   .post("http://localhost:3000/forms", {
+      //     username: username,
+      //     email: email,
+      //     password: password,
+      //   })
+      //   .then((response) => {
+      //     console.log(response.data);
+      //     // do something with the response data
+      //   })
+      //   .catch((error) => {
+      //     console.log(error.response.data);
+      //     setErrorMessage(error.response.data.message);
+      //   });
     }
   };
 
@@ -169,6 +188,21 @@ function Card({ keyId }) {
       reader.onerror = (error) => reject(error);
     });
   };
+
+  
+  useEffect(() => {
+    let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
+    let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
+    let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
+    if (!inputFieldDRegion == '') {
+      inputFieldDRegion.value = userInfo.user.user.region;
+      inputFieldDHQ.value = userInfo.user.user.hq;
+      inputFieldFsoName.value = userInfo.user.user.fsoname;
+      inputFieldDRegion.previousElementSibling.classList.add('input-active','input-focus')
+      inputFieldDHQ.previousElementSibling.classList.add('input-active','input-focus')
+      inputFieldFsoName.previousElementSibling.classList.add('input-active','input-focus')
+    }
+  }, []);
 
   return (
     <>
@@ -257,7 +291,7 @@ function Card({ keyId }) {
                 changeEvent={handleInputChange}
                 hidden
               />
-              <Photo UploadImage={croppedImage} key={keyId}/>
+              <Photo UploadImage={croppedImage} key={keyId} />
             </div>
           </div>
         </div>

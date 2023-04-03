@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-function Loader() {
-    return (
-            <div className="lds-dual-ring"></div>
-    )
+function Loader({ loaderActive }) {
+  return (
+    <div className={`lds-dual-ring ${loaderActive ? "active" : ""}`}></div>
+  );
 }
 
-export default Loader
+export default Loader;
