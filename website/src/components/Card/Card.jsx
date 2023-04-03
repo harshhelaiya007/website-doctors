@@ -129,12 +129,6 @@ function Card({ keyId }) {
     }
   };
 
-  const handleSubmit = (e) => {
-    if (document.querySelector("form").classList.contains("error")) {
-      e.preventDefault();
-    }
-  };
-
   const handleNumber = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, "");
     let docNumberRegx = /^[0-9]*$/;
@@ -142,7 +136,7 @@ function Card({ keyId }) {
     buttonDisable(e.target);
     if (!inputValue == "" && docNumberRegx.test(inputValue)) {
       showSuccess(e.target);
-      setNumber(inputValue)
+      setNumber(inputValue);
     } else {
       showError(
         e.target,
@@ -155,6 +149,8 @@ function Card({ keyId }) {
   const handleInputChange = (event) => {
     const file = event.target.files;
     setFile(file[0]);
+    event.target.classList.add("valid");
+    event.target.parentElement.parentNode.classList.add("valid");
     const bool = validateImageSize(file);
     if (bool) {
       convertToBase64(file, true)
@@ -198,7 +194,7 @@ function Card({ keyId }) {
     axios
       .post("http://localhost:3000/forms", {
         cardId: keyId,
-        reference: userInfo,
+        reference: "userInfo",
         name: name,
         email: email,
         region: region,
@@ -213,30 +209,41 @@ function Card({ keyId }) {
       .catch((error) => {
         console.log(error);
       });
-      axios
-      .post("http://localhost:3000/upload", formData)
-      .then((response) => {
-        console.log(response.data);
-        // do something with the response data
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .post("http://localhost:3000/upload", formData)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     // do something with the response data
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   useEffect(() => {
     let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
     let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
     let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
+    console.log(
+      inputFieldDRegion.parentElement.parentNode.classList.add("valid")
+    );
     if (!inputFieldDRegion == "") {
       if (userInfo && !userInfo == "") {
         inputFieldDRegion.value = userInfo.user.user.region;
         inputFieldDHQ.value = userInfo.user.user.hq;
         inputFieldFsoName.value = userInfo.user.user.fsoname;
+
+        inputFieldDRegion.parentElement.parentNode.classList.add("valid");
+        inputFieldDHQ.parentElement.parentNode.classList.add("valid");
+        inputFieldFsoName.parentElement.parentNode.classList.add("valid");
+
         inputFieldDRegion.previousElementSibling.classList.add(
           "input-active",
           "input-focus"
         );
+        inputFieldDRegion.classList.add("valid");
+        inputFieldDHQ.classList.add("valid");
+        inputFieldFsoName.classList.add("valid");
         inputFieldDHQ.previousElementSibling.classList.add(
           "input-active",
           "input-focus"
@@ -251,7 +258,7 @@ function Card({ keyId }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="d-flex main-wrapper">
           <div className="left-side-wrapper">
             <div className="d-flex form-flex-wrapper">
@@ -310,7 +317,7 @@ function Card({ keyId }) {
               <Button
                 className="btn btn-primary btn-lg btn-color submit-btn"
                 type="button"
-                btnText={"Submit"}
+                btnText={"submit"}
                 onClick={handleSubmitClick}
                 disabled
               />

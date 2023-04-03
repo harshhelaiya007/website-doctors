@@ -26,11 +26,17 @@ function Header() {
       })
       .then((response) => {
         console.log(response.data);
+        localStorage.removeItem('userData');
         // do something with the response data
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleNavItemClick = (event) => {
+    // Handle the click event here
+    console.log("Nav-item clicked:", event.target.textContent);
   };
 
   return (
@@ -74,17 +80,17 @@ function Header() {
               </div>
               <div className="d-flex mobile-d-flex">
                 {navItems.map((navItemName) => {
-                  // if (!userInfo && navItemName === "Login") {
-                  //   return null; // hide Login nav-item when user is logged in
-                  // }
-                  if (!userInfo && navItemName === "Admin") {
+                  if (userInfo && navItemName === "Login") {
+                    return null; // hide Login nav-item when user is logged in
+                  }
+                  if (userInfo && navItemName === "Admin") {
                     return null; // hide Login nav-item when user is logged in
                   }
                   if (!userInfo && navItemName === "Home") {
                     return null; // hide Login nav-item when user is logged in
                   }
                   return (
-                    <li className="nav-item" key={navItemName}>
+                    <li className="nav-item" key={navItemName} onClick={handleNavItemClick}>
                       <Link to={"/" + navItemName} className="nav-link">
                         {navItemName}
                       </Link>
