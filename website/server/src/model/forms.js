@@ -6,7 +6,7 @@ const doctorSchema = new Schema({
     type: String,
     required: true
   },
-  refe: {
+  reference: {
     type: String,
     required: true
   },
@@ -35,10 +35,6 @@ const doctorSchema = new Schema({
     type: String,
     required: true,
     unique: true
-  },
-  image:{
-    type: String,
-    required: true,
   },
   date: {
     type: Date,

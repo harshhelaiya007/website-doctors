@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const Doctor = require('../model/forms');
+const multer = require('multer')
+const upload = multer({ dest: 'uploads' });
 
 // Define doctor creation endpoint
 router.post('/', [
@@ -12,7 +14,7 @@ router.post('/', [
     check('hq', 'Please enter the headquarters').notEmpty(),
     check('fsoname', 'Please enter the FSO name').notEmpty(),
     check('doctorNumber', 'Please enter the doctor number').notEmpty(),
-], async (req, res) => {
+], upload.single('image'), async (req, res) => {
 
     // Check for validation errors
     const errors = validationResult(req);
@@ -21,7 +23,7 @@ router.post('/', [
     }
 
     // Extract doctor input from request body
-    const { name, email, region, hq, fsoname, doctorNumber, image,cardId,refe } = req.body;
+    const { name, email, region, hq, fsoname, doctorNumber, image, cardId, reference } = req.body;
 
     try {
         // Check if doctor with given email exists
@@ -33,14 +35,13 @@ router.post('/', [
         // Create new doctor
         doctor = new Doctor({
             cardId,
-            refe,
+            reference,
             name,
             email,
             region,
             hq,
             fsoname,
             doctorNumber,
-            image
         });
         // Save new doctor to database
         await doctor.save();

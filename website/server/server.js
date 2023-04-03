@@ -6,10 +6,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 dotenv.config();
 
-const path = require('path');
-
-
-
 // Connect to database
 mongoose.connect('mongodb+srv://harshhelaiya5:Justin%40007@cluster0.eyqbbzz.mongodb.net/?retryWrites=true&w=majority');
 
@@ -38,9 +34,11 @@ const loginRoute = require('./src/api/login');
 const logoutRoute = require('./src/api/logout');
 const formRoute = require('./src/api/form');
 const doctorsDetails = require('./src/api/doctos');
+// const uploadImage = require('./src/api/uploadImage');
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
 app.use('/forms', formRoute);
 app.use('/doctors', doctorsDetails);
+// app.use('/upload', uploadImage);
 app.listen(3000, () => console.log('Server running on port 3000'));

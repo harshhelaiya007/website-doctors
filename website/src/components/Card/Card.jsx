@@ -1,5 +1,5 @@
 import { React, useState, useContext, useRef, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Photo from "../Photo/Photo";
@@ -11,11 +11,12 @@ function Card({ keyId }) {
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
+  const [file, setFile] = useState([]);
   const { setImage, croppedImage } = useContext(ModelImageContext);
-  var userInfo = localStorage.getItem('userData');
+  var userInfo = localStorage.getItem("userData");
 
-  if (userInfo && !userInfo == '') {
-    userInfo = JSON.parse(localStorage.getItem('userData'));
+  if (userInfo && !userInfo == "") {
+    userInfo = JSON.parse(localStorage.getItem("userData"));
   }
 
   const showSuccess = (inputEle) => {
@@ -118,20 +119,6 @@ function Card({ keyId }) {
   const handleSubmit = (e) => {
     if (document.querySelector("form").classList.contains("error")) {
       e.preventDefault();
-      // axios
-      //   .post("http://localhost:3000/forms", {
-      //     username: username,
-      //     email: email,
-      //     password: password,
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
-      //     // do something with the response data
-      //   })
-      //   .catch((error) => {
-      //     console.log(error.response.data);
-      //     setErrorMessage(error.response.data.message);
-      //   });
     }
   };
 
@@ -153,6 +140,7 @@ function Card({ keyId }) {
 
   const handleInputChange = (event) => {
     const file = event.target.files;
+    setFile(file[0]);
     const bool = validateImageSize(file);
     if (bool) {
       convertToBase64(file, true)
@@ -189,18 +177,52 @@ function Card({ keyId }) {
     });
   };
 
-  
+  const handleSubmitClick = () => {
+    const formData = new FormData();
+    formData.append("image", file);
+    console.log(formData);
+    axios
+      .post("http://localhost:3000/forms", {
+        cardId: "1",
+        reference: "user",
+        name: "name",
+        email: "email1@gmail.com",
+        region: "regon",
+        hq: "d",
+        fsoname: "dd",
+        doctorNumber: "567898765467",
+      })
+      .then((response) => {
+        console.log(response.data);
+        // do something with the response data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
     let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
     let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
-    if (!inputFieldDRegion == '') {
-      inputFieldDRegion.value = userInfo.user.user.region;
-      inputFieldDHQ.value = userInfo.user.user.hq;
-      inputFieldFsoName.value = userInfo.user.user.fsoname;
-      inputFieldDRegion.previousElementSibling.classList.add('input-active','input-focus')
-      inputFieldDHQ.previousElementSibling.classList.add('input-active','input-focus')
-      inputFieldFsoName.previousElementSibling.classList.add('input-active','input-focus')
+    if (!inputFieldDRegion == "") {
+      if (userInfo && !userInfo == "") {
+        inputFieldDRegion.value = userInfo.user.user.region;
+        inputFieldDHQ.value = userInfo.user.user.hq;
+        inputFieldFsoName.value = userInfo.user.user.fsoname;
+        inputFieldDRegion.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        inputFieldDHQ.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        inputFieldFsoName.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+      }
     }
   }, []);
 
@@ -266,7 +288,7 @@ function Card({ keyId }) {
                 className="btn btn-primary btn-lg btn-color submit-btn"
                 type="button"
                 btnText={"Submit"}
-                disabled
+                onClick={handleSubmitClick}
               />
               <Button
                 className="btn btn-secondary btn-lg btn-color cancel-btn"
