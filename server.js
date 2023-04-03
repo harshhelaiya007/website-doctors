@@ -20,7 +20,7 @@ mongoose.connection.on('connected', connected => {
 // Middleware
 app.use(express.json());
 app.use(bodyParser.json({ type: 'application/*+json', limit: '150mb' }));
-app.use(bodyParser.urlencoded({limit: '150mb',extended: true}));
+app.use(bodyParser.urlencoded({ limit: '150mb', extended: true }));
 app.use(cors()); // Add CORS middleware
 
 app.use(cors({
@@ -28,14 +28,20 @@ app.use(cors({
 }));
 
 // Routes
-const registerRoute = require('./api/register');
-const loginRoute = require('./api/login');
-const logoutRoute = require('./api/logout');
-const formRoute = require('./api/form');
-const doctorsDetails = require('./api/doctos');
+const registerRoute = require('./src/api/register');
+const loginRoute = require('./src/api/login');
+const logoutRoute = require('./src/api/logout');
+const formRoute = require('./src/api/form');
+const doctorsDetails = require('./src/api/doctos');
 app.use('/register', registerRoute);
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
 app.use('/forms', formRoute);
 app.use('/doctorGet', doctorsDetails);
-app.listen(4001, () => console.log('Server running on port 3000'));
+app.listen(80, () => console.log('Server running on port 80'));
+
+app.use(express.static('frontend/'))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'index.html'))
+})
