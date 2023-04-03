@@ -1,18 +1,28 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import "./Forms.css";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
+import ModelImageContext from "../Context/ModelImageContext";
+import Model from "../Model/Model";
+import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.css";
 
 function Forms() {
   const [cardPositions, setCardPositions] = useState([0]);
   const [cardCount, setCardCount] = useState(1);
   const [activeCard, setActiveCard] = useState(0);
 
+  const [image, setImage] = useState(null);
+
+  let [croppedImage, setCroppedImage] = useState(null);
+  const imageRef = useRef(null);
+
   const addCard = () => {
     const newPosition = cardPositions[cardPositions.length - 1] + 18;
     setCardPositions([...cardPositions, newPosition]);
     setCardCount(cardCount + 1);
     setActiveCard(cardCount);
+    setCroppedImage(null);
   };
 
   const removeCard = () => {
@@ -29,11 +39,57 @@ function Forms() {
     setActiveCard(index);
   };
 
+  const cropperOptions = {
+    aspectRatio: 16 / 9,
+    width: 328,
+    height: 399,
+    viewMode: 0,
+    minContainerWidth: 618,
+    minContainerHeight: 458,
+    minCanvasWidth: 618,
+    minCanvasHeight: 458,
+    minCropBoxWidth: 100,
+    minCropBoxHeight: 100,
+    background: true,
+    movable: true,
+    zoomable: false,
+    cropBoxResizable: true,
+    crop: () => {
+      const canvas = cropper.getCroppedCanvas();
+      setCroppedImage(canvas.toDataURL());
+    },
+  };
+
+  let cropper;
+
+  const onImageLoaded = (event) => {
+    cropper = new Cropper(event.target, cropperOptions);
+  };
+
+  useEffect(() => {
+    let cardHome = document.querySelectorAll(
+      ".form-section.main .card-section"
+    );
+    let sideBarClone = document.querySelector(".sideBar-cardClone");
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      cardHome.forEach(function (cardEle) {
+        console.log();
+        cardEle.style.width = window.innerWidth - 50;
+      });
+      localStorage.setItem('cardWidthHome',window.innerWidth - 50)
+      sideBarClone.style.width = window.innerWidth - 50;
+    } else {
+      console.log("card size is in window");
+    }
+  }, []);
+
   return (
     <>
       <div className="form-section main">
         <div className="form-section-inner">
-          <div className="sideBar-cardClone">
+          <div
+            className={`sideBar-cardClone ${cardCount <= 1 ? "dsp-none" : ""}`}
+          >
             {cardPositions.map((position, index) => (
               <div
                 key={index}
@@ -49,10 +105,10 @@ function Forms() {
           <div className="container card-section-wrapper">
             {cardPositions.map((position, index) => (
               <div
-                key={`card-${position}`}
+                key={index}
                 className={`card-section ${index > 0 ? "cloned" : ""} ${
                   index === 0 ? "first-ele" : ""
-                } ${activeCard == index ? "comesForward" : ""}`}
+                } ${index === activeCard ? "comesForward" : ""}`}
                 style={{ transform: `translateY(${position}px)` }}
                 id={index}
               >
@@ -91,13 +147,22 @@ function Forms() {
                 </div>
                 <div className="card-section-body">
                   {/* Render input fields here */}
-                  <Card />
+                  <ModelImageContext.Provider
+                    value={{ image, setImage, croppedImage }}
+                  >
+                    <Card keyId={index + 1} key={index} />
+                  </ModelImageContext.Provider>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+      <Model
+        uploadImageData={image}
+        modelRef={imageRef}
+        onImageLoadCropper={onImageLoaded}
+      />
     </>
   );
 }

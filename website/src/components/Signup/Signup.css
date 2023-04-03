@@ -7,5 +7,27 @@
     padding-bottom: 0;
 }
 .form-section .form-section-inner.signup {
-    height: 927px;
+    height: 870px;
+}
+
+@media screen and (max-width:767px) {
+    .form-section.login-box.signup {
+        margin: 0;
+    }
+    .form-section .form-section-inner.signup {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .container.card-section-login-wrapper {
+        width: 100%;
+    }
+    .card-section.login-box.signup {
+        padding: 25px;
+        width: max-content;
+    }
+    .form-section .form-section-inner.signup {
+        height: 815px;
+    }
 }

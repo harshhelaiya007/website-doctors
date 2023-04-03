@@ -78,15 +78,12 @@ body {
 }
 
 /* loader */
-/* air date picker css */
-.air-datepicker-body--day-name {
-  color: black;
+
+@media screen and (max-width:767px) {
+  
+  .nav-mobile {
+    padding-left: 18px;
+  }
 }
-.air-datepicker-cell.-selected-, .air-datepicker-cell.-selected-.-current- {
-  background-color: #3E54AC;
-}
-.air-datepicker-cell.-selected-:hover, .air-datepicker-cell.-selected-.-current-:hover {
-  background-color: #3E54AC;
-}
-/* air date picker css */
+
 
