@@ -11,6 +11,7 @@ function Card({ keyId }) {
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
+  const [fsoname, setFsoName] = useState("");
   const [file, setFile] = useState([]);
   const { setImage, croppedImage } = useContext(ModelImageContext);
   var userInfo = localStorage.getItem("userData");
@@ -75,6 +76,18 @@ function Card({ keyId }) {
     }
   };
 
+  const handleFsoName = (e) => {
+    let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
+    let inputValue = e.target.value;
+    buttonDisable(e.target);
+    if (!inputValue == "" && docRegx.test(inputValue)) {
+      showSuccess(e.target);
+      setFsoName(inputValue);
+    } else {
+      showRequired(e.target, "Name is Required.", "Please Enter Valid Name.");
+    }
+  };
+
   // email validation
   const handleEmail = (e) => {
     let emailRegx = /\S+@\S+\.\S+/;
@@ -129,6 +142,7 @@ function Card({ keyId }) {
     buttonDisable(e.target);
     if (!inputValue == "" && docNumberRegx.test(inputValue)) {
       showSuccess(e.target);
+      setNumber(inputValue)
     } else {
       showError(
         e.target,
@@ -183,15 +197,24 @@ function Card({ keyId }) {
     console.log(formData);
     axios
       .post("http://localhost:3000/forms", {
-        cardId: "1",
-        reference: "user",
-        name: "name",
-        email: "email1@gmail.com",
-        region: "regon",
-        hq: "d",
-        fsoname: "dd",
-        doctorNumber: "567898765467",
+        cardId: keyId,
+        reference: userInfo,
+        name: name,
+        email: email,
+        region: region,
+        hq: hq,
+        fsoname: fsoname,
+        doctorNumber: number,
       })
+      .then((response) => {
+        console.log(response.data);
+        // do something with the response data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      axios
+      .post("http://localhost:3000/upload", formData)
       .then((response) => {
         console.log(response.data);
         // do something with the response data
@@ -271,7 +294,7 @@ function Card({ keyId }) {
                 type="text"
                 name={`fsoName-${keyId}`}
                 labelText={"FSO Name"}
-                changeEvent={handleName}
+                changeEvent={handleFsoName}
               />
               <Input
                 inputId={`inputDoctorNumber-${keyId}`}
@@ -289,6 +312,7 @@ function Card({ keyId }) {
                 type="button"
                 btnText={"Submit"}
                 onClick={handleSubmitClick}
+                disabled
               />
               <Button
                 className="btn btn-secondary btn-lg btn-color cancel-btn"
