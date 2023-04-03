@@ -1,28 +1,44 @@
 import { React, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import axios from "axios";
 import "./Login.css";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = (event) => {
     event.preventDefault();
+    var loaderEle = document.querySelector('.lds-dual-ring')
+    loaderEle.classList.add('active')
+    document.querySelector('.form-section.login-box').classList.add('dsp-none');
+    document.querySelector('.header').classList.add('dsp-none');
 
     axios
       .post("http://localhost:3000/login", {
-        username: username,
+        username: email,
         password: password,
       })
       .then((response) => {
         console.log(response.data);
+        var loaderEle = document.querySelector('.lds-dual-ring')
+        loaderEle.classList.remove('active')
+        document.querySelector('.form-section.login-box').classList.remove('dsp-none');
+        document.querySelector('.header').classList.remove('dsp-none');
+        <Redirect to="/Home" />;
         // do something with the response data
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error.response);
+        if (error.response.status === 400) {
+          alert('BAD REQUEST')
+          var loaderEle = document.querySelector('.lds-dual-ring')
+          loaderEle.classList.remove('active')
+          document.querySelector('.form-section.login-box').classList.remove('dsp-none');
+          document.querySelector('.header').classList.remove('dsp-none');
+        }
       });
   };
 
@@ -55,7 +71,7 @@ function Login() {
                 labelText={"Email"}
                 parentWrapperClass={"login-form"}
                 changeEvent={(event) => {
-                  setUsername(event.target.value);
+                  setEmail(event.target.value);
                 }}
               />
               <Input

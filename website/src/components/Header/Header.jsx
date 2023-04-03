@@ -40,7 +40,7 @@ function Header() {
   };
 
   return (
-    <section>
+    <section className="header">
       <nav className="navbar navbar-expand-lg">
         <div className="container">
           <ul className="navbar-nav mr-auto">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Redirect } from "react-router";
 import axios from "axios";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
@@ -140,6 +141,10 @@ function Signup() {
 
   const handleSignup = (event) => {
     event.preventDefault();
+    var loaderEle = document.querySelector('.lds-dual-ring')
+    loaderEle.classList.add('active')
+    document.querySelector('.form-section.login-box').classList.add('dsp-none');
+    document.querySelector('.header').classList.add('dsp-none');
 
     axios
       .post("http://localhost:3000/register", {
@@ -152,12 +157,28 @@ function Signup() {
       })
       .then((response) => {
         // do something with the response data
+        console.log(response.data);
         let registerUserData = response.data;
         localStorage.setItem("userData", JSON.stringify(registerUserData));
-        console.log(registerUserData);
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section.login-box")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
+        <Redirect to="/Home" />;
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error.response);
+        if (error.response.status === 400) {
+          alert("BAD REQUEST");
+          var loaderEle = document.querySelector(".lds-dual-ring");
+          loaderEle.classList.remove("active");
+          document
+            .querySelector(".form-section.login-box")
+            .classList.remove("dsp-none");
+          document.querySelector(".header").classList.remove("dsp-none");
+        }
       });
   };
 

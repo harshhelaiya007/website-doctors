@@ -258,7 +258,7 @@ function Card({ keyId }) {
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmitClick}>
         <div className="d-flex main-wrapper">
           <div className="left-side-wrapper">
             <div className="d-flex form-flex-wrapper">
@@ -316,9 +316,8 @@ function Card({ keyId }) {
             <div className="d-flex form-flex-wrapper btn-div">
               <Button
                 className="btn btn-primary btn-lg btn-color submit-btn"
-                type="button"
+                type="submit"
                 btnText={"submit"}
-                onClick={handleSubmitClick}
                 disabled
               />
               <Button

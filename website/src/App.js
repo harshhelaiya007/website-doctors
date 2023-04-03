@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -6,8 +6,10 @@ import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
 import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
+import Loader from "./components/Loader/Loader";
 
 function App() {
+  const [loading, setLoading] = useState(true);
   var userInfo = localStorage.getItem("userData");
 
   if (userInfo && !userInfo == "") {
@@ -17,6 +19,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+        {loading && <Loader />}
         <Header />
         <Switch>
           <Route exact path="/">
