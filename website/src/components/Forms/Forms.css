@@ -435,12 +435,10 @@ label.file-label {
     }
 
     .form-section.main {
-        margin: 5px;
-        width: 100px;
+        margin: 0;
+        width: 130px;
         min-height: 550px;
-        padding-bottom: 40px;
-        padding-top: 40px;
-        padding-left: 0;
+        padding: 0;
     }
 
     .form-section.main .card-section {
@@ -449,11 +447,11 @@ label.file-label {
     }
 
     .add-btn-div {
-        left: 25px;
+        left: 13px;
     }
 
     .minus-btn-div {
-        right: -240px;
+        right: 0;
     }
 
     .main-wrapper {
@@ -500,6 +498,15 @@ label.file-label {
 
     .sideBar-cardClone .select-item a {
         font-size: 14px;
+    }
+    .card-section-wrapper {
+        width: 100%;
+    }
+    .form-section.main .form-section-inner {
+        height: 1137px;
+    }
+    .comesForward.cloned {
+        z-index: 999;
     }
 }
 

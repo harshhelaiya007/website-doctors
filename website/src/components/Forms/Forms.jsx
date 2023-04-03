@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import "./Forms.css";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
@@ -65,6 +65,23 @@ function Forms() {
   const onImageLoaded = (event) => {
     cropper = new Cropper(event.target, cropperOptions);
   };
+
+  useEffect(() => {
+    let cardHome = document.querySelectorAll(
+      ".form-section.main .card-section"
+    );
+    let sideBarClone = document.querySelector(".sideBar-cardClone");
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      cardHome.forEach(function (cardEle) {
+        console.log();
+        cardEle.style.width = window.innerWidth - 50;
+      });
+      localStorage.setItem('cardWidthHome',window.innerWidth - 50)
+      sideBarClone.style.width = window.innerWidth - 50;
+    } else {
+      console.log("card size is in window");
+    }
+  }, []);
 
   return (
     <>
