@@ -1,5 +1,5 @@
 import { React } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import "jquery";
 import "bootstrap";
@@ -11,10 +11,8 @@ function Header() {
   // <!-- Header Section start here -->
 
   var userInfo = localStorage.getItem("userData");
+  const history = useHistory();
 
-  if (userInfo && !userInfo == "") {
-    userInfo = JSON.parse(localStorage.getItem("userData"));
-  }
   if (userInfo && !userInfo == "") {
     userInfo = JSON.parse(localStorage.getItem("userData"));
   }
@@ -27,6 +25,8 @@ function Header() {
       .then((response) => {
         console.log(response.data);
         localStorage.removeItem('userData');
+        history.push('/');
+        window.location.reload();
         // do something with the response data
       })
       .catch((error) => {
@@ -83,7 +83,7 @@ function Header() {
                   if (userInfo && navItemName === "Login") {
                     return null; // hide Login nav-item when user is logged in
                   }
-                  if (userInfo && navItemName === "Admin") {
+                  if (!userInfo.admin && navItemName === "Admin") {
                     return null; // hide Login nav-item when user is logged in
                   }
                   if (!userInfo && navItemName === "Home") {

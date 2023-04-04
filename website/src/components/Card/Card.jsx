@@ -187,14 +187,15 @@ function Card({ keyId }) {
     });
   };
 
-  const handleSubmitClick = () => {
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("image", file);
     console.log(formData);
     axios
       .post("http://localhost:3000/forms", {
         cardId: keyId,
-        reference: "userInfo",
+        reference: userInfo,
         name: name,
         email: email,
         region: region,
@@ -204,6 +205,7 @@ function Card({ keyId }) {
       })
       .then((response) => {
         console.log(response.data);
+        alert('Data Successfully Saved')
         // do something with the response data
       })
       .catch((error) => {
@@ -228,10 +230,13 @@ function Card({ keyId }) {
       inputFieldDRegion.parentElement.parentNode.classList.add("valid")
     );
     if (!inputFieldDRegion == "") {
-      if (userInfo && !userInfo == "") {
+      if (userInfo && !userInfo.user == "") {
         inputFieldDRegion.value = userInfo.user.user.region;
+        setRegion(userInfo.user.user.region)
         inputFieldDHQ.value = userInfo.user.user.hq;
+        setHq(userInfo.user.user.hq)
         inputFieldFsoName.value = userInfo.user.user.fsoname;
+        setFsoName(userInfo.user.user.fsoname);
 
         inputFieldDRegion.parentElement.parentNode.classList.add("valid");
         inputFieldDHQ.parentElement.parentNode.classList.add("valid");

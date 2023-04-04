@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import axios from "axios";
@@ -8,6 +8,7 @@ import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -18,16 +19,19 @@ function Login() {
 
     axios
       .post("http://localhost:3000/login", {
-        username: email,
+        email: email,
         password: password,
       })
       .then((response) => {
         console.log(response.data);
+        let registerUserData = response.data;
+        localStorage.setItem("userData", JSON.stringify(registerUserData));
         var loaderEle = document.querySelector('.lds-dual-ring')
         loaderEle.classList.remove('active')
         document.querySelector('.form-section.login-box').classList.remove('dsp-none');
         document.querySelector('.header').classList.remove('dsp-none');
-        <Redirect to="/Home" />;
+        history.push('/Home');
+        window.location.reload();
         // do something with the response data
       })
       .catch((error) => {
@@ -38,7 +42,10 @@ function Login() {
           loaderEle.classList.remove('active')
           document.querySelector('.form-section.login-box').classList.remove('dsp-none');
           document.querySelector('.header').classList.remove('dsp-none');
+        } else if(error.response.status === 500) {
+          alert('Server Error');
         }
+        history.push('/')
       });
   };
 
