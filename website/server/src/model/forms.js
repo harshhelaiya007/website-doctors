@@ -36,6 +36,10 @@ const doctorSchema = new Schema({
     required: true,
     unique: true
   },
+  image: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now

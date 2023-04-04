@@ -192,6 +192,20 @@ function Card({ keyId }) {
     const formData = new FormData();
     formData.append("image", file);
     console.log(formData);
+    var imageUrl;
+    // image axios
+    axios
+    .post("http://localhost:3000/upload", formData)
+    .then((response) => {
+      console.log(response.data);
+      // do something with the response data
+      imageUrl = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    console.log(imageUrl + '  new');
+    // form axios
     axios
       .post("http://localhost:3000/forms", {
         cardId: keyId,
@@ -202,19 +216,11 @@ function Card({ keyId }) {
         hq: hq,
         fsoname: fsoname,
         doctorNumber: number,
+        image: imageUrl
       })
       .then((response) => {
         console.log(response.data);
         alert('Data Successfully Saved')
-        // do something with the response data
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axios
-      .post("http://localhost:3000/upload", formData)
-      .then((response) => {
-        console.log(response.data);
         // do something with the response data
       })
       .catch((error) => {

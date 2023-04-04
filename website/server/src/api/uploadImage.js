@@ -26,6 +26,7 @@ router.post('/', upload.single('image'), async (req, res) => {
 
 // get 
 router.get('/images/:key', (req, res) => {
+    console.log(req.body);
     console.log(req.params)
     const key = req.params.key
     const readStream = getFileStream(key)
