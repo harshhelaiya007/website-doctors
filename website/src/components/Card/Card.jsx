@@ -355,6 +355,7 @@ function Card({ keyId }) {
                 hidden
               />
               <Photo UploadImage={croppedImage} key={keyId} />
+              <Photo UploadImage={'/images/1ada5ae7fd354ef56eff96220ec78ad1'} />
             </div>
           </div>
         </div>

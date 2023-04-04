@@ -48,7 +48,7 @@ router.post('/', [
 
         if (email === adminUsername && password === adminPassword) {
             res.set('Authorization', 'Bearer ' + token);
-            return res.status(200).json({ message: 'Login successful', token, user: { user }, loggedIn: true });
+            return res.status(200).json({ message: 'Login successful', token, user: { user }, loggedIn: true, admin:true });
         }
         res.json({ token, user: { user }, loggedIn: true });
     } catch (err) {
