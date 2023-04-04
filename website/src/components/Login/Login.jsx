@@ -1,28 +1,51 @@
 import { React, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
 import axios from "axios";
 import "./Login.css";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const handleLogin = (event) => {
     event.preventDefault();
+    var loaderEle = document.querySelector('.lds-dual-ring')
+    loaderEle.classList.add('active')
+    document.querySelector('.form-section.login-box').classList.add('dsp-none');
+    document.querySelector('.header').classList.add('dsp-none');
 
     axios
       .post("http://localhost:3000/login", {
-        username: username,
+        email: email,
         password: password,
       })
       .then((response) => {
         console.log(response.data);
+        let registerUserData = response.data;
+        localStorage.setItem("userData", JSON.stringify(registerUserData));
+        var loaderEle = document.querySelector('.lds-dual-ring')
+        loaderEle.classList.remove('active')
+        document.querySelector('.form-section.login-box').classList.remove('dsp-none');
+        document.querySelector('.header').classList.remove('dsp-none');
+        history.push('/Home');
+        window.location.reload();
         // do something with the response data
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error.response);
+        if (error.response.status === 400) {
+          alert('BAD REQUEST')
+          var loaderEle = document.querySelector('.lds-dual-ring')
+          loaderEle.classList.remove('active')
+          document.querySelector('.form-section.login-box').classList.remove('dsp-none');
+          document.querySelector('.header').classList.remove('dsp-none');
+        } else if(error.response.status === 500) {
+          alert('Server Error');
+        }
+        history.push('/')
       });
   };
 
@@ -55,7 +78,7 @@ function Login() {
                 labelText={"Email"}
                 parentWrapperClass={"login-form"}
                 changeEvent={(event) => {
-                  setUsername(event.target.value);
+                  setEmail(event.target.value);
                 }}
               />
               <Input

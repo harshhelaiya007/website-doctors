@@ -7,7 +7,7 @@ const doctorSchema = new Schema({
     required: true
   },
   reference: {
-    type: String,
+    type: Object,
     required: true
   },
   name: {

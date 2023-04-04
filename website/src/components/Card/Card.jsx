@@ -11,6 +11,7 @@ function Card({ keyId }) {
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
+  const [fsoname, setFsoName] = useState("");
   const [file, setFile] = useState([]);
   const { setImage, croppedImage } = useContext(ModelImageContext);
   var userInfo = localStorage.getItem("userData");
@@ -75,6 +76,18 @@ function Card({ keyId }) {
     }
   };
 
+  const handleFsoName = (e) => {
+    let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
+    let inputValue = e.target.value;
+    buttonDisable(e.target);
+    if (!inputValue == "" && docRegx.test(inputValue)) {
+      showSuccess(e.target);
+      setFsoName(inputValue);
+    } else {
+      showRequired(e.target, "Name is Required.", "Please Enter Valid Name.");
+    }
+  };
+
   // email validation
   const handleEmail = (e) => {
     let emailRegx = /\S+@\S+\.\S+/;
@@ -116,12 +129,6 @@ function Card({ keyId }) {
     }
   };
 
-  const handleSubmit = (e) => {
-    if (document.querySelector("form").classList.contains("error")) {
-      e.preventDefault();
-    }
-  };
-
   const handleNumber = (e) => {
     e.target.value = e.target.value.replace(/[^0-9]/g, "");
     let docNumberRegx = /^[0-9]*$/;
@@ -129,6 +136,7 @@ function Card({ keyId }) {
     buttonDisable(e.target);
     if (!inputValue == "" && docNumberRegx.test(inputValue)) {
       showSuccess(e.target);
+      setNumber(inputValue);
     } else {
       showError(
         e.target,
@@ -141,6 +149,8 @@ function Card({ keyId }) {
   const handleInputChange = (event) => {
     const file = event.target.files;
     setFile(file[0]);
+    event.target.classList.add("valid");
+    event.target.parentElement.parentNode.classList.add("valid");
     const bool = validateImageSize(file);
     if (bool) {
       convertToBase64(file, true)
@@ -177,21 +187,32 @@ function Card({ keyId }) {
     });
   };
 
-  const handleSubmitClick = () => {
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("image", file);
     console.log(formData);
     axios
       .post("http://localhost:3000/forms", {
-        cardId: "1",
-        reference: "user",
-        name: "name",
-        email: "email1@gmail.com",
-        region: "regon",
-        hq: "d",
-        fsoname: "dd",
-        doctorNumber: "567898765467",
+        cardId: keyId,
+        reference: userInfo,
+        name: name,
+        email: email,
+        region: region,
+        hq: hq,
+        fsoname: fsoname,
+        doctorNumber: number,
       })
+      .then((response) => {
+        console.log(response.data);
+        alert('Data Successfully Saved')
+        // do something with the response data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios
+      .post("http://localhost:3000/upload", formData)
       .then((response) => {
         console.log(response.data);
         // do something with the response data
@@ -205,15 +226,29 @@ function Card({ keyId }) {
     let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
     let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
     let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
+    console.log(
+      inputFieldDRegion.parentElement.parentNode.classList.add("valid")
+    );
     if (!inputFieldDRegion == "") {
-      if (userInfo && !userInfo == "") {
+      if (userInfo && !userInfo.user == "") {
         inputFieldDRegion.value = userInfo.user.user.region;
+        setRegion(userInfo.user.user.region)
         inputFieldDHQ.value = userInfo.user.user.hq;
+        setHq(userInfo.user.user.hq)
         inputFieldFsoName.value = userInfo.user.user.fsoname;
+        setFsoName(userInfo.user.user.fsoname);
+
+        inputFieldDRegion.parentElement.parentNode.classList.add("valid");
+        inputFieldDHQ.parentElement.parentNode.classList.add("valid");
+        inputFieldFsoName.parentElement.parentNode.classList.add("valid");
+
         inputFieldDRegion.previousElementSibling.classList.add(
           "input-active",
           "input-focus"
         );
+        inputFieldDRegion.classList.add("valid");
+        inputFieldDHQ.classList.add("valid");
+        inputFieldFsoName.classList.add("valid");
         inputFieldDHQ.previousElementSibling.classList.add(
           "input-active",
           "input-focus"
@@ -228,7 +263,7 @@ function Card({ keyId }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitClick}>
         <div className="d-flex main-wrapper">
           <div className="left-side-wrapper">
             <div className="d-flex form-flex-wrapper">
@@ -271,7 +306,7 @@ function Card({ keyId }) {
                 type="text"
                 name={`fsoName-${keyId}`}
                 labelText={"FSO Name"}
-                changeEvent={handleName}
+                changeEvent={handleFsoName}
               />
               <Input
                 inputId={`inputDoctorNumber-${keyId}`}
@@ -286,9 +321,9 @@ function Card({ keyId }) {
             <div className="d-flex form-flex-wrapper btn-div">
               <Button
                 className="btn btn-primary btn-lg btn-color submit-btn"
-                type="button"
-                btnText={"Submit"}
-                onClick={handleSubmitClick}
+                type="submit"
+                btnText={"submit"}
+                disabled
               />
               <Button
                 className="btn btn-secondary btn-lg btn-color cancel-btn"

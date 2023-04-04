@@ -23,7 +23,7 @@ router.post('/', [
     }
 
     // Extract doctor input from request body
-    const { name, email, region, hq, fsoname, doctorNumber, image, cardId, reference } = req.body;
+    const { name, email, region, hq, fsoname, doctorNumber, cardId, reference } = req.body;
 
     try {
         // Check if doctor with given email exists

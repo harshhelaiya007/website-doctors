@@ -1,5 +1,6 @@
 import { React } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 import "jquery";
 import "bootstrap";
 import "./Header.css";
@@ -8,8 +9,39 @@ const navItems = ["Home", "Login", "Admin"];
 
 function Header() {
   // <!-- Header Section start here -->
+
+  var userInfo = localStorage.getItem("userData");
+  const history = useHistory();
+
+  if (userInfo && !userInfo == "") {
+    userInfo = JSON.parse(localStorage.getItem("userData"));
+    var admin = userInfo.admin
+  }
+  const handleLogoutClick = () => {
+    axios
+      .post("http://localhost:3000/logout", {
+        email: userInfo.user.user.email,
+        token: userInfo.token,
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.removeItem('userData');
+        history.push('/');
+        window.location.reload();
+        // do something with the response data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleNavItemClick = (event) => {
+    // Handle the click event here
+    console.log("Nav-item clicked:", event.target.textContent);
+  };
+
   return (
-    <section>
+    <section className="header">
       <nav className="navbar navbar-expand-lg">
         <div className="container">
           <ul className="navbar-nav mr-auto">
@@ -48,17 +80,28 @@ function Header() {
                 ></button>
               </div>
               <div className="d-flex mobile-d-flex">
-                {navItems.map((navItemName) => (
-                  <li className="nav-item" key={navItemName}>
-                    <Link to={"/" + navItemName} className="nav-link">
-                      {navItemName}
-                    </Link>
-                  </li>
-                ))}
+                {navItems.map((navItemName) => {
+                  if (userInfo && navItemName === "Login") {
+                    return null; // hide Login nav-item when user is logged in
+                  }
+                  if (!admin && navItemName === "Admin") {
+                    return null; // hide Login nav-item when user is logged in
+                  }
+                  if (!userInfo && navItemName === "Home") {
+                    return null; // hide Login nav-item when user is logged in
+                  }
+                  return (
+                    <li className="nav-item" key={navItemName} onClick={handleNavItemClick}>
+                      <Link to={"/" + navItemName} className="nav-link">
+                        {navItemName}
+                      </Link>
+                    </li>
+                  );
+                })}
               </div>
             </div>
           </ul>
-          <div className="nav-item dropdown">
+          <div className={`nav-item dropdown ${userInfo ? '' : 'dsp-none'}`}>
             <a
               className="nav-link dropdown-toggle text-white"
               id="navbarDropdown"
@@ -74,7 +117,7 @@ function Header() {
               className="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdown"
             >
-              <li>
+              <li onClick={handleLogoutClick}>
                 <a className="dropdown-item">Log out</a>
               </li>
             </ul>
