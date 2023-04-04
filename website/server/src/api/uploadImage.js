@@ -6,7 +6,7 @@ const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
 const upload = multer({ dest: 'uploads' });
 
-// const { uploadFile, getFileStream } = require('../../s3')
+const { uploadFile, getFileStream } = require('../../s3')
 // storage
 router.post('/', upload.single('image'), async (req, res) => {
     const file = req.file

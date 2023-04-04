@@ -15,6 +15,7 @@ function Header() {
 
   if (userInfo && !userInfo == "") {
     userInfo = JSON.parse(localStorage.getItem("userData"));
+    var admin = userInfo.admin
   }
   const handleLogoutClick = () => {
     axios
@@ -83,7 +84,7 @@ function Header() {
                   if (userInfo && navItemName === "Login") {
                     return null; // hide Login nav-item when user is logged in
                   }
-                  if (!userInfo.admin && navItemName === "Admin") {
+                  if (!admin && navItemName === "Admin") {
                     return null; // hide Login nav-item when user is logged in
                   }
                   if (!userInfo && navItemName === "Home") {

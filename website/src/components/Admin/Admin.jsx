@@ -24,6 +24,7 @@ function Admin() {
             { data: "hq" },
             { data: "fsoname" },
             { data: "doctorNumber" },
+            { data: "reference"}
           ],
           dom: "Bfrtip",
           buttons: ["copy", "csv", "excel", "pdf", "print"],
@@ -46,6 +47,7 @@ function Admin() {
                 <th>HQ</th>
                 <th>FSOName</th>
                 <th>Doctor Number</th>
+                <th>Reference</th>
               </tr>
             </thead>
             <tbody></tbody>

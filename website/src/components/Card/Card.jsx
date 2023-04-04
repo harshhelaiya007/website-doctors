@@ -211,15 +211,15 @@ function Card({ keyId }) {
       .catch((error) => {
         console.log(error);
       });
-    // axios
-    //   .post("http://localhost:3000/upload", formData)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // do something with the response data
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    axios
+      .post("http://localhost:3000/upload", formData)
+      .then((response) => {
+        console.log(response.data);
+        // do something with the response data
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
