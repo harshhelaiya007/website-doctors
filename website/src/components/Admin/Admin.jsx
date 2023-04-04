@@ -3,8 +3,11 @@ import $ from "jquery";
 import "datatables.net-dt/css/jquery.dataTables.css";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables.net-buttons-dt/css/buttons.dataTables.css";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
 import "./Admin.css";
 
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 function Admin() {
   useEffect(() => {
     // Fetch data from the API
@@ -22,8 +25,9 @@ function Admin() {
             { data: "fsoname" },
             { data: "doctorNumber" },
           ],
-          // Add export button
-          buttons: ["csv"],
+          dom: "Bfrtip",
+          buttons: ["copy", "csv", "excel", "pdf", "print"],
+          bDestroy: true,
         });
       });
   }, []);

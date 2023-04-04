@@ -17,6 +17,8 @@
     "datatables.net-buttons-dt": "^2.3.6",
     "datatables.net-dt": "^1.13.4",
     "jquery": "^3.6.4",
+    "jszip": "^3.10.1",
+    "pdfmake": "^0.2.7",
     "popper.js": "^1.16.1",
     "react": "^18.2.0",
     "react-cropper": "^2.3.2",
