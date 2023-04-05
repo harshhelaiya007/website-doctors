@@ -39,7 +39,7 @@ const loginRoute = require("./src/api/login");
 const logoutRoute = require("./src/api/logout");
 const formRoute = require("./src/api/form");
 const doctorsDetails = require("./src/api/doctos");
-const uploadImage = require("./src/api/uploadImage");
+const uploadImage = require("./src/api/image");
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
 app.use("/logout", logoutRoute);
@@ -49,8 +49,8 @@ app.use("/upload", uploadImage);
 app.listen(80, () => console.log("Server running on port 80"));
 
 // Load react build
-app.use(express.static("frontend/build"));
+// app.use(express.static("frontend/build"));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+// });

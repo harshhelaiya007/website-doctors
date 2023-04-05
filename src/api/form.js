@@ -1,20 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
 const Doctor = require('../model/forms');
 const multer = require('multer')
+const s3 = require('../../s3');
 const upload = multer({ dest: 'uploads' });
+
+const fs = require('fs')
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
 
 // Define doctor creation endpoint
 router.post('/', [
-    // Validate user input
-    check('name', 'Please enter the doctor name').notEmpty(),
-    check('email', 'Please enter a valid email').isEmail(),
-    check('region', 'Please enter the region').notEmpty(),
-    check('hq', 'Please enter the headquarters').notEmpty(),
-    check('fsoname', 'Please enter the FSO name').notEmpty(),
-    check('doctorNumber', 'Please enter the doctor number').notEmpty(),
-], upload.single('image'), async (req, res) => {
+    upload.single('image')
+], async (req, res) => {
 
     // Check for validation errors
     const errors = validationResult(req);
@@ -23,26 +21,24 @@ router.post('/', [
     }
 
     // Extract doctor input from request body
-    const { name, email, region, hq, fsoname, doctorNumber, cardId, reference, image } = req.body;
+    const { name, region, hq, fsoname, doctorNumber, cardId, reference } = req.body;
 
     try {
-        // Check if doctor with given email exists
-        let doctor = await Doctor.findOne({ email });
-        if (doctor) {
-            return res.status(400).json({ msg: 'Doctor already exists' });
-        }
+        // Upload image to S3 bucket
+        const file = req.file;
+        const imageUrl = await s3.uploadImage(file.path);
+        await unlinkFile(file.path)
 
         // Create new doctor
         doctor = new Doctor({
             cardId,
             reference,
             name,
-            email,
             region,
             hq,
             fsoname,
             doctorNumber,
-            image
+            image: imageUrl
         });
         // Save new doctor to database
         await doctor.save();

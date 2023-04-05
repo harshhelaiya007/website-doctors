@@ -1,6 +1,7 @@
 require('dotenv').config()
 const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3')
+const path = require('path');
 
 const bucketName = process.env.AWS_BUCKET_NAME
 const region = process.env.AWS_BUCKET_REGION
@@ -13,28 +14,22 @@ const s3 = new S3({
   secretAccessKey
 })
 
-// uploads a file to s3
-function uploadFile(file) {
-  const fileStream = fs.createReadStream(file.path)
 
-  const uploadParams = {
+const uploadImage = (filePath) => {
+  const fileContent = fs.readFileSync(filePath);
+  const fileName = path.basename(filePath);
+  const fileExtension = fileName.split('.').pop();
+  const contentType = `image/${fileExtension}`;
+
+  const params = {
     Bucket: bucketName,
-    Body: fileStream,
-    Key: file.filename
-  }
+    Key: `${Date.now()}.${fileExtension}`,
+    Body: fileContent,
+    ContentType: contentType,
+  };
 
-  return s3.upload(uploadParams).promise()
-}
-exports.uploadFile = uploadFile
+  return s3.upload(params).promise()
+    .then(data => data.Location);
+};
 
-
-// downloads a file from s3
-function getFileStream(fileKey) {
-  const downloadParams = {
-    Key: fileKey,
-    Bucket: bucketName
-  }
-
-  return s3.getObject(downloadParams).createReadStream()
-}
-exports.getFileStream = getFileStream
+module.exports = { uploadImage };

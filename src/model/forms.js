@@ -14,11 +14,6 @@ const doctorSchema = new Schema({
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
   region: {
     type: String,
     required: true

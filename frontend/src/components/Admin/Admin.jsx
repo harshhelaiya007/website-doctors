@@ -15,7 +15,7 @@ function Admin() {
     document.querySelector(".form-section").classList.add("dsp-none");
     document.querySelector(".header").classList.add("dsp-none");
     // Fetch data from the API
-    fetch("/doctors")
+    fetch("http://localhost:80/doctors")
       .then((response) => response.json())
       .then((data) => {
         // Initialize DataTable
@@ -27,7 +27,8 @@ function Admin() {
             { data: "hq" },
             { data: "fsoname" },
             { data: "doctorNumber" },
-            { data: "reference"}
+            { data: "reference" },
+            { data: "image" },
           ],
           dom: "Bfrtip",
           buttons: ["csv", "excel", "pdf", "print"],
@@ -35,24 +36,20 @@ function Admin() {
         });
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
-        document
-          .querySelector(".form-section")
-          .classList.remove("dsp-none");
+        document.querySelector(".form-section").classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
       })
       .catch((error) => {
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
-        document
-          .querySelector(".form-section")
-          .classList.remove("dsp-none");
+        document.querySelector(".form-section").classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
         if (error.response.status === 400) {
           alert("BAD REQUEST");
         } else {
-          alert('Server Error');
+          alert("Server Error");
         }
-      })
+      });
   }, []);
 
   return (
@@ -69,6 +66,7 @@ function Admin() {
                 <th>FSOName</th>
                 <th>Doctor Number</th>
                 <th>Reference</th>
+                <th>IMAGE</th>
               </tr>
             </thead>
             <tbody></tbody>

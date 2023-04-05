@@ -176,31 +176,25 @@ function Card({ keyId }) {
     loaderEle.classList.add("active");
     document.querySelector(".form-section").classList.add("dsp-none");
     document.querySelector(".header").classList.add("dsp-none");
+
     const formData = new FormData();
-    formData.append("image", fileDirect, fileDirect.name);
+    formData.append("cardId", keyId);
+    formData.append("reference", userInfo.user.user.email);
+    formData.append("name", name);
+    formData.append("region", region);
+    formData.append("hq", hq);
+    formData.append("fsoname", fsoname);
+    formData.append("doctorNumber", number);
+    formData.append("image", fileDirect);
 
     // form axios
     axios
-      .post(
-        "http://localhost:80/forms",
-        {
-          cardId: keyId,
-          reference: userInfo.user.user.email,
-          name: name,
-          region: region,
-          hq: hq,
-          fsoname: fsoname,
-          doctorNumber: number,
-          image: formData
-        }
-      )
+      .post("http://localhost:80/forms", formData)
       .then((response) => {
         console.log(response.data);
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
-        document
-          .querySelector(".form-section")
-          .classList.remove("dsp-none");
+        document.querySelector(".form-section").classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
         alert("Data Successfully Saved");
         // do something with the response data
@@ -208,14 +202,12 @@ function Card({ keyId }) {
       .catch((error) => {
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
-        document
-          .querySelector(".form-section")
-          .classList.remove("dsp-none");
+        document.querySelector(".form-section").classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
         if (error.response.status === 400) {
           alert("BAD REQUEST");
         } else {
-          alert('Server Error');
+          alert("Server Error");
         }
       });
   };
