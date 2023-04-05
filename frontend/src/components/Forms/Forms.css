@@ -383,7 +383,7 @@ label.file-label {
 }
 
 /* responsive design */
-@media screen and (max-width:767px) {
+@media screen and (max-width:919px) {
     .hide-in-mobile {
         display: none;
     }
@@ -507,6 +507,12 @@ label.file-label {
     }
     .comesForward.cloned {
         z-index: 999;
+    }
+    .modal-body {
+        width: 100%;
+    }
+    .modal-content {
+        width: 100%;
     }
 }
 

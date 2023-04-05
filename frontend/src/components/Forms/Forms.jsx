@@ -54,6 +54,7 @@ function Forms() {
     movable: true,
     zoomable: false,
     cropBoxResizable: true,
+    responsive: true,
     crop: () => {
       const canvas = cropper.getCroppedCanvas();
       setCroppedImage(canvas.toDataURL());
@@ -76,7 +77,7 @@ function Forms() {
         console.log();
         cardEle.style.width = window.innerWidth - 50;
       });
-      localStorage.setItem('cardWidthHome',window.innerWidth - 50)
+      localStorage.setItem("cardWidthHome", window.innerWidth - 50);
       sideBarClone.style.width = window.innerWidth - 50;
     } else {
       console.log("card size is in window");
