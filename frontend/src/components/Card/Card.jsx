@@ -321,7 +321,7 @@ function Card({ keyId }) {
               <Photo UploadImage={croppedImage} key={keyId} />
             </div>
             <br />
-            <p className={`${croppedImage ? "dsp-none" : ""}`}>
+            <p className={`info-p ${croppedImage ? "dsp-none" : ""}`}>
               Please Upload Image First
             </p>
           </div>

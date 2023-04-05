@@ -10,6 +10,14 @@
     height: 870px;
 }
 
+.form-group.login-form:nth-child(6) {
+    margin: 0;
+}
+
+.info-p.d-flex {
+    flex-direction: column;
+}
+
 @media screen and (max-width:767px) {
     .form-section.login-box.signup {
         margin: 0;

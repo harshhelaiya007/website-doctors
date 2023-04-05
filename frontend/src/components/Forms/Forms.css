@@ -388,7 +388,7 @@ label.file-label {
     align-items: center;
 }
 
-.right-side-wrapper p {
+.info-p {
     font-size: 12px;
     font-weight: 500;
     color: red;

@@ -3,7 +3,7 @@ import axios from "axios";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import "./Signup.css";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -165,7 +165,7 @@ function Signup() {
           .querySelector(".form-section.login-box")
           .classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
-        history.push('/Login');
+        history.push("/Login");
       })
       .catch((error) => {
         console.log(error.response);
@@ -178,7 +178,7 @@ function Signup() {
             .classList.remove("dsp-none");
           document.querySelector(".header").classList.remove("dsp-none");
         }
-        history.push('/Signup');
+        history.push("/Signup");
       });
   };
 
@@ -255,6 +255,10 @@ function Signup() {
                 parentWrapperClass={"login-form"}
                 changeEvent={handlePassword}
               />
+              <p className={`info-p d-flex`}>
+                <span>One UpperCase Letter, One LowerCase Letter</span>
+                <span>One Special Character, One Number, Mininum 6 Letter</span>
+              </p>
               {/* <Input
                 inputId={"inputConfirmPassword"}
                 type="password"
