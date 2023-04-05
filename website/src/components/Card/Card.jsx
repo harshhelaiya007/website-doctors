@@ -15,6 +15,7 @@ function Card({ keyId }) {
   const [file, setFile] = useState([]);
   const { setImage, croppedImage } = useContext(ModelImageContext);
   var userInfo = localStorage.getItem("userData");
+  const [filePath, setfilePath] = useState('');
 
   if (userInfo && !userInfo == "") {
     userInfo = JSON.parse(localStorage.getItem("userData"));
@@ -187,24 +188,26 @@ function Card({ keyId }) {
     });
   };
 
-  const handleSubmitClick = (e) => {
+  const handleSubmitClick = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", file);
-    console.log(formData);
-    var imageUrl;
+    formData.append("image", file)
+  
     // image axios
     axios
     .post("http://localhost:3000/upload", formData)
     .then((response) => {
       console.log(response.data);
       // do something with the response data
-      imageUrl = response.data;
+      setfilePath(response.data)
     })
     .catch((error) => {
       console.log(error);
     });
-    console.log(imageUrl + '  new');
+    if (!filePath == '') {
+      debugger
+      console.log(filePath);
+    }
     // form axios
     axios
       .post("http://localhost:3000/forms", {
@@ -216,7 +219,7 @@ function Card({ keyId }) {
         hq: hq,
         fsoname: fsoname,
         doctorNumber: number,
-        image: imageUrl
+        image: filePath
       })
       .then((response) => {
         console.log(response.data);
@@ -329,7 +332,7 @@ function Card({ keyId }) {
                 className="btn btn-primary btn-lg btn-color submit-btn"
                 type="submit"
                 btnText={"submit"}
-                disabled
+                
               />
               <Button
                 className="btn btn-secondary btn-lg btn-color cancel-btn"
@@ -355,7 +358,6 @@ function Card({ keyId }) {
                 hidden
               />
               <Photo UploadImage={croppedImage} key={keyId} />
-              {/* <Photo UploadImage={'/images/1ada5ae7fd354ef56eff96220ec78ad1'} /> */}
             </div>
           </div>
         </div>

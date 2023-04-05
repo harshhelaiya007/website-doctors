@@ -1,34 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { v4: uuidv4 } = require('uuid'); // You may need to install the `uuid` package
+const fs = require('fs')
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
 
+const upload = multer({ dest: 'uploads/' })
 const { uploadFile, getFileStream } = require('../../s3');
 
-const upload = multer();
+router.get('/images/:key', (req, res) => {
+  console.log(req.params)
+  const key = req.params.key
+  const readStream = getFileStream(key)
 
-// Upload an image file to S3
-router.post('/upload', upload.single('image'), async (req, res, next) => {
-  try {
-    const file = req.file;
-    const result = await uploadFile(file);
-    res.status(200).json({ success: true, fileUrl: result.Location });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
+  readStream.pipe(res)
+})
 
-// Retrieve an image file from S3
-router.get('/image/:key', async (req, res, next) => {
-  try {
-    const key = req.params.key;
-    const readStream = getFileStream(key);
-    readStream.pipe(res);
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
+router.post('/', upload.single('image'), async (req, res) => {
+  const file = req.file
+  console.log(file)
+
+  // apply filter
+  // resize 
+
+  const result = await uploadFile(file)
+  await unlinkFile(file.path)
+  console.log(result)
+  const description = req.body.description
+  res.send({imagePath: `/images/${result.Key}`})
+})
+
 
 module.exports = router;
