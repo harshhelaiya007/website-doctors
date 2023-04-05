@@ -10,6 +10,10 @@ import "./Admin.css";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 function Admin() {
   useEffect(() => {
+    var loaderEle = document.querySelector(".lds-dual-ring");
+    loaderEle.classList.add("active");
+    document.querySelector(".form-section").classList.add("dsp-none");
+    document.querySelector(".header").classList.add("dsp-none");
     // Fetch data from the API
     fetch("/doctors")
       .then((response) => response.json())
@@ -29,7 +33,26 @@ function Admin() {
           buttons: ["csv", "excel", "pdf", "print"],
           bDestroy: true,
         });
-      });
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
+      })
+      .catch((error) => {
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
+        if (error.response.status === 400) {
+          alert("BAD REQUEST");
+        } else {
+          alert('Server Error');
+        }
+      })
   }, []);
 
   return (

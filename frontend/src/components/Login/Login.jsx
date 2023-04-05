@@ -36,13 +36,15 @@ function Login() {
       })
       .catch((error) => {
         console.log(error.response);
+        var loaderEle = document.querySelector('.lds-dual-ring')
+        loaderEle.classList.remove('active')
+        document.querySelector('.form-section.login-box').classList.remove('dsp-none');
+        document.querySelector('.header').classList.remove('dsp-none');
         if (error.response.status === 400) {
           alert('BAD REQUEST')
-          var loaderEle = document.querySelector('.lds-dual-ring')
-          loaderEle.classList.remove('active')
-          document.querySelector('.form-section.login-box').classList.remove('dsp-none');
-          document.querySelector('.header').classList.remove('dsp-none');
         } else if(error.response.status === 500) {
+          alert('Server Error');
+        } else {
           alert('Server Error');
         }
         history.push('/')

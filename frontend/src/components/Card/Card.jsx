@@ -172,6 +172,10 @@ function Card({ keyId }) {
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
+    var loaderEle = document.querySelector(".lds-dual-ring");
+    loaderEle.classList.add("active");
+    document.querySelector(".form-section").classList.add("dsp-none");
+    document.querySelector(".header").classList.add("dsp-none");
     const formData = new FormData();
     formData.append("image", fileDirect, fileDirect.name);
 
@@ -192,11 +196,27 @@ function Card({ keyId }) {
       )
       .then((response) => {
         console.log(response.data);
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
         alert("Data Successfully Saved");
         // do something with the response data
       })
       .catch((error) => {
-        console.log(error);
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
+        if (error.response.status === 400) {
+          alert("BAD REQUEST");
+        } else {
+          alert('Server Error');
+        }
       });
   };
 

@@ -18,6 +18,10 @@ function Header() {
     var admin = userInfo.admin
   }
   const handleLogoutClick = () => {
+    var loaderEle = document.querySelector(".lds-dual-ring");
+    loaderEle.classList.add("active");
+    document.querySelector(".form-section.login-box").classList.add("dsp-none");
+    document.querySelector(".header").classList.add("dsp-none");
     axios
       .post("/logout", {
         email: userInfo.user.user.email,
@@ -28,10 +32,27 @@ function Header() {
         localStorage.removeItem('userData');
         history.push('/');
         window.location.reload();
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section.login-box")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
         // do something with the response data
       })
       .catch((error) => {
         console.log(error);
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section.login-box")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
+        if (error.response.status === 400) {
+          alert("BAD REQUEST");
+        } else {
+          alert('Server Error');
+        }
       });
   };
 
