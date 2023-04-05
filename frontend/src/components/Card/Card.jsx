@@ -7,15 +7,13 @@ import ModelImageContext from "../Context/ModelImageContext";
 
 function Card({ keyId }) {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
   const [fsoname, setFsoName] = useState("");
-  const [file, setFile] = useState([]);
+  const [fileDirect, setFileDirect] = useState("");
   const { setImage, croppedImage } = useContext(ModelImageContext);
   var userInfo = localStorage.getItem("userData");
-  const [filePath, setfilePath] = useState('');
 
   if (userInfo && !userInfo == "") {
     userInfo = JSON.parse(localStorage.getItem("userData"));
@@ -89,23 +87,6 @@ function Card({ keyId }) {
     }
   };
 
-  // email validation
-  const handleEmail = (e) => {
-    let emailRegx = /\S+@\S+\.\S+/;
-    let inputValue = e.target.value;
-    buttonDisable(e.target);
-    if (!inputValue == "" && emailRegx.test(inputValue)) {
-      showSuccess(e.target);
-      setEmail(inputValue);
-    } else {
-      showRequired(
-        e.target,
-        "Email is Required.",
-        "Please Enter Valid Email Address."
-      );
-    }
-  };
-
   const handleRegion = (e) => {
     e.target.value = e.target.value.replace(/[^a-z\s]/gi, "");
     let regionRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
@@ -141,7 +122,7 @@ function Card({ keyId }) {
     } else {
       showError(
         e.target,
-        "Docots Number is Required",
+        "Doctors Number is Required",
         "Please Enter Valid Docots Number."
       );
     }
@@ -149,7 +130,7 @@ function Card({ keyId }) {
 
   const handleInputChange = (event) => {
     const file = event.target.files;
-    setFile(file[0]);
+    setFileDirect(file[0]);
     event.target.classList.add("valid");
     event.target.parentElement.parentNode.classList.add("valid");
     const bool = validateImageSize(file);
@@ -157,7 +138,8 @@ function Card({ keyId }) {
       convertToBase64(file, true)
         .then((data) => {
           setImage(data);
-          openModelImage();
+          console.log(file[0]);
+          // openModelImage();
         })
         .catch((error) => {
           console.error(error);
@@ -191,39 +173,26 @@ function Card({ keyId }) {
   const handleSubmitClick = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("image", file)
-  
-    // image axios
-    axios
-    .post("/upload", formData)
-    .then((response) => {
-      console.log(response.data);
-      // do something with the response data
-      setfilePath(response.data)
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    if (!filePath == '') {
-      debugger
-      console.log(filePath);
-    }
+    formData.append("image", fileDirect, fileDirect.name);
+
     // form axios
     axios
-      .post("/forms", {
-        cardId: keyId,
-        reference: userInfo.user.user.email,
-        name: name,
-        email: email,
-        region: region,
-        hq: hq,
-        fsoname: fsoname,
-        doctorNumber: number,
-        image: filePath
-      })
+      .post(
+        "http://localhost:80/forms",
+        {
+          cardId: keyId,
+          reference: userInfo.user.user.email,
+          name: name,
+          region: region,
+          hq: hq,
+          fsoname: fsoname,
+          doctorNumber: number,
+          image: formData
+        }
+      )
       .then((response) => {
         console.log(response.data);
-        alert('Data Successfully Saved')
+        alert("Data Successfully Saved");
         // do something with the response data
       })
       .catch((error) => {
@@ -241,9 +210,9 @@ function Card({ keyId }) {
     if (!inputFieldDRegion == "") {
       if (userInfo && !userInfo.user == "") {
         inputFieldDRegion.value = userInfo.user.user.region;
-        setRegion(userInfo.user.user.region)
+        setRegion(userInfo.user.user.region);
         inputFieldDHQ.value = userInfo.user.user.hq;
-        setHq(userInfo.user.user.hq)
+        setHq(userInfo.user.user.hq);
         inputFieldFsoName.value = userInfo.user.user.fsoname;
         setFsoName(userInfo.user.user.fsoname);
 
@@ -284,12 +253,13 @@ function Card({ keyId }) {
                 changeEvent={handleName}
               />
               <Input
-                inputId={`inputEmail-${keyId}`}
+                inputId={`inputDoctorNumber-${keyId}`}
                 type="text"
-                name={`email${keyId}`}
+                name={`doctorNumber-${keyId}`}
                 labelClassName={"email-label"}
-                labelText={"Email"}
-                changeEvent={handleEmail}
+                labelText={"Doctors Number"}
+                changeEvent={handleNumber}
+                maxLength="10"
               />
             </div>
             <div className="d-flex form-flex-wrapper">
@@ -317,22 +287,13 @@ function Card({ keyId }) {
                 labelText={"FSO Name"}
                 changeEvent={handleFsoName}
               />
-              <Input
-                inputId={`inputDoctorNumber-${keyId}`}
-                type="text"
-                name={`doctorNumber-${keyId}`}
-                labelClassName={"email-label"}
-                labelText={"Doctors Number"}
-                changeEvent={handleNumber}
-                maxLength="10"
-              />
             </div>
             <div className="d-flex form-flex-wrapper btn-div">
               <Button
                 className="btn btn-primary btn-lg btn-color submit-btn"
                 type="submit"
                 btnText={"submit"}
-                
+                disabled
               />
               <Button
                 className="btn btn-secondary btn-lg btn-color cancel-btn"
@@ -359,6 +320,10 @@ function Card({ keyId }) {
               />
               <Photo UploadImage={croppedImage} key={keyId} />
             </div>
+            <br />
+            <p className={`${croppedImage ? "dsp-none" : ""}`}>
+              Please Upload Image First
+            </p>
           </div>
         </div>
       </form>

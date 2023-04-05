@@ -19,7 +19,6 @@ function Admin() {
           data: data.doctors,
           columns: [
             { data: "name" },
-            { data: "email" },
             { data: "region" },
             { data: "hq" },
             { data: "fsoname" },
@@ -42,7 +41,6 @@ function Admin() {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Email</th>
                 <th>Region</th>
                 <th>HQ</th>
                 <th>FSOName</th>

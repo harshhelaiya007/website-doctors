@@ -382,6 +382,18 @@ label.file-label {
     z-index: 1;
 }
 
+.right-side-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-side-wrapper p {
+    font-size: 12px;
+    font-weight: 500;
+    color: red;
+}
+
 /* responsive design */
 @media screen and (max-width:919px) {
     .hide-in-mobile {
