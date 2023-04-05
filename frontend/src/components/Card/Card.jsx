@@ -195,7 +195,7 @@ function Card({ keyId }) {
   
     // image axios
     axios
-    .post("http://localhost:3000/upload", formData)
+    .post("/upload", formData)
     .then((response) => {
       console.log(response.data);
       // do something with the response data
@@ -210,7 +210,7 @@ function Card({ keyId }) {
     }
     // form axios
     axios
-      .post("http://localhost:3000/forms", {
+      .post("/forms", {
         cardId: keyId,
         reference: userInfo.user.user.email,
         name: name,

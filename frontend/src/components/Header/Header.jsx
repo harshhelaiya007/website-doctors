@@ -19,7 +19,7 @@ function Header() {
   }
   const handleLogoutClick = () => {
     axios
-      .post("http://localhost:3000/logout", {
+      .post("/logout", {
         email: userInfo.user.user.email,
         token: userInfo.token,
       })

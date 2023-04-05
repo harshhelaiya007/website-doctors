@@ -11,7 +11,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 function Admin() {
   useEffect(() => {
     // Fetch data from the API
-    fetch("http://localhost:3000/doctors")
+    fetch("/doctors")
       .then((response) => response.json())
       .then((data) => {
         // Initialize DataTable
