@@ -16,7 +16,7 @@ function Admin() {
       .then((data) => {
         // Initialize DataTable
         const dataTable = $("#data-table").DataTable({
-          data: data,
+          data: data.doctors,
           columns: [
             { data: "name" },
             { data: "email" },
@@ -27,7 +27,7 @@ function Admin() {
             { data: "reference"}
           ],
           dom: "Bfrtip",
-          buttons: ["copy", "csv", "excel", "pdf", "print"],
+          buttons: ["csv", "excel", "pdf", "print"],
           bDestroy: true,
         });
       });

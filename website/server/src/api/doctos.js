@@ -5,7 +5,7 @@ const Doctor = require('../model/forms');
 router.get('/', async (req, res) => {
   try {
     const doctors = await Doctor.find({}, 'name email reference region hq fsoname doctorNumber').exec();
-    res.status(200).json(doctors);
+    res.status(200).json({doctors});
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

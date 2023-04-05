@@ -212,7 +212,7 @@ function Card({ keyId }) {
     axios
       .post("http://localhost:3000/forms", {
         cardId: keyId,
-        reference: userInfo,
+        reference: userInfo.user.user.email,
         name: name,
         email: email,
         region: region,
