@@ -15,7 +15,7 @@ function Admin() {
     document.querySelector(".form-section").classList.add("dsp-none");
     document.querySelector(".header").classList.add("dsp-none");
     // Fetch data from the API
-    fetch("http://localhost:80/doctors")
+    fetch("/doctors")
       .then((response) => response.json())
       .then((data) => {
         // Initialize DataTable

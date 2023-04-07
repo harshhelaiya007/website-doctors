@@ -5,7 +5,7 @@
 }
 
 .card-section-wrapper {
-    width: 1319px;
+    width: 940px;
     border-radius: 32px;
 }
 
@@ -20,6 +20,8 @@
     padding-left: 55px;
     padding-top: 50px;
     margin-left: 85px;
+    left: 20%;
+    transform: translateX(-50%);
 }
 
 .add-btn-div {
@@ -337,8 +339,12 @@ label.file-label {
     align-items: center;
 }
 
+.card-section-body {
+    margin-top: 65px;
+}
+
 .sideBar-cardClone {
-    width: 1319.5px;
+    width: 940px;
     height: 90px;
     background-color: #655DBB;
     position: absolute;

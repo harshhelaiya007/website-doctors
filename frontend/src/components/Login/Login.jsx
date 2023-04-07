@@ -41,7 +41,11 @@ function Login() {
         document.querySelector('.form-section.login-box').classList.remove('dsp-none');
         document.querySelector('.header').classList.remove('dsp-none');
         if (error.response.status === 400) {
-          alert('BAD REQUEST')
+          if(error.response.data.msg == 'Invalid Credentials') {
+            alert('Invalid Credentials');
+          } else {
+            alert('BAD REQUEST')
+          }
         } else if(error.response.status === 500) {
           alert('Server Error');
         } else {

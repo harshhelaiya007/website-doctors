@@ -189,7 +189,7 @@ function Card({ keyId }) {
 
     // form axios
     axios
-      .post("http://localhost:80/forms", formData)
+      .post("/forms", formData)
       .then((response) => {
         console.log(response.data);
         var loaderEle = document.querySelector(".lds-dual-ring");
@@ -265,33 +265,22 @@ function Card({ keyId }) {
                 changeEvent={handleName}
               />
               <Input
-                inputId={`inputDoctorNumber-${keyId}`}
-                type="text"
-                name={`doctorNumber-${keyId}`}
-                labelClassName={"email-label"}
-                labelText={"Doctors Number"}
-                changeEvent={handleNumber}
-                maxLength="10"
-              />
-            </div>
-            <div className="d-flex form-flex-wrapper">
-              <Input
                 inputId={`inputRegion-${keyId}`}
                 type="text"
                 name={`region-${keyId}`}
                 labelText={"Region"}
                 changeEvent={handleRegion}
               />
+            </div>
+            <div className="d-flex form-flex-wrapper">
               <Input
                 inputId={`inputHQ-${keyId}`}
                 type="text"
                 name={`hq-${keyId}`}
-                labelClassName={"email-label"}
+                labelClassName={"label"}
                 labelText={"HQ"}
                 changeEvent={handleHq}
               />
-            </div>
-            <div className="d-flex form-flex-wrapper">
               <Input
                 inputId={`inputFSOName-${keyId}`}
                 type="text"

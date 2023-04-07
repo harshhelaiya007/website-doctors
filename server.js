@@ -46,7 +46,7 @@ app.use("/logout", logoutRoute);
 app.use("/forms", formRoute);
 app.use("/doctors", doctorsDetails);
 app.use("/upload", uploadImage);
-app.listen(80, () => console.log("Server running on port 80"));
+app.listen(80, () => console.log("Server running on port 300"));
 
 // Load react build
 // app.use(express.static("frontend/build"));
