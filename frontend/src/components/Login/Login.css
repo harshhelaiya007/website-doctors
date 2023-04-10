@@ -70,6 +70,7 @@
     }
     .form-section.login-box {
         margin: 0;
+        left: 10%;
     }
     .form-section .form-section-inner {
         margin-left: 20px;
