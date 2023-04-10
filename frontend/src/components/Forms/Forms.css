@@ -457,10 +457,11 @@ label.file-label {
         width: 130px;
         min-height: 550px;
         padding: 0;
+        margin-left: 35px;
     }
 
     .form-section.main .card-section {
-        width: 350px;
+        width: 320px;
         height: max-content;
         margin-left: 20px;
     }
@@ -522,7 +523,7 @@ label.file-label {
         width: 100%;
     }
     .form-section.main .form-section-inner {
-        height: 1137px;
+        height: 1045px;
     }
     .comesForward.cloned {
         z-index: 999;

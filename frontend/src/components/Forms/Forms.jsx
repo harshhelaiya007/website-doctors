@@ -67,22 +67,22 @@ function Forms() {
     cropper = new Cropper(event.target, cropperOptions);
   };
 
-  useEffect(() => {
-    let cardHome = document.querySelectorAll(
-      ".form-section.main .card-section"
-    );
-    let sideBarClone = document.querySelector(".sideBar-cardClone");
-    if (window.matchMedia("(max-width: 767px)").matches) {
-      cardHome.forEach(function (cardEle) {
-        console.log();
-        cardEle.style.width = window.innerWidth - 50;
-      });
-      localStorage.setItem("cardWidthHome", window.innerWidth - 50);
-      sideBarClone.style.width = window.innerWidth - 50;
-    } else {
-      console.log("card size is in window");
-    }
-  }, []);
+  // useEffect(() => {
+  //   let cardHome = document.querySelectorAll(
+  //     ".form-section.main .card-section"
+  //   );
+  //   let sideBarClone = document.querySelector(".sideBar-cardClone");
+  //   if (window.matchMedia("(max-width: 767px)").matches) {
+  //     cardHome.forEach(function (cardEle) {
+  //       cardEle.style.width = window.innerWidth - 50;
+  //       console.log((window.innerWidth-50)/2);
+  //       document.querySelector('.form-section.main').style.marginLeft = (window.innerWidth-50)/4;
+  //     });
+  //     sideBarClone.style.width = window.innerWidth - 50;
+  //   } else {
+  //     console.log("card size is in window");
+  //   }
+  // }, []);
 
   return (
     <>
