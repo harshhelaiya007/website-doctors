@@ -3,6 +3,7 @@ import $ from "jquery";
 import "datatables.net-dt/css/jquery.dataTables.css";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables.net-buttons-dt/css/buttons.dataTables.css";
+import 'datatables.net-responsive'
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "./Admin.css";
@@ -44,7 +45,7 @@ function Admin() {
         loaderEle.classList.remove("active");
         document.querySelector(".form-section").classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
-        if (error.response.status === 400) {
+        if (error.status === 400) {
           alert("BAD REQUEST");
         } else {
           alert("Server Error");
