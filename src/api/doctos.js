@@ -4,7 +4,7 @@ const Doctor = require('../model/forms');
 
 router.get('/', async (req, res) => {
   try {
-    const doctors = await Doctor.find({}, 'name reference region hq fsoname doctorNumber image').exec();
+    const doctors = await Doctor.find({}, 'name reference region hq fsoname image').exec();
     res.status(200).json({doctors});
   } catch (err) {
     console.error(err.message);

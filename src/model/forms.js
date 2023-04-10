@@ -26,11 +26,6 @@ const doctorSchema = new Schema({
     type: String,
     required: true
   },
-  doctorNumber: {
-    type: String,
-    required: true,
-    unique: true
-  },
   image: {
     type: String,
     required: false,

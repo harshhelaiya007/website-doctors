@@ -26,7 +26,6 @@ function Admin() {
             { data: "region" },
             { data: "hq" },
             { data: "fsoname" },
-            { data: "doctorNumber" },
             { data: "reference" },
             { data: "image" },
           ],
@@ -64,7 +63,6 @@ function Admin() {
                 <th>Region</th>
                 <th>HQ</th>
                 <th>FSOName</th>
-                <th>Doctor Number</th>
                 <th>Reference</th>
                 <th>IMAGE</th>
               </tr>

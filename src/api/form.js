@@ -21,7 +21,7 @@ router.post('/', [
     }
 
     // Extract doctor input from request body
-    const { name, region, hq, fsoname, doctorNumber, cardId, reference } = req.body;
+    const { name, region, hq, fsoname, cardId, reference } = req.body;
 
     try {
         // Upload image to S3 bucket
@@ -37,7 +37,6 @@ router.post('/', [
             region,
             hq,
             fsoname,
-            doctorNumber,
             image: imageUrl
         });
         // Save new doctor to database
