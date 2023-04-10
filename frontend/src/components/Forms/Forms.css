@@ -462,6 +462,7 @@ label.file-label {
     .form-section.main .card-section {
         width: 350px;
         height: max-content;
+        margin-left: 20px;
     }
 
     .add-btn-div {

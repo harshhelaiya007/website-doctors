@@ -32,6 +32,7 @@ function Admin() {
           dom: "Bfrtip",
           buttons: ["csv", "excel", "pdf", "print"],
           bDestroy: true,
+          responsive: true,
         });
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
