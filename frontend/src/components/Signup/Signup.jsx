@@ -123,23 +123,6 @@ function Signup() {
     }
   };
 
-  const handlePassword = (e) => {
-    let regexPassword =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
-    let inputValue = e.target.value;
-    buttonDisable(e.target);
-    if (!inputValue == "" && regexPassword.test(inputValue)) {
-      showSuccess(e.target);
-      setPassword(inputValue);
-    } else {
-      showError(
-        e.target,
-        "Password is Required",
-        "Please Enter Valid Password."
-      );
-    }
-  };
-
   const handleSignup = (event) => {
     event.preventDefault();
     var loaderEle = document.querySelector(".lds-dual-ring");
@@ -206,9 +189,9 @@ function Signup() {
               <Input
                 inputId={"inputUserName"}
                 type="text"
-                name="username"
+                name="employeeid"
                 labelClassName={""}
-                labelText={"Username"}
+                labelText={"Employee ID"}
                 parentWrapperClass={"login-form"}
                 changeEvent={handleName}
               />
@@ -255,12 +238,7 @@ function Signup() {
                 labelClassName={""}
                 labelText={"Password"}
                 parentWrapperClass={"login-form"}
-                changeEvent={handlePassword}
               />
-              <p className={`info-p d-flex`}>
-                <span>One UpperCase Letter, One LowerCase Letter</span>
-                <span>One Special Character, One Number, Mininum 6 Letter</span>
-              </p>
               {/* <Input
                 inputId={"inputConfirmPassword"}
                 type="password"
