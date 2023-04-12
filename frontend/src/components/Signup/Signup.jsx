@@ -15,6 +15,7 @@ function Signup() {
   const history = useHistory();
 
   const showSuccess = (inputEle) => {
+    console.log('comes under success');
     inputEle.parentNode.parentNode.classList.add("valid");
     inputEle.parentNode.parentNode.classList.remove("error");
     inputEle.classList.add("valid");
@@ -25,6 +26,7 @@ function Signup() {
   };
 
   const showError = (inputEle, msg) => {
+    console.log('comes under error');
     inputEle.parentNode.parentNode.classList.add("error");
     inputEle.parentNode.parentNode.classList.remove("valid");
     inputEle.classList.add("error");
@@ -59,10 +61,9 @@ function Signup() {
 
   // name field validation
   const handleName = (e) => {
-    let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
     buttonDisable(e.target);
-    if (!inputValue == "" && docRegx.test(inputValue)) {
+    if (!inputValue == "") {
       showSuccess(e.target);
       setUsername(inputValue);
     } else {
@@ -71,10 +72,9 @@ function Signup() {
   };
 
   const handleFsoName = (e) => {
-    let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
     buttonDisable(e.target);
-    if (!inputValue == "" && docRegx.test(inputValue)) {
+    if (!inputValue == "" ) {
       showSuccess(e.target);
       setFsoName(inputValue);
     } else {
@@ -100,11 +100,9 @@ function Signup() {
   };
 
   const handleRegion = (e) => {
-    e.target.value = e.target.value.replace(/[^a-z\s]/gi, "");
-    let regionRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
     buttonDisable(e.target);
-    if (!inputValue == "" && regionRegx.test(inputValue)) {
+    if (!inputValue == "") {
       showSuccess(e.target);
       setRegion(inputValue);
     } else {
@@ -122,6 +120,17 @@ function Signup() {
       showError(e.target, "HQ is Required", "Please Enter Valid HQ.");
     }
   };
+
+  const handlePassword = (e) => {
+    let inputValue = e.target.value;
+    buttonDisable(e.target);
+    if (!inputValue == "") {
+      showSuccess(e.target);
+      setPassword(inputValue);
+    } else {
+      showError(e.target, "HQ is Required", "Please Enter Valid HQ.");
+    }
+  }
 
   const handleSignup = (event) => {
     event.preventDefault();
@@ -188,7 +197,7 @@ function Signup() {
             <form onSubmit={handleSignup}>
               <Input
                 inputId={"inputUserName"}
-                type="text"
+                type="number"
                 name="employeeid"
                 labelClassName={""}
                 labelText={"Employee ID"}
@@ -238,6 +247,7 @@ function Signup() {
                 labelClassName={""}
                 labelText={"Password"}
                 parentWrapperClass={"login-form"}
+                changeEvent={handlePassword}
               />
               {/* <Input
                 inputId={"inputConfirmPassword"}
