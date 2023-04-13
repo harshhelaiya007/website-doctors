@@ -195,7 +195,7 @@ function Signup() {
           <div className="card-section login-box signup">
             <h2 className="heading-title">Sign Up Form</h2>
             <form onSubmit={handleSignup}>
-              <Input
+            <Input
                 inputId={"inputUserName"}
                 type="number"
                 name="employeeid"
