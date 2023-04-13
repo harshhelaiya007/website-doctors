@@ -20,7 +20,7 @@ function Header() {
   const handleLogoutClick = () => {
     var loaderEle = document.querySelector(".lds-dual-ring");
     loaderEle.classList.add("active");
-    document.querySelector(".form-section.login-box").classList.add("dsp-none");
+    document.querySelector(".form-section.login-box")?.classList.add("dsp-none");
     document.querySelector(".header").classList.add("dsp-none");
     axios
       .post("/logout", {
