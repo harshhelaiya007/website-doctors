@@ -23,6 +23,11 @@ mongoose.connection.on("connected", (connected) => {
 
 // Middleware
 app.use(express.json());
+const fileupload = require("express-fileupload")
+
+app.use(fileupload())
+
+app.use(express.urlencoded({ extended : true }));
 app.use(bodyParser.json({ type: "application/*+json", limit: "150mb" }));
 app.use(bodyParser.urlencoded({ limit: "150mb", extended: true }));
 app.use(cors()); // Add CORS middleware
@@ -40,12 +45,16 @@ const logoutRoute = require("./src/api/logout");
 const formRoute = require("./src/api/form");
 const doctorsDetails = require("./src/api/doctos");
 const uploadImage = require("./src/api/image");
+const getImage = require("./src/api/get_image");
+
 app.use("/register", registerRoute);
 app.use("/login", loginRoute);
 app.use("/logout", logoutRoute);
 app.use("/forms", formRoute);
 app.use("/doctors", doctorsDetails);
 app.use("/upload", uploadImage);
+app.use("/image", getImage);
+
 app.listen(3000, () => console.log("Server running on port 300"));
 
 // Load react build
