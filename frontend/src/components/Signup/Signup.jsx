@@ -62,9 +62,9 @@ function Signup() {
   // name field validation
   const handleName = (e) => {
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "") {
-      showSuccess(e.target);
+      // showSuccess(e.target);
       setUsername(inputValue);
     } else {
       showRequired(e.target, "Name is Required.", "Please Enter Valid Name.");
@@ -73,7 +73,7 @@ function Signup() {
 
   const handleFsoName = (e) => {
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "" ) {
       showSuccess(e.target);
       setFsoName(inputValue);
@@ -86,7 +86,7 @@ function Signup() {
   const handleEmail = (e) => {
     let emailRegx = /\S+@\S+\.\S+/;
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "" && emailRegx.test(inputValue)) {
       showSuccess(e.target);
       setEmail(inputValue);
@@ -101,7 +101,7 @@ function Signup() {
 
   const handleRegion = (e) => {
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "") {
       showSuccess(e.target);
       setRegion(inputValue);
@@ -112,7 +112,7 @@ function Signup() {
 
   const handleHq = (e) => {
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "") {
       showSuccess(e.target);
       setHq(inputValue);
@@ -123,12 +123,12 @@ function Signup() {
 
   const handlePassword = (e) => {
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "") {
       showSuccess(e.target);
       setPassword(inputValue);
     } else {
-      showError(e.target, "HQ is Required", "Please Enter Valid HQ.");
+      showError(e.target, "Password is Required", "Please Enter Valid Password.");
     }
   }
 
@@ -242,7 +242,7 @@ function Signup() {
               />
               <Input
                 inputId={"inputPassword"}
-                type="password"
+                type="number"
                 name="password"
                 labelClassName={""}
                 labelText={"Password"}
