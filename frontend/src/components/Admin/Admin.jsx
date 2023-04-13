@@ -3,7 +3,7 @@ import $ from "jquery";
 import "datatables.net-dt/css/jquery.dataTables.css";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables.net-buttons-dt/css/buttons.dataTables.css";
-import 'datatables.net-responsive'
+import "datatables.net-responsive";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import "./Admin.css";
@@ -29,11 +29,11 @@ function Admin() {
             { data: "fsoname" },
             { data: "reference" },
             {
-              data: "image",
-              render: function(data, type, row, meta) {
-                return '<div class="image-container"><img src="image/' + data.split('/')[1] + '" alt="Doctor Image"></div>';
-              }
-            }
+              data: (row) => {
+                console.log(row);
+                return `<a href="/image/${row["image"]}" download ="${row["name"]}">${row["image"]}</a>`;
+              },
+            },
           ],
           dom: "Bfrtip",
           buttons: ["csv", "excel", "pdf", "print"],
