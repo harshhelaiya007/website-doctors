@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 
 function Signup() {
   const [username, setUsername] = useState("");
+
+  const [disableStatus, setDisableStatus] = useState(true);
   const [email, setEmail] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
@@ -14,8 +16,24 @@ function Signup() {
   const [password, setPassword] = useState("");
   const history = useHistory();
 
+  useEffect(() => {
+    if (
+      username !== "" &&
+      password !== "" &&
+      email !== "" &&
+      hq !== "" &&
+      fsoName !== ""
+    ) {
+      setDisableStatus(false);
+    } else {
+      setDisableStatus(true);
+    }
+
+    return () => {};
+  }, [email, password, username, region, hq, fsoName]);
+
   const showSuccess = (inputEle) => {
-    console.log('comes under success');
+    console.log("comes under success");
     inputEle.parentNode.parentNode.classList.add("valid");
     inputEle.parentNode.parentNode.classList.remove("error");
     inputEle.classList.add("valid");
@@ -26,7 +44,7 @@ function Signup() {
   };
 
   const showError = (inputEle, msg) => {
-    console.log('comes under error');
+    console.log("comes under error");
     inputEle.parentNode.parentNode.classList.add("error");
     inputEle.parentNode.parentNode.classList.remove("valid");
     inputEle.classList.add("error");
@@ -74,7 +92,7 @@ function Signup() {
   const handleFsoName = (e) => {
     let inputValue = e.target.value;
     // buttonDisable(e.target);
-    if (!inputValue == "" ) {
+    if (!inputValue == "") {
       showSuccess(e.target);
       setFsoName(inputValue);
     } else {
@@ -128,9 +146,13 @@ function Signup() {
       showSuccess(e.target);
       setPassword(inputValue);
     } else {
-      showError(e.target, "Password is Required", "Please Enter Valid Password.");
+      showError(
+        e.target,
+        "Password is Required",
+        "Please Enter Valid Password."
+      );
     }
-  }
+  };
 
   const handleSignup = (event) => {
     event.preventDefault();
@@ -170,7 +192,7 @@ function Signup() {
         if (error.response.status === 400) {
           alert("BAD REQUEST");
         } else {
-          alert('Server Error');
+          alert("Server Error");
         }
         history.push("/Signup");
       });
@@ -195,7 +217,7 @@ function Signup() {
           <div className="card-section login-box signup">
             <h2 className="heading-title">Sign Up Form</h2>
             <form onSubmit={handleSignup}>
-            <Input
+              <Input
                 inputId={"inputUserName"}
                 type="number"
                 name="employeeid"
@@ -262,7 +284,7 @@ function Signup() {
                   className="btn btn-primary btn-lg btn-color signUp-btn"
                   type="submit"
                   btnText={"Sign Up"}
-                  disabled
+                  disabled={disableStatus}
                 />
                 <Button
                   className="btn btn-secondary btn-lg btn-color cancel-btn"
