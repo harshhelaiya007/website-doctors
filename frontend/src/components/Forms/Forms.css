@@ -175,6 +175,12 @@ textarea:focus {
     outline: none
 }
 
+#inputPassword {
+    text-security: disc;
+    -webkit-text-security: disc;
+    -moz-text-security: disc;
+}
+
 .form-group .input-field {
     height: auto;
     line-height: 1;
