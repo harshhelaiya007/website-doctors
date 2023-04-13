@@ -66,7 +66,7 @@ function Card({ keyId }) {
   const handleName = (e) => {
     let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "" && docRegx.test(inputValue)) {
       showSuccess(e.target);
       setName(inputValue);
@@ -78,7 +78,7 @@ function Card({ keyId }) {
   const handleFsoName = (e) => {
     let docRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "" && docRegx.test(inputValue)) {
       showSuccess(e.target);
       setFsoName(inputValue);
@@ -91,7 +91,7 @@ function Card({ keyId }) {
     e.target.value = e.target.value.replace(/[^a-z\s]/gi, "");
     let regionRegx = /^[a-zA-Z]+[a-zA-Z\s]+$/;
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "" && regionRegx.test(inputValue)) {
       showSuccess(e.target);
       setRegion(inputValue);
@@ -102,29 +102,12 @@ function Card({ keyId }) {
 
   const handleHq = (e) => {
     let inputValue = e.target.value;
-    buttonDisable(e.target);
+    // buttonDisable(e.target);
     if (!inputValue == "") {
       showSuccess(e.target);
       setHq(inputValue);
     } else {
       showError(e.target, "HQ is Required", "Please Enter Valid HQ.");
-    }
-  };
-
-  const handleNumber = (e) => {
-    e.target.value = e.target.value.replace(/[^0-9]/g, "");
-    let docNumberRegx = /^[0-9]*$/;
-    let inputValue = e.target.value;
-    buttonDisable(e.target);
-    if (!inputValue == "" && docNumberRegx.test(inputValue)) {
-      showSuccess(e.target);
-      setNumber(inputValue);
-    } else {
-      showError(
-        e.target,
-        "Doctors Number is Required",
-        "Please Enter Valid Docots Number."
-      );
     }
   };
 
@@ -147,10 +130,6 @@ function Card({ keyId }) {
     } else {
       alert("Please upload an image of size less than or equal to 100KB");
     }
-  };
-
-  const openModelImage = () => {
-    document.getElementById("clickMe").click();
   };
 
   const validateImageSize = (files) => {
@@ -294,7 +273,6 @@ function Card({ keyId }) {
                 className="btn btn-primary btn-lg btn-color submit-btn"
                 type="submit"
                 btnText={"submit"}
-                disabled
               />
               <Button
                 className="btn btn-secondary btn-lg btn-color cancel-btn"
