@@ -19,16 +19,18 @@ const uploadImage = (image) => {
 
   const ext = image.name.split(".");
 
+  const imageName = `${Date.now()}.${ext[ext.length - 1]}`;
+
   const params = {
     Bucket: bucketName,
-    Key: `images/${Date.now()}.${ext[ext.length - 1]}`,
+    Key: `images/${imageName}`,
     Body: file,
   };
 
   return s3
     .upload(params)
     .promise()
-    .then((data) => data.Key);
+    .then((data) => imageName);
 };
 
 const getImage = (image, res) => {
