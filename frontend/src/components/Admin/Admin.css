@@ -5,3 +5,8 @@
 table.dataTable.display tbody td:last-child {
     font-size: 12px;
 }
+
+.card-section.admin-panel {
+    height: max-content;
+    margin-bottom: 30px;
+}

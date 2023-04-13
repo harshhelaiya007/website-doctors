@@ -56,7 +56,7 @@ function Admin() {
   return (
     <section className="form-section">
       <div className="container">
-        <div className="card-section">
+        <div className="card-section admin-panel">
           <h2 className="heading-title">Admin Panel</h2>
           <table id="data-table" className="display" style={{ width: "100%" }}>
             <thead>
@@ -66,7 +66,7 @@ function Admin() {
                 <th>HQ</th>
                 <th>FSOName</th>
                 <th>Reference</th>
-                <th>IMAGE</th>
+                <th>Image</th>
               </tr>
             </thead>
             <tbody></tbody>
