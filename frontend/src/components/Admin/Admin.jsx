@@ -28,13 +28,19 @@ function Admin() {
             { data: "hq" },
             { data: "fsoname" },
             { data: "reference" },
-            { data: "image" },
+            {
+              data: "image",
+              render: function(data, type, row, meta) {
+                return '<div class="image-container"><img src="image/' + data.split('/')[1] + '" alt="Doctor Image"></div>';
+              }
+            }
           ],
           dom: "Bfrtip",
           buttons: ["csv", "excel", "pdf", "print"],
           bDestroy: true,
           responsive: true,
         });
+        
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
         document.querySelector(".form-section").classList.remove("dsp-none");
