@@ -40,6 +40,7 @@ function Admin() {
           bDestroy: true,
           responsive: true,
         });
+        
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
         document.querySelector(".form-section").classList.remove("dsp-none");
