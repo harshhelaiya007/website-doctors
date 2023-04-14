@@ -20,3 +20,11 @@ table.dataTable.display tbody td:last-child {
     width: 100%;
     height: 100%;
 }
+.deleteBtn {
+    border: 1px solid grey;
+    margin: 8px;
+    padding: 10px;
+}
+tr {
+    cursor: pointer;
+}
