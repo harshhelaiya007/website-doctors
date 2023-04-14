@@ -27,7 +27,7 @@ const fileupload = require("express-fileupload")
 
 app.use(fileupload())
 
-app.use(express.urlencoded({ extended : true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: "application/*+json", limit: "150mb" }));
 app.use(bodyParser.urlencoded({ limit: "150mb", extended: true }));
 app.use(cors()); // Add CORS middleware
@@ -54,6 +54,28 @@ app.use("/forms", formRoute);
 app.use("/doctors", doctorsDetails);
 app.use("/upload", uploadImage);
 app.use("/image", getImage);
+
+
+// DELETE API to delete a doctor by ID
+app.delete('/doctors/:name', (req, res) => {
+  const reqName = req.params.name;
+
+  // Find and delete the document by ID
+  mongoose.connection.db.collection('doctors').deleteOne({ name: reqName }, function (err, result) {
+    if (err) {
+      res.status(500).send(err.message);
+      return;
+    }
+
+    if (result.deletedCount === 0) {
+      res.status(404).send('Document not found');
+      return;
+    }
+
+    res.send(`Deleted ${result.deletedCount} document(s)`);
+  });
+});
+
 
 app.listen(80, () => console.log("Server running on port 80"));
 
