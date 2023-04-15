@@ -12,7 +12,7 @@ function Card({ keyId }) {
   const [hq, setHq] = useState("");
   const [fsoname, setFsoName] = useState("");
   const [fileDirect, setFileDirect] = useState("");
-  const { setImage, croppedImage } = useContext(ModelImageContext);
+  const [image, setImage] = useState(null);
   var userInfo = localStorage.getItem("userData");
 
   if (userInfo && !userInfo == "") {
@@ -284,7 +284,7 @@ function Card({ keyId }) {
           <div className="right-side-wrapper">
             <div
               className={`card-section-img ${
-                croppedImage ? "inputFileUpload" : ""
+                image ? "inputFileUpload" : ""
               }`}
             >
               <Input
@@ -297,10 +297,10 @@ function Card({ keyId }) {
                 changeEvent={handleInputChange}
                 hidden
               />
-              <Photo UploadImage={croppedImage} key={keyId} />
+              <Photo UploadImage={image} key={keyId} indexId={keyId} />
             </div>
             <br />
-            <p className={`info-p ${croppedImage ? "dsp-none" : ""}`}>
+            <p className={`info-p ${image ? "dsp-none" : ""}`}>
               Please Upload Image First
             </p>
           </div>
