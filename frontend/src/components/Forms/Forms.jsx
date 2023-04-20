@@ -18,12 +18,15 @@ function Forms() {
   const imageRef = useRef(null);
 
   const addCard = () => {
-    const newPosition = cardPositions[cardPositions.length - 1] + 18;
-    setCardPositions([...cardPositions, newPosition]);
-    setCardCount(cardCount + 1);
-    setActiveCard(cardCount);
-    setCroppedImage(null);
+    if (cardCount < 15) {
+      const newPosition = cardPositions[cardPositions.length - 1] + 18;
+      setCardPositions([...cardPositions, newPosition]);
+      setCardCount(cardCount + 1);
+      setActiveCard(cardCount);
+      setCroppedImage(null);
+    }
   };
+  
 
   const removeCard = () => {
     if (cardCount > 1) {
