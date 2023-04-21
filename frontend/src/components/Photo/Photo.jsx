@@ -4,7 +4,7 @@ import "./Photo.css";
 function Photo({ UploadImage, indexId }) {
 
   return (
-    <div className="image-section" id={indexId}>
+    <div className="image-section" id={`image-section-${indexId}`}>
       <img
         src={`${UploadImage ? UploadImage : ""}`}
         className={`photo-upload-img ${!UploadImage ? "dsp-none" : ""}`}

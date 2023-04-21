@@ -26,8 +26,6 @@ function Forms() {
       setCroppedImage(null);
     }
   };
-  
-
   const removeCard = () => {
     if (cardCount > 1) {
       const newPositions = [...cardPositions];
@@ -69,6 +67,79 @@ function Forms() {
   const onImageLoaded = (event) => {
     cropper = new Cropper(event.target, cropperOptions);
   };
+
+  useEffect(() => {
+
+    var userData = localStorage.getItem('userData');
+
+    if (!userData == '' && userData) {
+      userData = JSON.parse(localStorage.getItem('userData'));
+    }
+
+    var userEmailId = userData.user.user.email; 
+
+    console.log(userEmailId);
+
+    fetch("/doctors")
+      .then((response) => response.json())
+      .then((data) => {
+        data.doctors.forEach(function(doctorsData) {
+          if (doctorsData.reference == userEmailId) {
+
+            let doctorsCardId = doctorsData.cardId;
+            
+            var doctorsCardRender = document.getElementById(doctorsCardId - 1);
+            
+            var doctorNameRender = doctorsCardRender.querySelector(`#inputDoctorName-${doctorsCardId}`);
+            var doctorRegionRender = doctorsCardRender.querySelector(`#inputRegion-${doctorsCardId}`);
+            var doctorHQRender = doctorsCardRender.querySelector(`#inputHQ-${doctorsCardId}`);
+            var doctorFsoNameRender = doctorsCardRender.querySelector(`#inputFSOName-${doctorsCardId}`);
+            
+            doctorNameRender.value = doctorsData.name
+            doctorRegionRender.value = doctorsData.region
+            doctorHQRender.value = doctorsData.hq
+            doctorFsoNameRender.value = doctorsData.fsoname
+            doctorNameRender.previousElementSibling.classList.add(
+              "input-active",
+              "input-focus"
+            );
+            doctorRegionRender.previousElementSibling.classList.add(
+              "input-active",
+              "input-focus"
+            );
+            doctorHQRender.previousElementSibling.classList.add(
+              "input-active",
+              "input-focus"
+            );
+            doctorFsoNameRender.previousElementSibling.classList.add(
+              "input-active",
+              "input-focus"
+            );
+            doctorNameRender.parentElement.parentNode.classList.add("valid");
+            doctorRegionRender.parentElement.parentNode.classList.add("valid");
+            doctorHQRender.parentElement.parentNode.classList.add("valid");
+            doctorFsoNameRender.parentElement.parentNode.classList.add("valid");
+
+            // image rendering logic
+            var renderImage = doctorsCardRender.querySelector(`#image-section-${doctorsCardId} img`);
+            var cardImageSection = doctorsCardRender.querySelector('.card-section-img');
+            var imagePTag = doctorsCardRender.querySelector('.info-p');
+            if (doctorsData.image) {
+              imagePTag.classList.add('dsp-none');
+            } else {
+              imagePTag.classList.remove('dsp-none');
+            }
+            console.log(cardImageSection.classList.add('inputFileUpload'));
+            renderImage.classList.remove('dsp-none');
+            console.log(renderImage.src = `/image/${doctorsData.image}`);
+
+          }
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   // useEffect(() => {
   //   let cardHome = document.querySelectorAll(
