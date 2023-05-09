@@ -68,6 +68,7 @@ function Forms() {
     cropper = new Cropper(event.target, cropperOptions);
   };
 
+
   useEffect(() => {
 
     var userData = localStorage.getItem('userData');
@@ -78,18 +79,20 @@ function Forms() {
 
     var userEmailId = userData.user.user.email; 
 
-    console.log(userEmailId);
-
     fetch("/doctors")
       .then((response) => response.json())
       .then((data) => {
         data.doctors.forEach(function(doctorsData) {
           if (doctorsData.reference == userEmailId) {
+            const newPosition = cardPositions[cardPositions.length - 1] + 18;
+            setCardPositions([...cardPositions, newPosition]);
+            setCardCount(cardCount + 1);
+            setActiveCard(cardCount);
 
             let doctorsCardId = doctorsData.cardId;
-            
+                   
             var doctorsCardRender = document.getElementById(doctorsCardId - 1);
-            
+
             var doctorNameRender = doctorsCardRender.querySelector(`#inputDoctorName-${doctorsCardId}`);
             var doctorRegionRender = doctorsCardRender.querySelector(`#inputRegion-${doctorsCardId}`);
             var doctorHQRender = doctorsCardRender.querySelector(`#inputHQ-${doctorsCardId}`);
@@ -141,22 +144,6 @@ function Forms() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   let cardHome = document.querySelectorAll(
-  //     ".form-section.main .card-section"
-  //   );
-  //   let sideBarClone = document.querySelector(".sideBar-cardClone");
-  //   if (window.matchMedia("(max-width: 767px)").matches) {
-  //     cardHome.forEach(function (cardEle) {
-  //       cardEle.style.width = window.innerWidth - 50;
-  //       console.log((window.innerWidth-50)/2);
-  //       document.querySelector('.form-section.main').style.marginLeft = (window.innerWidth-50)/4;
-  //     });
-  //     sideBarClone.style.width = window.innerWidth - 50;
-  //   } else {
-  //     console.log("card size is in window");
-  //   }
-  // }, []);
 
   return (
     <>
@@ -225,7 +212,7 @@ function Forms() {
                   <ModelImageContext.Provider
                     value={{ image, setImage, croppedImage }}
                   >
-                    <Card keyId={index + 1} key={index} />
+                    <Card keyId={index + 1} key={index}/>
                   </ModelImageContext.Provider>
                 </div>
               </div>
