@@ -5,7 +5,7 @@ import Input from "../Input/Input";
 import Photo from "../Photo/Photo";
 import ModelImageContext from "../Context/ModelImageContext";
 
-function Card({ keyId }) {
+function Card({ keyId, renderDocData }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
@@ -192,12 +192,10 @@ function Card({ keyId }) {
   };
 
   useEffect(() => {
+
     let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
     let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
     let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
-    console.log(
-      inputFieldDRegion.parentElement.parentNode.classList.add("valid")
-    );
     if (!inputFieldDRegion == "") {
       if (userInfo && !userInfo.user == "") {
         inputFieldDRegion.value = userInfo.user.user.region;
@@ -228,6 +226,7 @@ function Card({ keyId }) {
         );
       }
     }
+
   }, []);
 
   return (

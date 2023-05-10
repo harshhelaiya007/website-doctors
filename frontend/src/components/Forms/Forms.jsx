@@ -15,6 +15,7 @@ function Forms() {
   const [image, setImage] = useState(null);
 
   let [croppedImage, setCroppedImage] = useState(null);
+  const [dataDoc, setdataDoc] = useState([]);
   const imageRef = useRef(null);
 
   const addCard = () => {
@@ -68,21 +69,23 @@ function Forms() {
     cropper = new Cropper(event.target, cropperOptions);
   };
 
-
   useEffect(() => {
+    var userData = localStorage.getItem("userData");
 
-    var userData = localStorage.getItem('userData');
-
-    if (!userData == '' && userData) {
-      userData = JSON.parse(localStorage.getItem('userData'));
+    if (!userData == "" && userData) {
+      userData = JSON.parse(localStorage.getItem("userData"));
     }
 
-    var userEmailId = userData.user.user.email; 
+    var userEmailId = userData.user.user.email;
 
-    fetch("/doctors")
+    fetch("http://localhost:80/doctors")
       .then((response) => response.json())
       .then((data) => {
-        data.doctors.forEach(function(doctorsData) {
+        const fetchedDoctorsData = data.doctors.filter(
+          (doctorsData) => doctorsData.reference === userEmailId
+        );
+        setdataDoc(fetchedDoctorsData);
+        data.doctors.forEach(function (doctorsData) {
           if (doctorsData.reference == userEmailId) {
             const newPosition = cardPositions[cardPositions.length - 1] + 18;
             setCardPositions([...cardPositions, newPosition]);
@@ -90,60 +93,58 @@ function Forms() {
             setActiveCard(cardCount);
 
             let doctorsCardId = doctorsData.cardId;
-                   
-            var doctorsCardRender = document.getElementById(doctorsCardId - 1);
 
-            var doctorNameRender = doctorsCardRender.querySelector(`#inputDoctorName-${doctorsCardId}`);
-            var doctorRegionRender = doctorsCardRender.querySelector(`#inputRegion-${doctorsCardId}`);
-            var doctorHQRender = doctorsCardRender.querySelector(`#inputHQ-${doctorsCardId}`);
-            var doctorFsoNameRender = doctorsCardRender.querySelector(`#inputFSOName-${doctorsCardId}`);
-            
-            doctorNameRender.value = doctorsData.name
-            doctorRegionRender.value = doctorsData.region
-            doctorHQRender.value = doctorsData.hq
-            doctorFsoNameRender.value = doctorsData.fsoname
-            doctorNameRender.previousElementSibling.classList.add(
-              "input-active",
-              "input-focus"
-            );
-            doctorRegionRender.previousElementSibling.classList.add(
-              "input-active",
-              "input-focus"
-            );
-            doctorHQRender.previousElementSibling.classList.add(
-              "input-active",
-              "input-focus"
-            );
-            doctorFsoNameRender.previousElementSibling.classList.add(
-              "input-active",
-              "input-focus"
-            );
-            doctorNameRender.parentElement.parentNode.classList.add("valid");
-            doctorRegionRender.parentElement.parentNode.classList.add("valid");
-            doctorHQRender.parentElement.parentNode.classList.add("valid");
-            doctorFsoNameRender.parentElement.parentNode.classList.add("valid");
+            // var doctorsCardRender = document.getElementById(doctorsCardId - 1);
 
-            // image rendering logic
-            var renderImage = doctorsCardRender.querySelector(`#image-section-${doctorsCardId} img`);
-            var cardImageSection = doctorsCardRender.querySelector('.card-section-img');
-            var imagePTag = doctorsCardRender.querySelector('.info-p');
-            if (doctorsData.image) {
-              imagePTag.classList.add('dsp-none');
-            } else {
-              imagePTag.classList.remove('dsp-none');
-            }
-            console.log(cardImageSection.classList.add('inputFileUpload'));
-            renderImage.classList.remove('dsp-none');
-            console.log(renderImage.src = `/image/${doctorsData.image}`);
+            // var doctorNameRender = doctorsCardRender.querySelector(`#inputDoctorName-${doctorsCardId}`);
+            // var doctorRegionRender = doctorsCardRender.querySelector(`#inputRegion-${doctorsCardId}`);
+            // var doctorHQRender = doctorsCardRender.querySelector(`#inputHQ-${doctorsCardId}`);
+            // var doctorFsoNameRender = doctorsCardRender.querySelector(`#inputFSOName-${doctorsCardId}`);
 
+            // doctorNameRender.value = doctorsData.name
+            // doctorRegionRender.value = doctorsData.region
+            // doctorHQRender.value = doctorsData.hq
+            // doctorFsoNameRender.value = doctorsData.fsoname
+            // doctorNameRender.previousElementSibling.classList.add(
+            //   "input-active",
+            //   "input-focus"
+            // );
+            // doctorRegionRender.previousElementSibling.classList.add(
+            //   "input-active",
+            //   "input-focus"
+            // );
+            // doctorHQRender.previousElementSibling.classList.add(
+            //   "input-active",
+            //   "input-focus"
+            // );
+            // doctorFsoNameRender.previousElementSibling.classList.add(
+            //   "input-active",
+            //   "input-focus"
+            // );
+            // doctorNameRender.parentElement.parentNode.classList.add("valid");
+            // doctorRegionRender.parentElement.parentNode.classList.add("valid");
+            // doctorHQRender.parentElement.parentNode.classList.add("valid");
+            // doctorFsoNameRender.parentElement.parentNode.classList.add("valid");
+
+            // // image rendering logic
+            // var renderImage = doctorsCardRender.querySelector(`#image-section-${doctorsCardId} img`);
+            // var cardImageSection = doctorsCardRender.querySelector('.card-section-img');
+            // var imagePTag = doctorsCardRender.querySelector('.info-p');
+            // if (doctorsData.image) {
+            //   imagePTag.classList.add('dsp-none');
+            // } else {
+            //   imagePTag.classList.remove('dsp-none');
+            // }
+            // console.log(cardImageSection.classList.add('inputFileUpload'));
+            // renderImage.classList.remove('dsp-none');
+            // console.log(renderImage.src = `/image/${doctorsData.image}`);
           }
-        })
+        });
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-
 
   return (
     <>
@@ -210,9 +211,22 @@ function Forms() {
                 <div className="card-section-body">
                   {/* Render input fields here */}
                   <ModelImageContext.Provider
-                    value={{ image, setImage, croppedImage }}
+                    value={{
+                      image,
+                      setImage,
+                      croppedImage,
+                      cardCount,
+                      cardPositions,
+                      setCardCount,
+                      setCardPositions,
+                      setActiveCard,
+                    }}
                   >
-                    <Card keyId={index + 1} key={index}/>
+                    <Card
+                      keyId={index + 1}
+                      key={index}
+                      renderDocData={dataDoc}
+                    />
                   </ModelImageContext.Provider>
                 </div>
               </div>
