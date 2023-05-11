@@ -20,6 +20,7 @@ function Forms() {
 
   const addCard = () => {
     if (cardCount < 15) {
+      setdataDoc("");
       const newPosition = cardPositions[cardPositions.length - 1] + 18;
       setCardPositions([...cardPositions, newPosition]);
       setCardCount(cardCount + 1);
@@ -78,73 +79,91 @@ function Forms() {
 
     var userEmailId = userData.user.user.email;
 
-    fetch("http://localhost:80/doctors")
+    fetch("/doctors")
       .then((response) => response.json())
       .then((data) => {
         const fetchedDoctorsData = data.doctors.filter(
           (doctorsData) => doctorsData.reference === userEmailId
         );
         setdataDoc(fetchedDoctorsData);
-        data.doctors.forEach(function (doctorsData) {
-          if (doctorsData.reference == userEmailId) {
-            const newPosition = cardPositions[cardPositions.length - 1] + 18;
-            setCardPositions([...cardPositions, newPosition]);
-            setCardCount(cardCount + 1);
-            setActiveCard(cardCount);
-
-            let doctorsCardId = doctorsData.cardId;
-
-            // var doctorsCardRender = document.getElementById(doctorsCardId - 1);
-
-            // var doctorNameRender = doctorsCardRender.querySelector(`#inputDoctorName-${doctorsCardId}`);
-            // var doctorRegionRender = doctorsCardRender.querySelector(`#inputRegion-${doctorsCardId}`);
-            // var doctorHQRender = doctorsCardRender.querySelector(`#inputHQ-${doctorsCardId}`);
-            // var doctorFsoNameRender = doctorsCardRender.querySelector(`#inputFSOName-${doctorsCardId}`);
-
-            // doctorNameRender.value = doctorsData.name
-            // doctorRegionRender.value = doctorsData.region
-            // doctorHQRender.value = doctorsData.hq
-            // doctorFsoNameRender.value = doctorsData.fsoname
-            // doctorNameRender.previousElementSibling.classList.add(
-            //   "input-active",
-            //   "input-focus"
-            // );
-            // doctorRegionRender.previousElementSibling.classList.add(
-            //   "input-active",
-            //   "input-focus"
-            // );
-            // doctorHQRender.previousElementSibling.classList.add(
-            //   "input-active",
-            //   "input-focus"
-            // );
-            // doctorFsoNameRender.previousElementSibling.classList.add(
-            //   "input-active",
-            //   "input-focus"
-            // );
-            // doctorNameRender.parentElement.parentNode.classList.add("valid");
-            // doctorRegionRender.parentElement.parentNode.classList.add("valid");
-            // doctorHQRender.parentElement.parentNode.classList.add("valid");
-            // doctorFsoNameRender.parentElement.parentNode.classList.add("valid");
-
-            // // image rendering logic
-            // var renderImage = doctorsCardRender.querySelector(`#image-section-${doctorsCardId} img`);
-            // var cardImageSection = doctorsCardRender.querySelector('.card-section-img');
-            // var imagePTag = doctorsCardRender.querySelector('.info-p');
-            // if (doctorsData.image) {
-            //   imagePTag.classList.add('dsp-none');
-            // } else {
-            //   imagePTag.classList.remove('dsp-none');
-            // }
-            // console.log(cardImageSection.classList.add('inputFileUpload'));
-            // renderImage.classList.remove('dsp-none');
-            // console.log(renderImage.src = `/image/${doctorsData.image}`);
-          }
-        });
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    if (dataDoc.length > 0) {
+      dataDoc.forEach(function (data) {
+        const newPosition = cardPositions[cardPositions.length - 1] + 18;
+        setCardPositions([...cardPositions, newPosition]);
+        setCardCount(cardCount + 1);
+        setActiveCard(cardCount);
+
+        let doctorsCardId = data.cardId;
+        var doctorRenderCard = document.querySelector(
+          `#card${doctorsCardId - 1}`
+        );
+
+        var doctorNameRender = doctorRenderCard.querySelector(
+          `#inputDoctorName-${doctorsCardId}`
+        );
+        var doctorRegionRender = doctorRenderCard.querySelector(
+          `#inputRegion-${doctorsCardId}`
+        );
+        var doctorHQRender = doctorRenderCard.querySelector(
+          `#inputHQ-${doctorsCardId}`
+        );
+        var doctorFsoNameRender = doctorRenderCard.querySelector(
+          `#inputFSOName-${doctorsCardId}`
+        );
+
+        doctorNameRender.value = data.name;
+        doctorRegionRender.value = data.region;
+        doctorHQRender.value = data.hq;
+        doctorFsoNameRender.value = data.fsoname;
+
+        doctorNameRender.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        doctorRegionRender.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        doctorHQRender.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        doctorFsoNameRender.previousElementSibling.classList.add(
+          "input-active",
+          "input-focus"
+        );
+        doctorNameRender.parentElement.parentNode.classList.add("valid");
+        doctorRegionRender.parentElement.parentNode.classList.add("valid");
+        doctorHQRender.parentElement.parentNode.classList.add("valid");
+        doctorFsoNameRender.parentElement.parentNode.classList.add("valid");
+
+        // image rendering logic
+        var renderImage = doctorRenderCard.querySelector(
+          `#image-section-${doctorsCardId} img`
+        );
+        var cardImageSection =
+          doctorRenderCard.querySelector(".card-section-img");
+        var imagePTag = doctorRenderCard.querySelector(".info-p");
+        if (data.image) {
+          imagePTag.classList.add("dsp-none");
+        } else {
+          imagePTag.classList.remove("dsp-none");
+        }
+        console.log(cardImageSection.classList.add("inputFileUpload"));
+        renderImage.classList.remove("dsp-none");
+
+        var minusBtn = doctorRenderCard.querySelector(".minus-btn-div");
+        minusBtn.classList.add("pointer-none");
+      });
+    }
+  }, [dataDoc]);
 
   return (
     <>
@@ -153,84 +172,162 @@ function Forms() {
           <div
             className={`sideBar-cardClone ${cardCount <= 1 ? "dsp-none" : ""}`}
           >
-            {cardPositions.map((position, index) => (
-              <div
-                key={index}
-                className={`select-item ${
-                  index === activeCard ? "active" : ""
-                }`}
-                onClick={() => handleSidebarClick(index)}
-              >
-                <Link to="#">{index + 1}</Link>
-              </div>
-            ))}
+            {dataDoc.length > 0
+              ? dataDoc.map((data, index) => (
+                  <div
+                    key={index}
+                    className={`select-item ${
+                      index === activeCard ? "active" : ""
+                    }`}
+                    onClick={() => handleSidebarClick(index)}
+                  >
+                    <Link to="#">{index + 1}</Link>
+                  </div>
+                ))
+              : cardPositions.map((position, index) => (
+                  <div
+                    key={index}
+                    className={`select-item ${
+                      index === activeCard ? "active" : ""
+                    }`}
+                    onClick={() => handleSidebarClick(index)}
+                  >
+                    <Link to="#">{index + 1}</Link>
+                  </div>
+                ))}
           </div>
           <div className="container card-section-wrapper">
-            {cardPositions.map((position, index) => (
-              <div
-                key={index}
-                className={`card-section ${index > 0 ? "cloned" : ""} ${
-                  index === 0 ? "first-ele" : ""
-                } ${index === activeCard ? "comesForward" : ""}`}
-                style={{ transform: `translateY(${position}px)` }}
-                id={index}
-              >
-                <div className="btn-wrapper">
-                  <div
-                    className="add-btn-div"
-                    key={`add-${index}`}
-                    onClick={addCard}
-                  >
-                    <img
-                      src="./assets/image/add-btn.png"
-                      alt="Add Button"
-                      className="add-btn"
-                    />
-                  </div>
-                  <div
-                    className={`minus-btn-div${
-                      cardCount > 1 ? "" : " dsp-none"
-                    }`}
-                    key={`minus-${index}`}
-                    onClick={removeCard}
-                  >
-                    <img
-                      src="./assets/image/minus-btn.png"
-                      alt="Minus Button"
-                      className="minus-btn"
-                    />
-                  </div>
-                </div>
-                {/* Card content goes here */}
-                <div className="heading-title">
-                  <h2>
-                    Doctors Details Form{" "}
-                    <span className="form-number">{index + 1}</span>
-                  </h2>
-                </div>
-                <div className="card-section-body">
-                  {/* Render input fields here */}
-                  <ModelImageContext.Provider
-                    value={{
-                      image,
-                      setImage,
-                      croppedImage,
-                      cardCount,
-                      cardPositions,
-                      setCardCount,
-                      setCardPositions,
-                      setActiveCard,
-                    }}
-                  >
-                    <Card
-                      keyId={index + 1}
+            {dataDoc.length > 0
+              ? dataDoc.map((data, index) => {
+                console.log('this working')
+                  return (
+                    <div
                       key={index}
-                      renderDocData={dataDoc}
-                    />
-                  </ModelImageContext.Provider>
-                </div>
-              </div>
-            ))}
+                      id={"card" + index}
+                      className={`card-section ${index > 0 ? "cloned" : ""} ${
+                        index === 0 ? "first-ele" : ""
+                      } ${index === activeCard ? "comesForward" : ""}`}
+                      style={{
+                        transform: `translateY(${cardPositions[index]}px)`,
+                      }}
+                    >
+                      <div className="btn-wrapper">
+                        <div
+                          className="add-btn-div"
+                          key={`add-${index}`}
+                          onClick={addCard}
+                        >
+                          <img
+                            src="./assets/image/add-btn.png"
+                            alt="Add Button"
+                            className="add-btn"
+                          />
+                        </div>
+                        <div
+                          className={`minus-btn-div${
+                            cardCount > 1 ? "" : " dsp-none"
+                          }`}
+                          key={`minus-${index}`}
+                          onClick={removeCard}
+                        >
+                          <img
+                            src="./assets/image/minus-btn.png"
+                            alt="Minus Button"
+                            className="minus-btn"
+                          />
+                        </div>
+                      </div>
+                      <div className="heading-title">
+                        <h2>
+                          Doctors Details Form{" "}
+                          <span className="form-number">{index + 1}</span>
+                        </h2>
+                      </div>
+                      <div className="card-section-body">
+                        {/* Render input fields here */}
+                        <ModelImageContext.Provider
+                          value={{
+                            image,
+                            setImage,
+                            croppedImage,
+                            cardCount,
+                            cardPositions,
+                            setCardCount,
+                            setCardPositions,
+                            setActiveCard,
+                          }}
+                        >
+                          <Card
+                            keyId={index + 1}
+                            key={index}
+                            renderData={data}
+                          />
+                        </ModelImageContext.Provider>
+                      </div>
+                    </div>
+                  );
+                })
+              : cardPositions.map((position, index) => (
+                  <div
+                    key={index}
+                    className={`card-section ${index > 0 ? "cloned" : ""} ${
+                      index === 0 ? "first-ele" : ""
+                    } ${index === activeCard ? "comesForward" : ""}`}
+                    style={{ transform: `translateY(${position}px)` }}
+                    id={"card" + index}
+                  >
+                    <div className="btn-wrapper">
+                      <div
+                        className="add-btn-div"
+                        key={`add-${index}`}
+                        onClick={addCard}
+                      >
+                        <img
+                          src="./assets/image/add-btn.png"
+                          alt="Add Button"
+                          className="add-btn"
+                        />
+                      </div>
+                      <div
+                        className={`minus-btn-div${
+                          cardCount > 1 ? "" : " dsp-none"
+                        }`}
+                        key={`minus-${index}`}
+                        onClick={removeCard}
+                      >
+                        <img
+                          src="./assets/image/minus-btn.png"
+                          alt="Minus Button"
+                          className="minus-btn"
+                        />
+                      </div>
+                    </div>
+                    {/* Card content goes here */}
+                    <div className="heading-title">
+                      <h2>
+                        Doctors Details Form{" "}
+                        <span className="form-number">{index + 1}</span>
+                      </h2>
+                    </div>
+                    <div className="card-section-body">
+                      {/* Render input fields here */}
+                      <ModelImageContext.Provider
+                        value={{
+                          image,
+                          setImage,
+                          croppedImage,
+                          cardCount,
+                          cardPositions,
+                          setCardCount,
+                          setCardPositions,
+                          setActiveCard,
+                        }}
+                      >
+                        <Card keyId={index + 1} key={index} />
+                      </ModelImageContext.Provider>
+                    </div>
+                  </div>
+                ))}
           </div>
         </div>
       </div>

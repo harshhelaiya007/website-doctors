@@ -1,11 +1,10 @@
-import { React, useState, useContext, useRef, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import axios from "axios";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Photo from "../Photo/Photo";
-import ModelImageContext from "../Context/ModelImageContext";
 
-function Card({ keyId, renderDocData }) {
+function Card({ keyId }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
@@ -44,21 +43,6 @@ function Card({ keyId, renderDocData }) {
       showError(inputEle, requiredMsg);
     } else {
       showError(inputEle, validationMsg);
-    }
-  };
-
-  const buttonDisable = (inputEle) => {
-    if (inputEle.classList.contains("error") || inputEle.value == "") {
-      document.querySelector(".btn.btn-color.submit-btn").disabled = true;
-    } else {
-      const inputFields = document.querySelectorAll("input.input-field");
-      inputFields.forEach((ele) => {
-        if (ele.classList.contains("valid")) {
-          document.querySelector(".btn.btn-color.submit-btn").disabled = false;
-        } else {
-          document.querySelector(".btn.btn-color.submit-btn").disabled = true;
-        }
-      });
     }
   };
 
@@ -192,7 +176,6 @@ function Card({ keyId, renderDocData }) {
   };
 
   useEffect(() => {
-
     let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
     let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
     let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
@@ -226,7 +209,6 @@ function Card({ keyId, renderDocData }) {
         );
       }
     }
-
   }, []);
 
   return (
@@ -282,9 +264,7 @@ function Card({ keyId, renderDocData }) {
           </div>
           <div className="right-side-wrapper">
             <div
-              className={`card-section-img ${
-                image ? "inputFileUpload" : ""
-              }`}
+              className={`card-section-img ${image ? "inputFileUpload" : ""}`}
             >
               <Input
                 inputId={`inputFile-${keyId}`}

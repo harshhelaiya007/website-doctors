@@ -406,6 +406,11 @@ label.file-label {
     color: red;
 }
 
+.pointer-none {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 /* responsive design */
 @media screen and (max-width:919px) {
     .hide-in-mobile {
