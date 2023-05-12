@@ -153,11 +153,11 @@ function Forms() {
         var imagePTag = doctorRenderCard.querySelector(".info-p");
         if (data.image) {
           imagePTag.classList.add("dsp-none");
-        } else {
+        } else { 
           imagePTag.classList.remove("dsp-none");
         }
-        console.log(cardImageSection.classList.add("inputFileUpload"));
-        console.log(renderImage.src = `/image/${data.image}`);
+        cardImageSection.classList.add("inputFileUpload");
+        renderImage.src = `/image/${data.image}`;
         renderImage.classList.remove("dsp-none");
 
 
