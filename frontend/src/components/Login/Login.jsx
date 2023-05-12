@@ -18,7 +18,7 @@ function Login() {
     document.querySelector('.header').classList.add('dsp-none');
 
     axios
-      .post("http://localhost:80/login", {
+      .post("/login", {
         email: email,
         password: password,
       })
