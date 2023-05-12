@@ -157,7 +157,9 @@ function Forms() {
           imagePTag.classList.remove("dsp-none");
         }
         console.log(cardImageSection.classList.add("inputFileUpload"));
+        console.log(renderImage.src = `/image/${data.image}`);
         renderImage.classList.remove("dsp-none");
+
 
         var minusBtn = doctorRenderCard.querySelector(".minus-btn-div");
         minusBtn.classList.add("pointer-none");
