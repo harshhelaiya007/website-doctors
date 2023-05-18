@@ -95,10 +95,6 @@ function Forms() {
   useEffect(() => {
     if (dataDoc.length > 0) {
       dataDoc.forEach(function (data) {
-        const newPosition = cardPositions[cardPositions.length - 1] + 18;
-        setCardPositions([...cardPositions, newPosition]);
-        setCardCount(cardCount + 1);
-        setActiveCard(cardCount);
 
         let doctorsCardId = data.cardId;
         var doctorRenderCard = document.querySelector(
@@ -153,13 +149,12 @@ function Forms() {
         var imagePTag = doctorRenderCard.querySelector(".info-p");
         if (data.image) {
           imagePTag.classList.add("dsp-none");
-        } else { 
+        } else {
           imagePTag.classList.remove("dsp-none");
         }
         cardImageSection.classList.add("inputFileUpload");
         renderImage.src = `/image/${data.image}`;
         renderImage.classList.remove("dsp-none");
-
 
         var minusBtn = doctorRenderCard.querySelector(".minus-btn-div");
         minusBtn.classList.add("pointer-none");
@@ -174,34 +169,22 @@ function Forms() {
           <div
             className={`sideBar-cardClone ${cardCount <= 1 ? "dsp-none" : ""}`}
           >
-            {dataDoc.length > 0
-              ? dataDoc.map((data, index) => (
-                  <div
-                    key={index}
-                    className={`select-item ${
-                      index === activeCard ? "active" : ""
-                    }`}
-                    onClick={() => handleSidebarClick(index)}
-                  >
-                    <Link to="#">{index + 1}</Link>
-                  </div>
-                ))
-              : cardPositions.map((position, index) => (
-                  <div
-                    key={index}
-                    className={`select-item ${
-                      index === activeCard ? "active" : ""
-                    }`}
-                    onClick={() => handleSidebarClick(index)}
-                  >
-                    <Link to="#">{index + 1}</Link>
-                  </div>
-                ))}
+            {cardPositions.map((position, index) => (
+              <div
+                key={index}
+                className={`select-item ${
+                  index === activeCard ? "active" : ""
+                }`}
+                onClick={() => handleSidebarClick(index)}
+              >
+                <Link to="#">{index + 1}</Link>
+              </div>
+            ))}
           </div>
           <div className="container card-section-wrapper">
             {dataDoc.length > 0
               ? dataDoc.map((data, index) => {
-                console.log('this working')
+                  console.log("this working");
                   return (
                     <div
                       key={index}
