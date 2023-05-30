@@ -78,15 +78,23 @@ function Forms() {
 
     var userEmailId = userData.user.user.email;
 
-    fetch("/doctors")
+    fetch("http://localhost:80/doctors")
       .then((response) => response.json())
       .then((data) => {
         const fetchedDoctorsData = data.doctors.filter(
           (doctorsData) => doctorsData.reference === userEmailId
         );
-        setdataDoc(fetchedDoctorsData);
-        setActiveCard(fetchedDoctorsData.length + 1);
-        setCardCount(fetchedDoctorsData.length);
+        if (fetchedDoctorsData.length > 0) {
+          setdataDoc(fetchedDoctorsData);
+          localStorage.setItem('dataLocal',JSON.stringify(fetchedDoctorsData));
+          setActiveCard(fetchedDoctorsData.length + 1);
+          setCardCount(fetchedDoctorsData.length);
+        } else {
+          setdataDoc("");
+          setCardPositions([0]);
+          setCardCount(1)
+          setActiveCard(cardCount)
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -101,7 +109,6 @@ function Forms() {
   useEffect(() => {
     if (dataDoc.length > 0) {
       dataDoc.forEach(function (data, index) {
-
         let doctorsCardId = data.cardId;
         var doctorRenderCard = document.querySelector(
           `#card${doctorsCardId - 1}`
@@ -181,7 +188,7 @@ function Forms() {
                     <div
                       key={index}
                       className={`select-item ${
-                        index  === activeCard ? "active" : ""
+                        index + 1 === activeCard ? "active" : ""
                       }`}
                       onClick={() => handleSidebarClick(index)}
                     >
@@ -206,7 +213,11 @@ function Forms() {
           <div className="container card-section-wrapper">
             {dataDoc.length > 0
               ? dataDoc.map((data, index) => {
-                const position = index < cardPositions.length ? cardPositions[index] : (cardPositions[cardPositions.length - 1] + 18 * (index - cardPositions.length + 1));
+                  const position =
+                    index < cardPositions.length
+                      ? cardPositions[index]
+                      : cardPositions[cardPositions.length - 1] +
+                        18 * (index - cardPositions.length + 1);
                   return (
                     <div
                       key={index}

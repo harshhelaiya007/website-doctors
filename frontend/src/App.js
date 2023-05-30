@@ -19,6 +19,7 @@ function App() {
     userInfo = JSON.parse(localStorage.getItem("userData"));
     adminFlag = userInfo.admin;
   }
+  console.log(adminFlag)
 
   return (
     <Router>
@@ -33,7 +34,7 @@ function App() {
             <Home />
           </Route>
             : history.push('/Login')}
-          {userInfo ? history.push('/Home') : <Route path="/Login">
+          {userInfo ? (userInfo.admin ? history.push('/Admin') : history.push('/Home')) : <Route path="/Login">
             <Login />
           </Route>}
           <Route path="/Signup">
