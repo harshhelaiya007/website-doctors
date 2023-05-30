@@ -112,7 +112,7 @@ function Card({ keyId }) {
           console.error(error);
         });
     } else {
-      alert("Please upload an image of size less than or equal to 100KB");
+      alert("Please upload an image of size less than or equal to 1MB");
     }
   };
 

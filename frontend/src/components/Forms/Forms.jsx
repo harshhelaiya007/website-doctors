@@ -10,13 +10,12 @@ import "cropperjs/dist/cropper.css";
 function Forms() {
   const [cardPositions, setCardPositions] = useState([0]);
   const [cardCount, setCardCount] = useState(1);
-  const [activeCard, setActiveCard] = useState(0);
+  const [activeCard, setActiveCard] = useState(1);
 
   const [image, setImage] = useState(null);
 
   let [croppedImage, setCroppedImage] = useState(null);
   const [dataDoc, setdataDoc] = useState([]);
-  const imageRef = useRef(null);
 
   const addCard = () => {
     if (cardCount < 15) {
@@ -86,6 +85,8 @@ function Forms() {
           (doctorsData) => doctorsData.reference === userEmailId
         );
         setdataDoc(fetchedDoctorsData);
+        setActiveCard(fetchedDoctorsData.length + 1);
+        setCardCount(fetchedDoctorsData.length);
       })
       .catch((error) => {
         console.log(error);
@@ -93,14 +94,18 @@ function Forms() {
   }, []);
 
   useEffect(() => {
+    const newPosition = cardPositions[cardPositions.length - 1] + 18;
+    setCardPositions([...cardPositions, newPosition]);
+  }, [dataDoc]);
+
+  useEffect(() => {
     if (dataDoc.length > 0) {
-      dataDoc.forEach(function (data) {
+      dataDoc.forEach(function (data, index) {
 
         let doctorsCardId = data.cardId;
         var doctorRenderCard = document.querySelector(
           `#card${doctorsCardId - 1}`
         );
-
         var doctorNameRender = doctorRenderCard.querySelector(
           `#inputDoctorName-${doctorsCardId}`
         );
@@ -153,7 +158,8 @@ function Forms() {
           imagePTag.classList.remove("dsp-none");
         }
         cardImageSection.classList.add("inputFileUpload");
-        renderImage.src = `/image/${data.image}`;
+
+        renderImage.src = `http://ec2-65-2-116-251.ap-south-1.compute.amazonaws.com/image/${data.image}`;
         renderImage.classList.remove("dsp-none");
 
         var minusBtn = doctorRenderCard.querySelector(".minus-btn-div");
@@ -169,22 +175,38 @@ function Forms() {
           <div
             className={`sideBar-cardClone ${cardCount <= 1 ? "dsp-none" : ""}`}
           >
-            {cardPositions.map((position, index) => (
-              <div
-                key={index}
-                className={`select-item ${
-                  index === activeCard ? "active" : ""
-                }`}
-                onClick={() => handleSidebarClick(index)}
-              >
-                <Link to="#">{index + 1}</Link>
-              </div>
-            ))}
+            {dataDoc.length > 0
+              ? dataDoc.map((data, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`select-item ${
+                        index  === activeCard ? "active" : ""
+                      }`}
+                      onClick={() => handleSidebarClick(index)}
+                    >
+                      <Link to="#">{index + 1}</Link>
+                    </div>
+                  );
+                })
+              : cardPositions.map((position, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`select-item ${
+                        index === activeCard ? "active" : ""
+                      }`}
+                      onClick={() => handleSidebarClick(index)}
+                    >
+                      <Link to="#">{index + 1}</Link>
+                    </div>
+                  );
+                })}
           </div>
           <div className="container card-section-wrapper">
             {dataDoc.length > 0
               ? dataDoc.map((data, index) => {
-                  console.log("this working");
+                const position = index < cardPositions.length ? cardPositions[index] : (cardPositions[cardPositions.length - 1] + 18 * (index - cardPositions.length + 1));
                   return (
                     <div
                       key={index}
@@ -193,7 +215,7 @@ function Forms() {
                         index === 0 ? "first-ele" : ""
                       } ${index === activeCard ? "comesForward" : ""}`}
                       style={{
-                        transform: `translateY(${cardPositions[index]}px)`,
+                        transform: `translateY(${position}px)`,
                       }}
                     >
                       <div className="btn-wrapper">
@@ -252,73 +274,75 @@ function Forms() {
                     </div>
                   );
                 })
-              : cardPositions.map((position, index) => (
-                  <div
-                    key={index}
-                    className={`card-section ${index > 0 ? "cloned" : ""} ${
-                      index === 0 ? "first-ele" : ""
-                    } ${index === activeCard ? "comesForward" : ""}`}
-                    style={{ transform: `translateY(${position}px)` }}
-                    id={"card" + index}
-                  >
-                    <div className="btn-wrapper">
-                      <div
-                        className="add-btn-div"
-                        key={`add-${index}`}
-                        onClick={addCard}
-                      >
-                        <img
-                          src="./assets/image/add-btn.png"
-                          alt="Add Button"
-                          className="add-btn"
-                        />
+              : cardPositions.map((position, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={`card-section ${index > 0 ? "cloned" : ""} ${
+                        index === 0 ? "first-ele" : ""
+                      } ${index === activeCard ? "comesForward" : ""}`}
+                      style={{ transform: `translateY(${position}px)` }}
+                      id={"card" + index}
+                    >
+                      <div className="btn-wrapper">
+                        <div
+                          className="add-btn-div"
+                          key={`add-${index}`}
+                          onClick={addCard}
+                        >
+                          <img
+                            src="./assets/image/add-btn.png"
+                            alt="Add Button"
+                            className="add-btn"
+                          />
+                        </div>
+                        <div
+                          className={`minus-btn-div${
+                            cardCount > 1 ? "" : " dsp-none"
+                          }`}
+                          key={`minus-${index}`}
+                          onClick={removeCard}
+                        >
+                          <img
+                            src="./assets/image/minus-btn.png"
+                            alt="Minus Button"
+                            className="minus-btn"
+                          />
+                        </div>
                       </div>
-                      <div
-                        className={`minus-btn-div${
-                          cardCount > 1 ? "" : " dsp-none"
-                        }`}
-                        key={`minus-${index}`}
-                        onClick={removeCard}
-                      >
-                        <img
-                          src="./assets/image/minus-btn.png"
-                          alt="Minus Button"
-                          className="minus-btn"
-                        />
+                      {/* Card content goes here */}
+                      <div className="heading-title">
+                        <h2>
+                          Doctors Details Form{" "}
+                          <span className="form-number">{index + 1}</span>
+                        </h2>
+                      </div>
+                      <div className="card-section-body">
+                        {/* Render input fields here */}
+                        <ModelImageContext.Provider
+                          value={{
+                            image,
+                            setImage,
+                            croppedImage,
+                            cardCount,
+                            cardPositions,
+                            setCardCount,
+                            setCardPositions,
+                            setActiveCard,
+                          }}
+                        >
+                          <Card keyId={index + 1} key={index} />
+                        </ModelImageContext.Provider>
                       </div>
                     </div>
-                    {/* Card content goes here */}
-                    <div className="heading-title">
-                      <h2>
-                        Doctors Details Form{" "}
-                        <span className="form-number">{index + 1}</span>
-                      </h2>
-                    </div>
-                    <div className="card-section-body">
-                      {/* Render input fields here */}
-                      <ModelImageContext.Provider
-                        value={{
-                          image,
-                          setImage,
-                          croppedImage,
-                          cardCount,
-                          cardPositions,
-                          setCardCount,
-                          setCardPositions,
-                          setActiveCard,
-                        }}
-                      >
-                        <Card keyId={index + 1} key={index} />
-                      </ModelImageContext.Provider>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
           </div>
         </div>
       </div>
       <Model
         uploadImageData={image}
-        modelRef={imageRef}
+        modelRef={""}
         onImageLoadCropper={onImageLoaded}
       />
     </>

@@ -248,7 +248,7 @@ textarea:focus {
 }
 
 .card-section-img.inputFileUpload {
-    min-height: 350px;
+    min-height: max-content;
     padding: 16px;
 }
 
