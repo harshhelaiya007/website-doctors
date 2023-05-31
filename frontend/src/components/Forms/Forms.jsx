@@ -78,7 +78,7 @@ function Forms() {
 
     var userEmailId = userData.user.user.email;
 
-    fetch("http://localhost:80/doctors")
+    fetch("/doctors")
       .then((response) => response.json())
       .then((data) => {
         const fetchedDoctorsData = data.doctors.filter(
