@@ -1,0 +1,30 @@
+.dataCardSection {
+    width: 18rem;
+    height: max-content;
+    background-color: #BFACE2;
+    color: white;
+}
+
+.card-img-section {
+    width: 230px;
+    margin: 10px auto;
+}
+
+.img-section {
+    width: 230px;
+    height: 230px;
+}
+
+.cardSection_wrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    padding: 0 135px;
+    gap: 30px;
+}
+
+.card-body p {
+    font-size: 18px;
+    font-weight: 500;
+}
