@@ -238,6 +238,12 @@ textarea:focus {
     margin-left: 15px;
 }
 
+.btn.btn-color.back-btn {
+    cursor: pointer;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
 .main-wrapper {
     align-items: center;
     /* gap: 40px; */

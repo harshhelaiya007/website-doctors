@@ -1,7 +1,11 @@
-import React from "react";
+import { React, useContext } from "react";
 import "./DataCard.css";
+import Button from "../Button/Button";
+import filledDataContext from "../Context/filledDataContext";
 
-function DataCard() {
+function DataCard({ checkNow }) {
+  const { filledData, setFilledData } = useContext(filledDataContext);
+
   let renderDataLocal = localStorage.getItem("dataLocal");
   if (renderDataLocal !== "" || renderDataLocal == null) {
     renderDataLocal = JSON.parse(localStorage.getItem("dataLocal"));
@@ -42,14 +46,23 @@ function DataCard() {
     }
   };
 
+  const handleBack = () => {
+    setFilledData(!filledData);
+  };
+
   return (
-    <div
-      className={`cardSection_wrapper ${
-        renderDataLocal.length > 0 ? "" : "dsp-none"
-      }`}
-    >
-      {localDataFn()}
-    </div>
+    <>
+      <Button
+        className={`btn btn-secondary btn-lg btn-color back-btn ${
+          checkNow ? "" : "dsp-none"
+        }`}
+        btnText={"Back"}
+        onClick={handleBack}
+      />
+      <div className={`cardSection_wrapper ${checkNow ? "" : "dsp-none"}`}>
+        {localDataFn()}
+      </div>
+    </>
   );
 }
 

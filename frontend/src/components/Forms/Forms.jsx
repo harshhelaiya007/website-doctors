@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import DataCard from "../DataCard/DataCard";
 import Button from "../Button/Button";
 import ModelImageContext from "../Context/ModelImageContext";
+import filledDataContext from "../Context/filledDataContext";
 import Model from "../Model/Model";
 import "./Forms.css";
 
 function Forms() {
+  // Create the context
+
   const [cardPositions, setCardPositions] = useState([0]);
   const [cardCount, setCardCount] = useState(1);
   const [activeCard, setActiveCard] = useState(1);
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [dataDoc, setDataDoc] = useState([]);
+  const [filledData, setFilledData] = useState(false);
 
   const addCard = () => {
-    if (cardCount < 15) {
-      setDataDoc("");
+    let getCardLimit = localStorage.getItem("dataLimit");
+    let cardLimit;
+    if (getCardLimit != "") {
+      cardLimit = 15 - getCardLimit;
+    } else {
+      cardLimit = 15;
+    }
+    if (cardCount < cardLimit) {
       const newPosition = cardPositions[cardPositions.length - 1] + 18;
       setCardPositions((positions) => [...positions, newPosition]);
       setCardCount((count) => {
@@ -26,6 +36,9 @@ function Forms() {
         return newCount;
       });
       setCroppedImage(null);
+    }
+    if (cardCount == cardLimit) {
+      alert("Reached Card Limit 15");
     }
   };
 
@@ -53,7 +66,7 @@ function Forms() {
       const parsedUserData = JSON.parse(userData);
       const userEmailId = parsedUserData.user.user.email;
 
-      fetch("http://localhost:80/doctors")
+      fetch("/doctors")
         .then((response) => response.json())
         .then((data) => {
           const fetchedDoctorsData = data.doctors.filter(
@@ -71,6 +84,7 @@ function Forms() {
               "dataLocal",
               JSON.stringify(fetchedDoctorsData)
             );
+            localStorage.setItem("dataLimit", fetchedDoctorsData.length);
             setDataDoc(fetchedDoctorsData);
           }
         })
@@ -160,16 +174,21 @@ function Forms() {
     return cards;
   };
 
+  const handleSetData = () => {
+    setFilledData(!filledData);
+  };
+
   return (
     <>
-      <div className="form-section main">
+      <div className={`form-section main ${filledData ? "dsp-none" : ""}`}>
+        <Button
+          className={`btn btn-secondary btn-lg btn-color filled-btn ${
+            dataDoc.length > 0 ? "" : "dsp-none"
+          }`}
+          btnText={"Filled Data"}
+          onClick={handleSetData}
+        />
         <div className="form-section-inner">
-          <Button
-            className={`btn btn-secondary btn-lg btn-color filled-btn ${
-              dataDoc.length > 0 ? "" : "dsp-none"
-            }`}
-            btnText={"Filled Data"}
-          />
           <div className="sidebar-section">
             <div className="sidebar">{renderSidebar()}</div>
           </div>
@@ -177,7 +196,9 @@ function Forms() {
         </div>
         <Model />
       </div>
-      <DataCard renderData={dataDoc} />
+      <filledDataContext.Provider value={{ filledData, setFilledData }}>
+        <DataCard renderData={dataDoc} checkNow={filledData} />
+      </filledDataContext.Provider>
     </>
   );
 }
