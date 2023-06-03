@@ -53,6 +53,7 @@
     padding: 35px;
     transform-origin: center top;
 }
+
 .card-section.first-ele {
     position: absolute;
 }
@@ -226,6 +227,15 @@ textarea:focus {
     color: black;
     background-color: #ECF2FF;
     border-color: black;
+}
+
+.btn.btn-color.filled-btn {
+    outline-color: #BFACE2;
+    background-color: #655DBB;
+    border: 1px solid #655DBB;
+    cursor: pointer;
+    margin-bottom: 15px;
+    margin-left: 15px;
 }
 
 .main-wrapper {
@@ -530,18 +540,23 @@ label.file-label {
     .sideBar-cardClone .select-item a {
         font-size: 14px;
     }
+
     .card-section-wrapper {
         width: 100%;
     }
+
     .form-section.main .form-section-inner {
         height: 1045px;
     }
+
     .comesForward.cloned {
         z-index: 999;
     }
+
     .modal-body {
         width: 100%;
     }
+
     .modal-content {
         width: 100%;
     }

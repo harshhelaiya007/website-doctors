@@ -20,7 +20,7 @@ function Header() {
   const handleLogoutClick = () => {
     var loaderEle = document.querySelector(".lds-dual-ring");
     loaderEle.classList.add("active");
-    document.querySelector(".form-section.login-box")?.classList.add("dsp-none");
+    document.querySelector(".form-section")?.classList.add("dsp-none");
     document.querySelector(".header").classList.add("dsp-none");
     axios
       .post("/logout", {
@@ -35,7 +35,7 @@ function Header() {
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
         document
-          .querySelector(".form-section.login-box")
+          .querySelector(".form-section")
           .classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
         // do something with the response data
@@ -45,7 +45,7 @@ function Header() {
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
         document
-          .querySelector(".form-section.login-box")
+          .querySelector(".form-section")
           .classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
         if (error.response.status === 400) {
