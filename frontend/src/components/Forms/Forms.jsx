@@ -19,6 +19,12 @@ function Forms() {
   const [dataDoc, setDataDoc] = useState([]);
   const [filledData, setFilledData] = useState(false);
 
+  const [refreshData, setRefreshData] = useState(true);
+
+  const handleRefreshDataStats = () => {
+    setRefreshData(!refreshData);
+  };
+
   const addCard = () => {
     let getCardLimit = localStorage.getItem("dataLimit");
     let cardLimit;
@@ -92,7 +98,7 @@ function Forms() {
           console.log(error);
         });
     }
-  }, []);
+  }, [refreshData]);
 
   const renderSidebar = () => {
     const sidebarItems = cardPositions.map((position, index) => {
@@ -126,14 +132,14 @@ function Forms() {
           id={`card${index + 1}`}
         >
           <div className="btn-wrapper">
-            <div className="add-btn-div" key={`add-${index}`} onClick={addCard}>
+            {/* <div className="add-btn-div" key={`add-${index}`} onClick={addCard}>
               <img
                 src="./assets/image/add-btn.png"
                 alt="Add Button"
                 className="add-btn"
               />
-            </div>
-            <div
+            </div> */}
+            {/* <div
               className={`minus-btn-div${cardCount > 1 ? "" : " dsp-none"}`}
               key={`minus-${index}`}
               onClick={removeCard}
@@ -143,12 +149,12 @@ function Forms() {
                 alt="Minus Button"
                 className="minus-btn"
               />
-            </div>
+            </div> */}
           </div>
           <div className="heading-title">
             <h2>
               Doctors Details Form{" "}
-              <span className="form-number">{index + 1}</span>
+              {/* <span className="form-number">{index + 1}</span> */}
             </h2>
           </div>
           <div className="card-section-body">
@@ -164,7 +170,12 @@ function Forms() {
                 setActiveCard,
               }}
             >
-              <Card keyId={index + 1} key={index} />
+              <Card
+                keyId={index + 1}
+                key={index}
+                disbledBtn={dataDoc.length >= 15}
+                handleRefreshDataStats={handleRefreshDataStats}
+              />
             </ModelImageContext.Provider>
           </div>
         </div>

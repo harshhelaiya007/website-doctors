@@ -4,7 +4,7 @@ import Button from "../Button/Button";
 import Input from "../Input/Input";
 import Photo from "../Photo/Photo";
 
-function Card({ keyId }) {
+function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [region, setRegion] = useState("");
@@ -135,44 +135,53 @@ function Card({ keyId }) {
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
-    var loaderEle = document.querySelector(".lds-dual-ring");
-    loaderEle.classList.add("active");
-    document.querySelector(".form-section").classList.add("dsp-none");
-    document.querySelector(".header").classList.add("dsp-none");
+    if (disbledBtn) {
+      alert("You have reched limit of 15 records");
+    } else {
+      var loaderEle = document.querySelector(".lds-dual-ring");
+      loaderEle.classList.add("active");
+      document.querySelector(".form-section").classList.add("dsp-none");
+      document.querySelector(".header").classList.add("dsp-none");
 
-    const formData = new FormData();
-    formData.append("cardId", keyId);
-    formData.append("reference", userInfo.user.user.email);
-    formData.append("name", name);
-    formData.append("region", region);
-    formData.append("hq", hq);
-    formData.append("fsoname", fsoname);
-    formData.append("doctorNumber", number);
-    formData.append("image", fileDirect);
+      const formData = new FormData();
+      formData.append("cardId", keyId);
+      formData.append("reference", userInfo.user.user.email);
+      formData.append("name", name);
+      formData.append("region", region);
+      formData.append("hq", hq);
+      formData.append("fsoname", fsoname);
+      formData.append("doctorNumber", number);
+      formData.append("image", fileDirect);
 
-    // form axios
-    axios
-      .post("/forms", formData)
-      .then((response) => {
-        console.log(response.data);
-        var loaderEle = document.querySelector(".lds-dual-ring");
-        loaderEle.classList.remove("active");
-        document.querySelector(".form-section").classList.remove("dsp-none");
-        document.querySelector(".header").classList.remove("dsp-none");
-        alert("Data Successfully Saved");
-        // do something with the response data
-      })
-      .catch((error) => {
-        var loaderEle = document.querySelector(".lds-dual-ring");
-        loaderEle.classList.remove("active");
-        document.querySelector(".form-section").classList.remove("dsp-none");
-        document.querySelector(".header").classList.remove("dsp-none");
-        if (error.response.status === 400) {
-          alert("BAD REQUEST");
-        } else {
-          alert("Server Error");
-        }
-      });
+      // form axios
+
+      axios
+        .post("/forms", formData)
+        .then((response) => {
+          var loaderEle = document.querySelector(".lds-dual-ring");
+          loaderEle.classList.remove("active");
+          document.querySelector(".form-section").classList.remove("dsp-none");
+          document.querySelector(".header").classList.remove("dsp-none");
+          // Refresh parent state for data checking
+          handleRefreshDataStats();
+          setName("");
+          setImage(null);
+          setFileDirect("");
+          alert("Data Successfully Saved");
+          // do something with the response data
+        })
+        .catch((error) => {
+          var loaderEle = document.querySelector(".lds-dual-ring");
+          loaderEle.classList.remove("active");
+          document.querySelector(".form-section").classList.remove("dsp-none");
+          document.querySelector(".header").classList.remove("dsp-none");
+          if (error.response.status === 400) {
+            alert("BAD REQUEST");
+          } else {
+            alert("Server Error");
+          }
+        });
+    }
   };
 
   useEffect(() => {

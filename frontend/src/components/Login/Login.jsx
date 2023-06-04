@@ -12,10 +12,10 @@ function Login() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    var loaderEle = document.querySelector('.lds-dual-ring')
-    loaderEle.classList.add('active')
-    document.querySelector('.form-section.login-box').classList.add('dsp-none');
-    document.querySelector('.header').classList.add('dsp-none');
+    var loaderEle = document.querySelector(".lds-dual-ring");
+    loaderEle.classList.add("active");
+    document.querySelector(".form-section.login-box").classList.add("dsp-none");
+    document.querySelector(".header").classList.add("dsp-none");
 
     axios
       .post("/login", {
@@ -26,39 +26,41 @@ function Login() {
         console.log(response.data);
         let registerUserData = response.data;
         localStorage.setItem("userData", JSON.stringify(registerUserData));
-        var loaderEle = document.querySelector('.lds-dual-ring')
-        loaderEle.classList.remove('active')
-        document.querySelector('.form-section.login-box').classList.remove('dsp-none');
-        document.querySelector('.header').classList.remove('dsp-none');
-        history.push('/Home');
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section.login-box")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
+        history.push("/Home");
         window.location.reload();
         // do something with the response data
       })
       .catch((error) => {
         console.log(error.response);
-        var loaderEle = document.querySelector('.lds-dual-ring')
-        loaderEle.classList.remove('active')
-        document.querySelector('.form-section.login-box').classList.remove('dsp-none');
-        document.querySelector('.header').classList.remove('dsp-none');
+        var loaderEle = document.querySelector(".lds-dual-ring");
+        loaderEle.classList.remove("active");
+        document
+          .querySelector(".form-section.login-box")
+          .classList.remove("dsp-none");
+        document.querySelector(".header").classList.remove("dsp-none");
         if (error.response.status === 400) {
-          if(error.response.data.msg == 'Invalid Credentials') {
-            alert('Invalid Credentials');
+          if (error.response.data.msg == "Invalid Credentials") {
+            alert("Invalid Credentials");
           } else {
-            alert('BAD REQUEST')
+            alert("BAD REQUEST");
           }
-        } else if(error.response.status === 500) {
-          alert('Server Error');
+        } else if (error.response.status === 500) {
+          alert("Server Error");
         } else {
-          alert('Server Error');
+          alert("Server Error");
         }
-        history.push('/')
+        history.push("/");
       });
   };
 
   useEffect(() => {
-    let cardLoginSignup = document.querySelector(
-      ".card-section.login-box"
-    );
+    let cardLoginSignup = document.querySelector(".card-section.login-box");
     if (window.matchMedia("(max-width: 767px)").matches) {
       cardLoginSignup.setAttribute(
         "style",
