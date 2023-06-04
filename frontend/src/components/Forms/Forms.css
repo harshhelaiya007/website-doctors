@@ -566,6 +566,20 @@ label.file-label {
     .modal-content {
         width: 100%;
     }
+
+    .cardSection_wrapper {
+        padding: 0 30px;
+    }
+
+    .dataCardSection {
+        width: 100%;
+    }
+
+    .btn.btn-color.filled-btn {
+        margin-top: 10px;
+        width: 100%;
+        padding: 10px;
+    }
 }
 
 /* responsive design */
