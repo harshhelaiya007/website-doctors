@@ -1,5 +1,6 @@
 import { React, useContext } from "react";
 import "./DataCard.css";
+import axios from "axios";
 import Button from "../Button/Button";
 import filledDataContext from "../Context/filledDataContext";
 
@@ -11,11 +12,24 @@ function DataCard({ checkNow }) {
     renderDataLocal = JSON.parse(localStorage.getItem("dataLocal"));
   }
 
+  const handleDeleteClick = (data) => {
+    axios
+      .delete(`/doctors/${data._id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Retry Deleting Data");
+      });
+      window.location.reload();
+  };
+
   const localDataFn = () => {
     if (renderDataLocal && renderDataLocal.length > 0) {
       return renderDataLocal.map((data, index) => (
         <div key={index} className="card dataCardSection">
-          <div className="card-img-section">
+          <div className="card-img-section" data-id={data._id}>
             <img
               className="card-img-top img-section"
               src={
@@ -39,6 +53,12 @@ function DataCard({ checkNow }) {
               FSO Name: <span>{data.fsoname}</span>
             </p>
           </div>
+          <Button
+            className="btn btn-primary btn-lg delete-btn"
+            type="submit"
+            btnText={"Delete"}
+            onClick={() => handleDeleteClick(data)}
+          />
         </div>
       ));
     } else {

@@ -15,7 +15,7 @@ function Header() {
 
   if (userInfo && !userInfo == "") {
     userInfo = JSON.parse(localStorage.getItem("userData"));
-    var admin = userInfo.admin
+    var admin = userInfo.admin;
   }
   const handleLogoutClick = () => {
     var loaderEle = document.querySelector(".lds-dual-ring");
@@ -29,30 +29,30 @@ function Header() {
       })
       .then((response) => {
         console.log(response.data);
-        localStorage.removeItem('userData');
-        history.push('/');
+        localStorage.removeItem("userData");
+        history.push("/");
         window.location.reload();
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
-        document
-          .querySelector(".form-section")
-          .classList.remove("dsp-none");
+        document.querySelector(".form-section").classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
         // do something with the response data
       })
       .catch((error) => {
         console.log(error);
+        let msgV = error.response.data.msg;
+        if (msgV === "Invalid token") {
+          localStorage.removeItem("dataLocal");
+          localStorage.removeItem("filledData");
+          localStorage.removeItem("userData");
+          localStorage.removeItem("dataLimit");
+          history.push("/");
+        }
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
-        document
-          .querySelector(".form-section")
-          .classList.remove("dsp-none");
+        document.querySelector(".form-section").classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
-        if (error.response.status === 400) {
-          alert("BAD REQUEST");
-        } else {
-          alert('Server Error');
-        }
+        alert("Server Error");
       });
   };
 
@@ -112,7 +112,11 @@ function Header() {
                     return null; // hide Login nav-item when user is logged in
                   }
                   return (
-                    <li className="nav-item" key={navItemName} onClick={handleNavItemClick}>
+                    <li
+                      className="nav-item"
+                      key={navItemName}
+                      onClick={handleNavItemClick}
+                    >
                       <Link to={"/" + navItemName} className="nav-link">
                         {navItemName}
                       </Link>
@@ -122,7 +126,7 @@ function Header() {
               </div>
             </div>
           </ul>
-          <div className={`nav-item dropdown ${userInfo ? '' : 'dsp-none'}`}>
+          <div className={`nav-item dropdown ${userInfo ? "" : "dsp-none"}`}>
             <a
               className="nav-link dropdown-toggle text-white"
               id="navbarDropdown"

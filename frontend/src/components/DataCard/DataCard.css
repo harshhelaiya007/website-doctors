@@ -28,3 +28,6 @@
     font-size: 18px;
     font-weight: 500;
 }
+.btn.delete-btn {
+    margin: 5px;
+}

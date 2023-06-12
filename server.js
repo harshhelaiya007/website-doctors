@@ -76,6 +76,8 @@ app.delete('/doctors/:name', (req, res) => {
   });
 });
 
+app.delete('/doctors/:id', doctorsDetails);
+
 
 app.listen(80, () => console.log("Server running on port 80"));
 
