@@ -1,62 +1,83 @@
-import React, { useState } from "react";
+import { React, useState, useEffect } from 'react';
 
 function Dropdown({
   inputId,
   labelClassName,
   labelText,
-  options,
   changeEvent,
   parentWrapperClass,
-  selectedValue,
+  disable = false,
+  ...others
 }) {
-  const [isDropdownActive, setIsDropdownActive] = useState(false);
-
-  const handleDropdownClick = () => {
-    setIsDropdownActive(!isDropdownActive);
+  const [isInputActive, setIsInputActive] = useState(false);
+  const handleInputChange = (event) => {
+    if (event.target.type === 'file') {
+      return;
+    }
+    if (event.target.value === '') {
+      setIsInputActive(false);
+    } else {
+      setIsInputActive(true);
+    }
   };
 
-  const handleOptionClick = (option) => {
-    setIsDropdownActive(false);
-    changeEvent(option);
+  const handleInputClick = (event) => {
+    if (event.target.type === 'file') {
+      return;
+    }
+    setIsInputActive(true);
   };
 
+  const handleInputBlur = (e) => {
+    if (e.target.value === '') {
+      setIsInputActive(false);
+    } else {
+      setIsInputActive(true);
+    }
+  };
+  const region = [
+    'DELHI',
+    'CHANDIGARH',
+    'JAIPUR',
+    'LUCKNOW',
+    'MEERUT',
+    'SRINAGAR',
+    'MUMBAI',
+    'AHMEDABAD',
+    'NAGPUR',
+    'PUNE',
+    'BHOPAL',
+    'THRISSUR',
+    'BANGALORE',
+    'CHENNAI',
+    'HYDERABAD',
+    'VIJAYAWADA',
+    'PATNA',
+    'RANCHI',
+    'CUTTACK',
+    'CALCUTTA',
+    'REST OF WEST BANGAL',
+    'NORTH EAST',
+  ].sort();
   return (
     <div
-      className={`form-group ${parentWrapperClass ? parentWrapperClass : ""}`}
+      className={`form-group ${parentWrapperClass ? parentWrapperClass : ''}`}
     >
       <label htmlFor={inputId} className={labelClassName}>
-        <span
-          className={`input-field_label ${
-            isDropdownActive ? "input-focus input-active" : ""
-          }`}
-        >
-          {labelText}
-          <span className="input-field_required" aria-hidden="true">
-            {" "}
-            *
-          </span>
-        </span>
-        <div
+        <select
           id={inputId}
-          className={`input-field dropdown ${isDropdownActive ? "active" : ""}`}
-          onClick={handleDropdownClick}
+          style={{
+            width: '100%',
+            borderRadius: '6px',
+            padding: '15px',
+            color: '#022741',
+          }}
+          onChange ={changeEvent}
         >
-          {selectedValue || "Select an option"}
-          <i className="fa fa-caret-down"></i>
-          <ul className={`dropdown-list ${isDropdownActive ? "active" : ""}`}>
-            {options.map((option, index) => (
-              <li
-                key={index}
-                className={`dropdown-item ${
-                  selectedValue === option ? "selected" : ""
-                }`}
-                onClick={() => handleOptionClick(option)}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        </div>
+          {region.map((e) => (
+            <option value={e}>{e}</option>
+          ))}
+        </select>
       </label>
       <div className="error-msg">
         <p></p>

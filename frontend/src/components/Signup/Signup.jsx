@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
+import Dropdown from "../Input/DropDown";
 import "./Signup.css";
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +13,6 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [region, setRegion] = useState("");
   const [hq, setHq] = useState("");
-  const [fsoName, setFsoName] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
@@ -21,8 +21,7 @@ function Signup() {
       username !== "" &&
       password !== "" &&
       email !== "" &&
-      hq !== "" &&
-      fsoName !== ""
+      hq !== ""
     ) {
       setDisableStatus(false);
     } else {
@@ -30,7 +29,7 @@ function Signup() {
     }
 
     return () => {};
-  }, [email, password, username, region, hq, fsoName]);
+  }, [email, password, username, region, hq]);
 
   const showSuccess = (inputEle) => {
     console.log("comes under success");
@@ -89,16 +88,7 @@ function Signup() {
     }
   };
 
-  const handleFsoName = (e) => {
-    let inputValue = e.target.value;
-    // buttonDisable(e.target);
-    if (!inputValue == "") {
-      showSuccess(e.target);
-      setFsoName(inputValue);
-    } else {
-      showRequired(e.target, "Name is Required.", "Please Enter Valid Name.");
-    }
-  };
+
 
   // email validation
   const handleEmail = (e) => {
@@ -167,7 +157,7 @@ function Signup() {
         email: email,
         region: region,
         hq: hq,
-        fsoname: fsoName,
+        fsoname: "",
         password: password,
       })
       .then((response) => {
@@ -235,7 +225,7 @@ function Signup() {
                 parentWrapperClass={"login-form"}
                 changeEvent={handleEmail}
               />
-              <Input
+              <Dropdown
                 inputId={"inputRegion"}
                 type="text"
                 name="region"
@@ -252,15 +242,6 @@ function Signup() {
                 labelText={"HQ"}
                 parentWrapperClass={"login-form"}
                 changeEvent={handleHq}
-              />
-              <Input
-                inputId={"inputFSOName"}
-                type="text"
-                name="fsoName"
-                labelClassName={""}
-                labelText={"FSO Name"}
-                parentWrapperClass={"login-form"}
-                changeEvent={handleFsoName}
               />
               <Input
                 inputId={"inputPassword"}

@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect } from 'react';
 
 function Input({
   inputId,
@@ -6,14 +6,15 @@ function Input({
   labelText,
   changeEvent,
   parentWrapperClass,
+  disable = false,
   ...others
 }) {
   const [isInputActive, setIsInputActive] = useState(false);
   const handleInputChange = (event) => {
-    if (event.target.type === "file") {
+    if (event.target.type === 'file') {
       return;
     }
-    if (event.target.value === "") {
+    if (event.target.value === '') {
       setIsInputActive(false);
     } else {
       setIsInputActive(true);
@@ -21,33 +22,32 @@ function Input({
   };
 
   const handleInputClick = (event) => {
-    if (event.target.type === "file") {
+    if (event.target.type === 'file') {
       return;
     }
     setIsInputActive(true);
   };
 
   const handleInputBlur = (e) => {
-    if (e.target.value === "") {
+    if (e.target.value === '') {
       setIsInputActive(false);
     } else {
       setIsInputActive(true);
     }
   };
-
   return (
     <div
-      className={`form-group ${parentWrapperClass ? parentWrapperClass : ""}`}
+      className={`form-group ${parentWrapperClass ? parentWrapperClass : ''}`}
     >
       <label htmlFor={inputId} className={labelClassName}>
         <span
           className={`input-field_label ${
-            isInputActive ? "input-focus input-active" : ""
+            isInputActive ? 'input-focus input-active' : ''
           }`}
         >
           {labelText}
           <span className="input-field_required" aria-hidden="true">
-            {" "}
+            {' '}
             *
           </span>
         </span>
@@ -59,7 +59,9 @@ function Input({
           onInput={handleInputChange}
           onChange={changeEvent}
           onBlur={handleInputBlur}
-        ></input>
+          disabled={disable}
+        />
+
       </label>
       <div className="error-msg">
         <p></p>

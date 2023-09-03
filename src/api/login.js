@@ -31,9 +31,6 @@ router.post('/', [
         const hashedPassword = user.password;
 
         const isMatch = await bcrypt.compare(password, hashedPassword);
-        console.log(isMatch)
-        console.log(password)
-        console.log(hashedPassword)
 
         if (!isMatch) {
             return res.status(400).json({ msg: 'Invalid Credentials' });
@@ -47,6 +44,7 @@ router.post('/', [
         const token = jwt.sign(payload, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c', { expiresIn: '1h' });
 
         if (email === adminUsername && password === adminPassword) {
+            console.log(user)
             res.set('Authorization', 'Bearer ' + token);
             return res.status(200).json({ message: 'Login successful', token, user: { user }, loggedIn: true, admin:true });
         }

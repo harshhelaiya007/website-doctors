@@ -238,35 +238,28 @@ function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
   };
 
   useEffect(() => {
-    // let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
-    // let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
-    // let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
-    // if (!inputFieldDRegion == '') {
-    //   if (userInfo && !userInfo.user == '') {
-    //     inputFieldDRegion.value = userInfo.user.user.region;
-    //     setRegion(userInfo.user.user.region);
-    //     inputFieldDHQ.value = userInfo.user.user.hq;
-    //     setHq(userInfo.user.user.hq);
-    //     inputFieldDRegion.parentElement.parentNode.classList.add('valid');
-    //     inputFieldDHQ.parentElement.parentNode.classList.add('valid');
-    //     inputFieldFsoName.parentElement.parentNode.classList.add('valid');
-    //     inputFieldDRegion.previousElementSibling.classList.add(
-    //       'input-active',
-    //       'input-focus'
-    //     );
-    //     inputFieldDRegion.classList.add('valid');
-    //     inputFieldDHQ.classList.add('valid');
-    //     inputFieldFsoName.classList.add('valid');
-    //     inputFieldDHQ.previousElementSibling.classList.add(
-    //       'input-active',
-    //       'input-focus'
-    //     );
-    //     inputFieldFsoName.previousElementSibling.classList.add(
-    //       'input-active',
-    //       'input-focus'
-    //     );
-    //   }
-    // }
+    let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
+    let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
+    if (!inputFieldDRegion == '') {
+      if (userInfo && !userInfo.user == '') {
+        inputFieldDRegion.value = userInfo.user.user.region;
+        setRegion(userInfo.user.user.region);
+        inputFieldDHQ.value = userInfo.user.user.hq;
+        setHq(userInfo.user.user.hq);
+        inputFieldDRegion.parentElement.parentNode.classList.add('valid');
+        inputFieldDHQ.parentElement.parentNode.classList.add('valid');
+        inputFieldDRegion.previousElementSibling.classList.add(
+          'input-active',
+          'input-focus'
+        );
+        inputFieldDRegion.classList.add('valid');
+        inputFieldDHQ.classList.add('valid');
+        inputFieldDHQ.previousElementSibling.classList.add(
+          'input-active',
+          'input-focus'
+        );
+      }
+    }
   }, []);
 
   return (
@@ -288,6 +281,7 @@ function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
                 name={`hq-${keyId}`}
                 labelClassName={'label'}
                 labelText={'HQ'}
+                disable={true}
                 changeEvent={handleHq}
               />
             </div>
@@ -296,6 +290,7 @@ function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
                 inputId={`inputRegion-${keyId}`}
                 type="text"
                 name={`region-${keyId}`}
+                disable={true}
                 labelText={'Region'}
                 changeEvent={handleRegion}
               />
