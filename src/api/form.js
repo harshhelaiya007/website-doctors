@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Doctor = require("../model/forms");
-const multer = require("multer");
-const s3 = require("../../s3");
-const upload = multer({ dest: "uploads" });
+const Doctor = require('../model/forms');
+const multer = require('multer');
+const s3 = require('../../s3');
+const upload = multer({ dest: 'uploads' });
 
-const fs = require("fs");
-const util = require("util");
+const fs = require('fs');
+const util = require('util');
 const unlinkFile = util.promisify(fs.unlink);
 
 // Define doctor creation endpoint
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   // Check for validation errors
   // const errors = validationResult(req);
   // if (!errors.isEmpty()) {
@@ -18,7 +18,17 @@ router.post("/", async (req, res) => {
   // }
 
   // Extract doctor input from request body
-  const { name, region, hq, fsoname, cardId, reference } = req.body;
+  const {
+    cardId,
+    reference,
+    name,
+    region,
+    hq,
+    ps,
+    doctorNumber,
+    doctorPlace,
+    doctorSpeciality,
+  } = req.body;
 
   try {
     // Upload image to S3 bucket
@@ -29,10 +39,13 @@ router.post("/", async (req, res) => {
     doctor = new Doctor({
       cardId,
       reference,
+      doctorNumber,
       name,
       region,
       hq,
-      fsoname,
+      ps,
+      doctorPlace,
+      doctorSpeciality,
       image: imageUrl,
     });
     // Save new doctor to database
@@ -40,13 +53,13 @@ router.post("/", async (req, res) => {
 
     // Return success response with new doctor information
     res.json({
-      msg: "Doctor created successfully",
+      msg: 'Doctor created successfully',
       doctor,
-      data: "successfully data saved",
+      data: 'successfully data saved',
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server error");
+    res.status(500).send('Server error');
   }
 });
 

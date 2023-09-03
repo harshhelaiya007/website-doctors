@@ -1,12 +1,12 @@
-import React, { useState, useEffect, createContext } from "react";
-import { Link } from "react-router-dom";
-import Card from "../Card/Card";
-import DataCard from "../DataCard/DataCard";
-import Button from "../Button/Button";
-import ModelImageContext from "../Context/ModelImageContext";
-import filledDataContext from "../Context/filledDataContext";
-import Model from "../Model/Model";
-import "./Forms.css";
+import React, { useState, useEffect, createContext } from 'react';
+import { Link } from 'react-router-dom';
+import Card from '../Card/Card';
+import DataCard from '../DataCard/DataCard';
+import Button from '../Button/Button';
+import ModelImageContext from '../Context/ModelImageContext';
+import filledDataContext from '../Context/filledDataContext';
+import Model from '../Model/Model';
+import './Forms.css';
 
 function Forms() {
   // Create the context
@@ -26,9 +26,9 @@ function Forms() {
   };
 
   const addCard = () => {
-    let getCardLimit = localStorage.getItem("dataLimit");
+    let getCardLimit = localStorage.getItem('dataLimit');
     let cardLimit;
-    if (getCardLimit != "") {
+    if (getCardLimit != '') {
       cardLimit = 15 - getCardLimit;
     } else {
       cardLimit = 15;
@@ -44,7 +44,7 @@ function Forms() {
       setCroppedImage(null);
     }
     if (cardCount == cardLimit) {
-      alert("Reached Card Limit 15");
+      alert('Reached Card Limit 15');
     }
   };
 
@@ -61,36 +61,36 @@ function Forms() {
   };
 
   useEffect(() => {
-    var loaderEle = document.querySelector(".lds-dual-ring");
-    loaderEle.classList.add("active");
-    document.querySelector(".form-section.main").classList.add("dsp-none");
-    document.querySelector(".header").classList.add("dsp-none");
+    var loaderEle = document.querySelector('.lds-dual-ring');
+    loaderEle.classList.add('active');
+    document.querySelector('.form-section.main').classList.add('dsp-none');
+    document.querySelector('.header').classList.add('dsp-none');
 
-    const userData = localStorage.getItem("userData");
+    const userData = localStorage.getItem('userData');
 
-    if (userData && userData !== "") {
+    if (userData && userData !== '') {
       const parsedUserData = JSON.parse(userData);
       const userEmailId = parsedUserData.user.user.email;
 
-      fetch("/doctors")
+      fetch('/doctors')
         .then((response) => response.json())
         .then((data) => {
           const fetchedDoctorsData = data.doctors.filter(
             (doctorsData) => doctorsData.reference === userEmailId
           );
-          var loaderEle = document.querySelector(".lds-dual-ring");
-          loaderEle.classList.remove("active");
+          var loaderEle = document.querySelector('.lds-dual-ring');
+          loaderEle.classList.remove('active');
           document
-            .querySelector(".form-section.main")
-            .classList.remove("dsp-none");
-          document.querySelector(".header").classList.remove("dsp-none");
+            .querySelector('.form-section.main')
+            .classList.remove('dsp-none');
+          document.querySelector('.header').classList.remove('dsp-none');
 
           if (fetchedDoctorsData.length > 0) {
             localStorage.setItem(
-              "dataLocal",
+              'dataLocal',
               JSON.stringify(fetchedDoctorsData)
             );
-            localStorage.setItem("dataLimit", fetchedDoctorsData.length);
+            localStorage.setItem('dataLimit', fetchedDoctorsData.length);
             setDataDoc(fetchedDoctorsData);
           }
         })
@@ -105,7 +105,7 @@ function Forms() {
       return (
         <div
           key={index}
-          className={`select-item ${index + 1 === activeCard ? "active" : ""}`}
+          className={`select-item ${index + 1 === activeCard ? 'active' : ''}`}
           onClick={() => handleSidebarClick(index)}
         >
           <Link to="#">{index + 1}</Link>
@@ -114,7 +114,7 @@ function Forms() {
     });
 
     return (
-      <div className={`sideBar-cardClone ${cardCount <= 1 ? "dsp-none" : ""}`}>
+      <div className={`sideBar-cardClone ${cardCount <= 1 ? 'dsp-none' : ''}`}>
         {sidebarItems}
       </div>
     );
@@ -125,35 +125,16 @@ function Forms() {
       return (
         <div
           key={index}
-          className={`card-section ${index > 0 ? "cloned" : ""} ${
-            index === 0 ? "first-ele" : ""
-          } ${index === activeCard ? "comesForward" : ""}`}
+          className={`card-section ${index > 0 ? 'cloned' : ''} ${
+            index === 0 ? 'first-ele' : ''
+          } ${index === activeCard ? 'comesForward' : ''}`}
           style={{ transform: `translateY(${position}px)` }}
           id={`card${index + 1}`}
         >
-          <div className="btn-wrapper">
-            {/* <div className="add-btn-div" key={`add-${index}`} onClick={addCard}>
-              <img
-                src="./assets/image/add-btn.png"
-                alt="Add Button"
-                className="add-btn"
-              />
-            </div> */}
-            {/* <div
-              className={`minus-btn-div${cardCount > 1 ? "" : " dsp-none"}`}
-              key={`minus-${index}`}
-              onClick={removeCard}
-            >
-              <img
-                src="./assets/image/minus-btn.png"
-                alt="Minus Button"
-                className="minus-btn"
-              />
-            </div> */}
-          </div>
+          <div className="btn-wrapper"></div>
           <div className="heading-title">
             <h2>
-              Doctors Details Form{" "}
+              Doctors Details Form{' '}
               {/* <span className="form-number">{index + 1}</span> */}
             </h2>
           </div>
@@ -191,12 +172,12 @@ function Forms() {
 
   return (
     <>
-      <div className={`form-section main ${filledData ? "dsp-none" : ""}`}>
+      <div className={`form-section main ${filledData ? 'dsp-none' : ''}`}>
         <Button
           className={`btn btn-secondary btn-lg btn-color filled-btn ${
-            dataDoc.length > 0 ? "" : "dsp-none"
+            dataDoc.length > 0 ? '' : 'dsp-none'
           }`}
-          btnText={"Filled Data"}
+          btnText={'Filled Data'}
           onClick={handleSetData}
         />
         <div className="form-section-inner">

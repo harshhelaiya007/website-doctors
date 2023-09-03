@@ -33,7 +33,7 @@ function DataCard({ checkNow }) {
             <img
               className="card-img-top img-section"
               src={
-                "http://ec2-65-2-116-251.ap-south-1.compute.amazonaws.com/image/" +
+                "/image/" +
                 data.image
               }
               alt={data.name}
