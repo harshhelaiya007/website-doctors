@@ -75,7 +75,7 @@ function Forms() {
       fetch('/doctors')
         .then((response) => response.json())
         .then((data) => {
-          const fetchedDoctorsData = data.doctors.filter(
+          const fetchedDoctorsData = data?.doctors?.filter(
             (doctorsData) => doctorsData.reference === userEmailId
           );
           var loaderEle = document.querySelector('.lds-dual-ring');
@@ -85,7 +85,7 @@ function Forms() {
             .classList.remove('dsp-none');
           document.querySelector('.header').classList.remove('dsp-none');
 
-          if (fetchedDoctorsData.length > 0) {
+          if (fetchedDoctorsData?.length > 0) {
             localStorage.setItem(
               'dataLocal',
               JSON.stringify(fetchedDoctorsData)

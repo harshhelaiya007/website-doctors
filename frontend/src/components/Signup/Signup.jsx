@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Button from "../Button/Button";
-import Input from "../Input/Input";
-import Dropdown from "../Input/DropDown";
-import "./Signup.css";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Button from '../Button/Button';
+import Input from '../Input/Input';
+import Dropdown from '../Input/DropDown';
+import './Signup.css';
+import { useHistory } from 'react-router-dom';
 
 function Signup() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
 
   const [disableStatus, setDisableStatus] = useState(true);
-  const [email, setEmail] = useState("");
-  const [region, setRegion] = useState("");
-  const [hq, setHq] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [region, setRegion] = useState('');
+  const [hq, setHq] = useState('');
+  const [password, setPassword] = useState('');
+  const [fsoName, setFsoName] = useState('');
+
   const history = useHistory();
 
   useEffect(() => {
     if (
-      username !== "" &&
-      password !== "" &&
-      email !== "" &&
-      hq !== ""
+      username !== '' &&
+      password !== '' &&
+      email !== '' &&
+      hq !== '' &&
+      fsoName !== ''
     ) {
       setDisableStatus(false);
     } else {
@@ -29,32 +32,32 @@ function Signup() {
     }
 
     return () => {};
-  }, [email, password, username, region, hq]);
+  }, [email, password, username, region, hq, fsoName]);
 
   const showSuccess = (inputEle) => {
-    console.log("comes under success");
-    inputEle.parentNode.parentNode.classList.add("valid");
-    inputEle.parentNode.parentNode.classList.remove("error");
-    inputEle.classList.add("valid");
-    inputEle.classList.remove("error");
-    inputEle.parentNode.nextElementSibling.classList.remove("show");
-    inputEle.parentNode.nextElementSibling.querySelector("p").textContent = "";
-    inputEle.parentNode.parentNode.classList.remove("error-show");
+    console.log('comes under success');
+    inputEle.parentNode.parentNode.classList.add('valid');
+    inputEle.parentNode.parentNode.classList.remove('error');
+    inputEle.classList.add('valid');
+    inputEle.classList.remove('error');
+    inputEle.parentNode.nextElementSibling.classList.remove('show');
+    inputEle.parentNode.nextElementSibling.querySelector('p').textContent = '';
+    inputEle.parentNode.parentNode.classList.remove('error-show');
   };
 
   const showError = (inputEle, msg) => {
-    console.log("comes under error");
-    inputEle.parentNode.parentNode.classList.add("error");
-    inputEle.parentNode.parentNode.classList.remove("valid");
-    inputEle.classList.add("error");
-    inputEle.classList.remove("valid");
-    inputEle.parentNode.nextElementSibling.classList.add("show");
-    inputEle.parentNode.nextElementSibling.querySelector("p").textContent = msg;
-    inputEle.parentNode.parentNode.classList.add("error-show");
+    console.log('comes under error');
+    inputEle.parentNode.parentNode.classList.add('error');
+    inputEle.parentNode.parentNode.classList.remove('valid');
+    inputEle.classList.add('error');
+    inputEle.classList.remove('valid');
+    inputEle.parentNode.nextElementSibling.classList.add('show');
+    inputEle.parentNode.nextElementSibling.querySelector('p').textContent = msg;
+    inputEle.parentNode.parentNode.classList.add('error-show');
   };
 
   const showRequired = (inputEle, requiredMsg, validationMsg) => {
-    if (inputEle.value == "") {
+    if (inputEle.value == '') {
       showError(inputEle, requiredMsg);
     } else {
       showError(inputEle, validationMsg);
@@ -62,17 +65,28 @@ function Signup() {
   };
 
   const buttonDisable = (inputEle) => {
-    if (inputEle.classList.contains("error") || inputEle.value == "") {
-      document.querySelector(".btn.btn-color.signUp-btn").disabled = true;
+    if (inputEle.classList.contains('error') || inputEle.value == '') {
+      document.querySelector('.btn.btn-color.signUp-btn').disabled = true;
     } else {
-      const inputFields = document.querySelectorAll("input.input-field");
+      const inputFields = document.querySelectorAll('input.input-field');
       inputFields.forEach((ele) => {
-        if (ele.classList.contains("valid")) {
-          document.querySelector(".btn.btn-color.signUp-btn").disabled = false;
+        if (ele.classList.contains('valid')) {
+          document.querySelector('.btn.btn-color.signUp-btn').disabled = false;
         } else {
-          document.querySelector(".btn.btn-color.signUp-btn").disabled = true;
+          document.querySelector('.btn.btn-color.signUp-btn').disabled = true;
         }
       });
+    }
+  };
+
+  const handleFsoName = (e) => {
+    let inputValue = e.target.value;
+    // buttonDisable(e.target);
+    if (!inputValue == '') {
+      showSuccess(e.target);
+      setFsoName(inputValue);
+    } else {
+      showRequired(e.target, 'Name is Required.', 'Please Enter Valid Name.');
     }
   };
 
@@ -80,29 +94,27 @@ function Signup() {
   const handleName = (e) => {
     let inputValue = e.target.value;
     // buttonDisable(e.target);
-    if (!inputValue == "") {
+    if (!inputValue == '') {
       // showSuccess(e.target);
       setUsername(inputValue);
     } else {
-      showRequired(e.target, "Name is Required.", "Please Enter Valid Name.");
+      showRequired(e.target, 'Name is Required.', 'Please Enter Valid Name.');
     }
   };
-
-
 
   // email validation
   const handleEmail = (e) => {
     let emailRegx = /\S+@\S+\.\S+/;
     let inputValue = e.target.value;
     // buttonDisable(e.target);
-    if (!inputValue == "" && emailRegx.test(inputValue)) {
+    if (!inputValue == '' && emailRegx.test(inputValue)) {
       showSuccess(e.target);
       setEmail(inputValue);
     } else {
       showRequired(
         e.target,
-        "Email is Required.",
-        "Please Enter Valid Email Address."
+        'Email is Required.',
+        'Please Enter Valid Email Address.'
       );
     }
   };
@@ -110,95 +122,98 @@ function Signup() {
   const handleRegion = (e) => {
     let inputValue = e.target.value;
     // buttonDisable(e.target);
-    if (!inputValue == "") {
+    console.log(region);
+    if (!inputValue == '') {
       showSuccess(e.target);
       setRegion(inputValue);
     } else {
-      showError(e.target, "Region is Required", "Please Enter Valid Region.");
+      showError(e.target, 'Region is Required', 'Please Enter Valid Region.');
     }
   };
 
   const handleHq = (e) => {
     let inputValue = e.target.value;
     // buttonDisable(e.target);
-    if (!inputValue == "") {
+    if (!inputValue == '') {
       showSuccess(e.target);
       setHq(inputValue);
     } else {
-      showError(e.target, "HQ is Required", "Please Enter Valid HQ.");
+      showError(e.target, 'HQ is Required', 'Please Enter Valid HQ.');
     }
   };
 
   const handlePassword = (e) => {
     let inputValue = e.target.value;
     // buttonDisable(e.target);
-    if (!inputValue == "") {
+    if (!inputValue == '') {
       showSuccess(e.target);
       setPassword(inputValue);
     } else {
       showError(
         e.target,
-        "Password is Required",
-        "Please Enter Valid Password."
+        'Password is Required',
+        'Please Enter Valid Password.'
       );
     }
   };
 
   const handleSignup = (event) => {
     event.preventDefault();
-    var loaderEle = document.querySelector(".lds-dual-ring");
-    loaderEle.classList.add("active");
-    document.querySelector(".form-section.login-box").classList.add("dsp-none");
-    document.querySelector(".header").classList.add("dsp-none");
+    var loaderEle = document.querySelector('.lds-dual-ring');
+    loaderEle.classList.add('active');
+    document.querySelector('.form-section.login-box').classList.add('dsp-none');
+    document.querySelector('.header').classList.add('dsp-none');
 
     axios
-      .post("/register", {
+      .post('http://localhost:80/register', {
         username: username,
         email: email,
         region: region,
         hq: hq,
-        fsoname: "",
+        fsoname: fsoName,
         password: password,
       })
       .then((response) => {
         // do something with the response data
-        console.log(response.data);
-        var loaderEle = document.querySelector(".lds-dual-ring");
-        loaderEle.classList.remove("active");
+        var loaderEle = document.querySelector('.lds-dual-ring');
+        loaderEle.classList.remove('active');
         document
-          .querySelector(".form-section.login-box")
-          .classList.remove("dsp-none");
-        document.querySelector(".header").classList.remove("dsp-none");
-        history.push("/Login");
+          .querySelector('.form-section.login-box')
+          .classList.remove('dsp-none');
+        document.querySelector('.header').classList.remove('dsp-none');
+        history.push('/Login');
       })
       .catch((error) => {
         console.log(error.response);
-        var loaderEle = document.querySelector(".lds-dual-ring");
-        loaderEle.classList.remove("active");
+        var loaderEle = document.querySelector('.lds-dual-ring');
+        loaderEle.classList.remove('active');
         document
-          .querySelector(".form-section.login-box")
-          .classList.remove("dsp-none");
-        document.querySelector(".header").classList.remove("dsp-none");
+          .querySelector('.form-section.login-box')
+          .classList.remove('dsp-none');
+        document.querySelector('.header').classList.remove('dsp-none');
         if (error.response.status === 400) {
-          alert("BAD REQUEST");
+          alert('BAD REQUEST');
         } else {
-          alert("Server Error");
+          alert('Server Error');
         }
-        history.push("/Signup");
+        history.push('/Signup');
       });
   };
 
   useEffect(() => {
+    setRegion(()=>"AHMEDABAD");
+
     let cardLoginSignup = document.querySelector(
-      ".card-section.login-box.signup"
+      '.card-section.login-box.signup'
     );
-    if (window.matchMedia("(max-width: 767px)").matches) {
+    if (window.matchMedia('(max-width: 767px)').matches) {
       cardLoginSignup.setAttribute(
-        "style",
+        'style',
         `width:${window.innerWidth - 50}px`
       );
     }
   }, []);
+
 
   return (
     <section className="form-section login-box signup">
@@ -208,48 +223,57 @@ function Signup() {
             <h2 className="heading-title">Sign Up Form</h2>
             <form onSubmit={handleSignup}>
               <Input
-                inputId={"inputUserName"}
-                type="number"
+                inputId={'inputUserName'}
+                type="text"
                 name="employeeid"
-                labelClassName={""}
-                labelText={"Employee ID"}
-                parentWrapperClass={"login-form"}
+                labelClassName={''}
+                labelText={'Employee ID'}
+                parentWrapperClass={'login-form'}
                 changeEvent={handleName}
               />
               <Input
-                inputId={"inputEmail"}
-                type="text"
+                inputId={'inputEmail'}
+                type="email"
                 name="email"
-                labelClassName={""}
-                labelText={"Email"}
-                parentWrapperClass={"login-form"}
+                labelClassName={''}
+                labelText={'Email'}
+                parentWrapperClass={'login-form'}
                 changeEvent={handleEmail}
               />
               <Dropdown
-                inputId={"inputRegion"}
+                inputId={'inputRegion'}
                 type="text"
                 name="region"
-                labelClassName={""}
-                labelText={"Region"}
-                parentWrapperClass={"login-form"}
+                labelClassName={''}
+                labelText={'Region'}
+                parentWrapperClass={'login-form'}
                 changeEvent={handleRegion}
               />
               <Input
-                inputId={"inputHQ"}
+                inputId={'inputHQ'}
                 type="text"
                 name="hq"
-                labelClassName={""}
-                labelText={"HQ"}
-                parentWrapperClass={"login-form"}
+                labelClassName={''}
+                labelText={'HQ'}
+                parentWrapperClass={'login-form'}
                 changeEvent={handleHq}
               />
               <Input
-                inputId={"inputPassword"}
-                type="number"
+                inputId={'inputFSOName'}
+                type="text"
+                name="fsoName"
+                labelClassName={''}
+                labelText={'FSO Name'}
+                parentWrapperClass={'login-form'}
+                changeEvent={handleFsoName}
+              />
+              <Input
+                inputId={'inputPassword'}
+                type="text"
                 name="password"
-                labelClassName={""}
-                labelText={"Password"}
-                parentWrapperClass={"login-form"}
+                labelClassName={''}
+                labelText={'Password'}
+                parentWrapperClass={'login-form'}
                 changeEvent={handlePassword}
               />
               {/* <Input
@@ -264,13 +288,13 @@ function Signup() {
                 <Button
                   className="btn btn-primary btn-lg btn-color signUp-btn"
                   type="submit"
-                  btnText={"Sign Up"}
+                  btnText={'Sign Up'}
                   disabled={disableStatus}
                 />
                 <Button
                   className="btn btn-secondary btn-lg btn-color cancel-btn"
                   type="button"
-                  btnText={"Cancel"}
+                  btnText={'Cancel'}
                 />
               </div>
             </form>

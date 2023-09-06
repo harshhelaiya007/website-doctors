@@ -94,14 +94,17 @@ function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
     }
   };
   const handleDoctorNumber = (e) => {
-    
     let inputValue = e.target.value;
     // buttonDisable(e.target);
     if (!inputValue == '') {
       showSuccess(e.target);
       setNumber(inputValue);
     } else {
-      showRequired(e.target, 'Number is Required.', 'Please Enter Valid Number.');
+      showRequired(
+        e.target,
+        'Number is Required.',
+        'Please Enter Valid Number.'
+      );
     }
   };
 
@@ -197,6 +200,7 @@ function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
       formData.append('hq', hq);
       formData.append('ps', psName);
       formData.append('doctorNumber', number);
+      formData.append('fsoname', fsoname);
       formData.append('doctorPlace', doctorPlace);
       formData.append('doctorSpeciality', doctorSpeciality);
       formData.append('image', fileDirect);
@@ -240,12 +244,17 @@ function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
   useEffect(() => {
     let inputFieldDRegion = document.querySelector(`#inputRegion-${keyId}`);
     let inputFieldDHQ = document.querySelector(`#inputHQ-${keyId}`);
+    let inputFieldFsoName = document.querySelector(`#inputFSOName-${keyId}`);
+
     if (!inputFieldDRegion == '') {
       if (userInfo && !userInfo.user == '') {
         inputFieldDRegion.value = userInfo.user.user.region;
         setRegion(userInfo.user.user.region);
         inputFieldDHQ.value = userInfo.user.user.hq;
         setHq(userInfo.user.user.hq);
+        inputFieldFsoName.value = userInfo.user.user.fsoname;
+        setFsoName(userInfo.user.user.fsoname);
+
         inputFieldDRegion.parentElement.parentNode.classList.add('valid');
         inputFieldDHQ.parentElement.parentNode.classList.add('valid');
         inputFieldDRegion.previousElementSibling.classList.add(
@@ -321,6 +330,14 @@ function Card({ keyId, handleRefreshDataStats, disbledBtn }) {
               />
             </div>
             <div className="d-flex form-flex-wrapper">
+              <Input
+                inputId={`inputFSOName-${keyId}`}
+                type="text"
+                disable={true}
+                name={`fsoName-${keyId}`}
+                labelText={'FSO Name'}
+                changeEvent={handleFsoName}
+              />
               <Input
                 inputId={`inputDoctorSpeciality-${keyId}`}
                 type="text"

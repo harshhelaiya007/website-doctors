@@ -37,20 +37,20 @@ function Login() {
         // do something with the response data
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error.message);
         var loaderEle = document.querySelector(".lds-dual-ring");
         loaderEle.classList.remove("active");
         document
           .querySelector(".form-section.login-box")
           .classList.remove("dsp-none");
         document.querySelector(".header").classList.remove("dsp-none");
-        if (error.response.status === 400) {
+        if (error?.response?.status === 400) {
           if (error.response.data.msg == "Invalid Credentials") {
             alert("Invalid Credentials");
           } else {
             alert("BAD REQUEST");
           }
-        } else if (error.response.status === 500) {
+        } else if (error?.response?.status === 500) {
           alert("Server Error");
         } else {
           alert("Server Error");
