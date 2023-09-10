@@ -165,7 +165,7 @@ function Signup() {
     document.querySelector('.header').classList.add('dsp-none');
 
     axios
-      .post('http://localhost:80/register', {
+      .post('/register', {
         username: username,
         email: email,
         region: region,
