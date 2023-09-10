@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
     hq,
     ps,
     doctorNumber,
+    fsoname,
     doctorPlace,
     doctorSpeciality,
   } = req.body;
@@ -45,6 +46,7 @@ router.post('/', async (req, res) => {
       hq,
       ps,
       doctorPlace,
+      fsoname,
       doctorSpeciality,
       image: imageUrl,
     });
